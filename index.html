@@ -437,7 +437,17 @@ loadProducts();
 
  <script>
 function showCategory(category) {
-  alert("You selected " + category);
+  const products = document.querySelectorAll('.product');
+
+  products.forEach(product => {
+    const productCategory = product.dataset.category;
+
+    if (productCategory === category) {
+      product.style.display = 'block';
+    } else {
+      product.style.display = 'none';
+    }
+  });
 }
 </script>
 </body>
