@@ -418,13 +418,15 @@ function searchProduct() {
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-const SUPABASE_URL = "https://snjrlhkmixiamgqhfhug.supabase.co/rest/v1/";
+const SUPABASE_URL = "https://snjrlhkmixiamgqhfhug.supabase.co";
 const SUPABASE_KEY = "sb_publishable_3jRUAQ88ntmpnA42QwTuew_TJ7NYgFw";
 
 const supabase = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_KEY
-);<script>
+);
+</script>
+  <script>
 async function loadProducts(){
   const { data, error } = await supabase
     .from('products')
