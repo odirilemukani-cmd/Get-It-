@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Get-It 🇧🇼 | Find. Compare. Get.</title>
-
-  <style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <title>Get-It 🇧🇼 | Find. Compare. Get.</title>  <style>
     * {
       box-sizing: border-box;
       margin: 0;
@@ -195,205 +190,53 @@
         padding: 14px;
       }
     }
-  </style>
-</head>
-
-<body>
-
-<header>
+  </style></head><body><header>
   <div class="logo">GET-IT <span>🇧🇼</span></div>
   <div class="location">📍 Gaborone</div>
-</header>
-
-<section class="hero">
-
-  <h1>Find it. Compare it. Get it.</h1>
-
-  <p>
+</header><section class="hero">  <h1>Find it. Compare it. Get it.</h1>  <p>
     Find products in Gaborone, compare prices and check availability.
-  </p>
+  </p>  <div class="search-box"><input
+  type="text"
+  id="searchInput"
+  placeholder="Search for a product..."
+>
 
-  <div class="search-box">
-    <input
-      type="text"
-      id="searchInput"
-      placeholder="Search for a product..."
-    >
+<button onclick="searchProduct()">
+  Search
+</button>
 
-    <button onclick="searchProduct()">
-      Search
-    </button>
-  </div>
+  </div></section><section class="section">  <h2>Browse Categories</h2>  <div class="categories"><div class="category" onclick="showCategory('Groceries')">
+  <div class="category-icon">🛒</div>
+  Groceries
+</div>
 
-</section>
+<div class="category" onclick="showCategory('Household')">
+  <div class="category-icon">🧴</div>
+  Household
+</div>
 
-<section class="section">
+<div class="category" onclick="showCategory('Electronics')">
+  <div class="category-icon">📱</div>
+  Electronics
+</div>
 
-  <h2>Browse Categories</h2>
+<div class="category" onclick="showCategory('Clothing')">
+  <div class="category-icon">👕</div>
+  Clothing
+</div>
 
-  <div class="categories">
+<div class="category" onclick="showCategory('Pharmacy')">
+  <div class="category-icon">💊</div>
+  Pharmacy
+</div>
 
-    <div class="category"
-      onclick="showCategory('Groceries')">
-      <div class="category-icon">🛒</div>
-      Groceries
-    </div>
-
-    <div class="category"
-      onclick="showCategory('Household')">
-      <div class="category-icon">🧴</div>
-      Household
-    </div>
-
-    <div class="category"
-      onclick="showCategory('Electronics')">
-      <div class="category-icon">📱</div>
-      Electronics
-    </div>
-
-    <div class="category"
-      onclick="showCategory('Clothing')">
-      <div class="category-icon">👕</div>
-      Clothing
-    </div>
-
-    <div class="category"
-      onclick="showCategory('Pharmacy')">
-      <div class="category-icon">💊</div>
-      Pharmacy
-    </div>
-
-  </div>
-
-</section>
-
-<section class="section">
-
-  <h2>Popular Products</h2>
-
-  <div class="products">
-
-    <div class="product"
-      data-category="Groceries">
-
-      <h3>Cooking Oil 2L</h3>
-
-      <div class="shop">
-        <div>
-          Shop A
-          <div class="stock available">
-            🟢 In stock
-          </div>
-        </div>
-
-        <div class="price">
-          P48
-        </div>
-      </div>
-
-      <div class="shop">
-        <div>
-          Shop B
-          <div class="stock available">
-            🟢 In stock
-          </div>
-        </div>
-
-        <div class="price">
-          P45
-        </div>
-      </div>
-
-      <div class="shop">
-        <div>
-          Shop C
-          <div class="stock unavailable">
-            🔴 Out of stock
-          </div>
-        </div>
-
-        <div class="price">
-          P51
-        </div>
-      </div>
-
-      <div class="cheapest">
-        🏆 Cheapest: Shop B — P45
-      </div>
-
-    </div>
-
-    <div class="product"
-      data-category="Groceries">
-
-      <h3>Milk 1L</h3>
-
-      <div class="shop">
-        <div>
-          Shop A
-          <div class="stock available">
-            🟢 In stock
-          </div>
-        </div>
-
-        <div class="price">
-          P15
-        </div>
-      </div>
-
-      <div class="shop">
-        <div>
-          Shop B
-          <div class="stock available">
-            🟢 In stock
-          </div>
-        </div>
-
-        <div class="price">
-          P14
-        </div>
-      </div>
-
-      <div class="shop">
-        <div>
-          Shop C
-          <div class="stock available">
-            🟢 In stock
-          </div>
-        </div>
-
-        <div class="price">
-          P16
-        </div>
-      </div>
-
-      <div class="cheapest">
-        🏆 Cheapest: Shop B — P14
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-<footer>
-
-  <p>GET-IT 🇧🇼</p>
-
-  <p>
+  </div></section><section class="section">  <h2>Popular Products</h2>  <div class="products" id="products">
+    <p>Loading products...</p>
+  </div></section><footer>  <p>GET-IT 🇧🇼</p>  <p>
     Helping Botswana find products, compare prices and save time.
-  </p>
-
-  <br>
-
-  <small>
+  </p>  <br>  <small>
     Prototype — Gaborone
-  </small>
-
-</footer>
-
-<script>
+  </small></footer><script>
 
 function searchProduct() {
 
@@ -414,43 +257,119 @@ function searchProduct() {
 
 }
 
-</script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script>
 
-<script>
-const SUPABASE_URL = "https://snjrlhkmixiamgqhfhug.supabase.co";
-const SUPABASE_KEY = "sb_publishable_3jRUAQ88ntmpnA42QwTuew_TJ7NYgFw";
+const SUPABASE_URL =
+  "https://snjrlhkmixiamgqhfhug.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_3jRUAQ88ntmpnA42QwTuew_TJ7NYgFw";
 
 const supabase = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_KEY
 );
-</script>
-  <script>
-async function loadProducts(){
+
+
+async function loadProducts() {
+
   const { data, error } = await supabase
     .from('products')
     .select('*');
 
-  console.log(data);
-  console.log(error);
+  console.log("Products:", data);
+  console.log("Error:", error);
+
+  if (error) {
+
+    document.getElementById("products").innerHTML =
+      "<p>Unable to load products.</p>";
+
+    return;
+
+  }
+
+  const container =
+    document.getElementById("products");
+
+  container.innerHTML = "";
+
+  data.forEach(product => {
+
+    const productCard =
+      document.createElement("div");
+
+    productCard.className = "product";
+
+    productCard.dataset.category =
+      product.category;
+
+    productCard.innerHTML = `
+
+      <h3>${product.name}</h3>
+
+      <div class="shop">
+
+        <div>
+
+          ${product.shop}
+
+          <div class="stock ${
+            product.stock === "In stock"
+              ? "available"
+              : "unavailable"
+          }">
+
+            ${
+              product.stock === "In stock"
+                ? "🟢 In stock"
+                : "🔴 Out of stock"
+            }
+
+          </div>
+
+        </div>
+
+        <div class="price">
+          P${product.price}
+        </div>
+
+      </div>
+
+    `;
+
+    container.appendChild(productCard);
+
+  });
+
 }
+
 
 loadProducts();
-</script>
 
-<script>
+
 function showCategory(category) {
-  const products = document.querySelectorAll('.product');
+
+  const products =
+    document.querySelectorAll('.product');
 
   products.forEach(product => {
-    if (product.dataset.category === category) {
+
+    if (
+      product.dataset.category === category
+    ) {
+
       product.style.display = '';
+
     } else {
+
       product.style.display = 'none';
+
     }
+
   });
+
 }
-</script>
-</body>
+
+</script></body>
 </html>
