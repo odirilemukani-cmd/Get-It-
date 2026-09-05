@@ -437,15 +437,13 @@ async function loadProducts(){
 loadProducts();
 </script>
 
- <script>
+<script>
 function showCategory(category) {
   const products = document.querySelectorAll('.product');
 
   products.forEach(product => {
-    const productCategory = product.dataset.category;
-
-    if (productCategory === category) {
-      product.style.display = 'block';
+    if (product.dataset.category === category) {
+      product.style.display = '';
     } else {
       product.style.display = 'none';
     }
