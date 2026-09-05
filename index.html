@@ -286,7 +286,6 @@ async function loadProducts() {
       "<p>Unable to load products.</p>";
 
     return;
-
   }
 
   const container =
@@ -302,39 +301,17 @@ async function loadProducts() {
     productCard.className = "product";
 
     productCard.dataset.category =
-      product.category;
+      product.Category;
 
     productCard.innerHTML = `
 
-      <h3>${product.name}</h3>
+      <h3>${product.Name}</h3>
 
-      <div class="shop">
+      <p><strong>Brand:</strong> ${product.Brand}</p>
 
-        <div>
+      <p><strong>Category:</strong> ${product.Category}</p>
 
-          ${product.shop}
-
-          <div class="stock ${
-            product.stock === "In stock"
-              ? "available"
-              : "unavailable"
-          }">
-
-            ${
-              product.stock === "In stock"
-                ? "🟢 In stock"
-                : "🔴 Out of stock"
-            }
-
-          </div>
-
-        </div>
-
-        <div class="price">
-          P${product.price}
-        </div>
-
-      </div>
+      <p><strong>Size:</strong> ${product.Size}</p>
 
     `;
 
@@ -344,9 +321,7 @@ async function loadProducts() {
 
 }
 
-
 loadProducts();
-
 
 function showCategory(category) {
 
