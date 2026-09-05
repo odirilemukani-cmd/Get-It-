@@ -419,9 +419,7 @@ const supabase = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_KEY
 );<script>
-async function loadProducts()function showCategory(category) {
-  alert("You selected " + category);
-} {
+async function loadProducts(){
   const { data, error } = await supabase
     .from('products')
     .select('*');
