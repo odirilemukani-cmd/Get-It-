@@ -278,7 +278,12 @@ async function loadProducts() {
     .select('*');
 
   console.log("Products:", data);
-  console.log("Error:", error);
+console.log("Error:", error);
+
+alert(
+  "Products: " + (data ? data.length : 0) +
+  "\nError: " + (error ? error.message : "None")
+);
 
   if (error) {
 
@@ -346,5 +351,7 @@ function showCategory(category) {
 
 }
 
-</script></body>
+</script>
+</body>
 </html>
+
