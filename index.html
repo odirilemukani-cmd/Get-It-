@@ -278,6 +278,7 @@ alert("Starting Supabase...");
   const { data, error } = await supabase
     .from('products')
     .select('*');
+  alert("Supabase finished!");
 
   console.log("Products:", data);
 console.log("Error:", error);
