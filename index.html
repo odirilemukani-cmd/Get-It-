@@ -275,9 +275,26 @@ const supabase = window.supabase.createClient(
 async function loadProducts() {
 alert("Starting Supabase...");  
 
-  const { data, error } = await supabase
+ const result = await Promise.race([
+  supabase
     .from('products')
-    .select('*');
+    .select('*'),
+
+  new Promise(resolve =>
+    setTimeout(
+      () => resolve({ timeout: true }),
+      10000
+    )
+  )
+]);
+
+if (result.timeout) {
+  alert("Supabase is taking too long to respond.");
+  return;
+}
+
+const { data, error } = result;
+  
   alert("Supabase finished!");
 
   console.log("Products:", data);
