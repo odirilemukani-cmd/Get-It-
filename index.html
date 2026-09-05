@@ -269,13 +269,13 @@ const supabase = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_KEY
 );
-
-
+</script>
+<script>
 async function loadProducts() {
 
   const { data, error } = await supabase
     .from('products')
-    .select('*');
+    .select('*');}
 
   console.log("Products:", data);
   console.log("Error:", error);
