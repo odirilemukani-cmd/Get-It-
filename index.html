@@ -417,7 +417,18 @@ const SUPABASE_KEY = "sb_publishable_3jRUAQ88ntmpnA42QwTuew_TJ7NYgFw";
 const supabase = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_KEY
-);
+);<script>
+async function loadProducts() {
+  const { data, error } = await supabase
+    .from('products')
+    .select('*');
+
+  console.log(data);
+  console.log(error);
+}
+
+loadProducts();
+</script>
 </script>
 </body>
 </html>
