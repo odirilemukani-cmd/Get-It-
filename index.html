@@ -120,6 +120,12 @@
       box-shadow: 0 8px 20px rgba(0,0,0,0.07);
     }
 
+    .category.active {
+      background: #1d4ed8;
+      color: white;
+      border-color: #1d4ed8;
+    }
+
     .category-icon {
       font-size: 30px;
       margin-bottom: 8px;
@@ -151,6 +157,7 @@
       padding: 20px;
       border-radius: 12px;
       border: 1px solid #e5e7eb;
+      grid-column: 1 / -1;
     }
 
     .error {
@@ -168,6 +175,7 @@
     }
 
     @media (max-width: 600px) {
+
       .hero h1 {
         font-size: 32px;
       }
@@ -187,13 +195,23 @@
 <body>
 
 <header>
-  <div class="logo">GET-IT <span>🇧🇼</span></div>
-  <div class="location">📍 Gaborone</div>
+
+  <div class="logo">
+    GET-IT <span>🇧🇼</span>
+  </div>
+
+  <div class="location">
+    📍 Gaborone
+  </div>
+
 </header>
+
 
 <section class="hero">
 
-  <h1>Find it. Compare it. Get it.</h1>
+  <h1>
+    Find it. Compare it. Get it.
+  </h1>
 
   <p>
     Find products in Gaborone, compare prices and check availability.
@@ -215,33 +233,55 @@
 
 </section>
 
+
 <section class="section">
 
-  <h2>Browse Categories</h2>
+  <h2>
+    Browse Categories
+  </h2>
 
   <div class="categories">
 
-    <div class="category" onclick="showCategory('Groceries')">
+    <div
+      class="category"
+      onclick="showCategory('Groceries', this)"
+    >
       <div class="category-icon">🛒</div>
       Groceries
     </div>
 
-    <div class="category" onclick="showCategory('Household')">
+
+    <div
+      class="category"
+      onclick="showCategory('Household', this)"
+    >
       <div class="category-icon">🧴</div>
       Household
     </div>
 
-    <div class="category" onclick="showCategory('Electronics')">
+
+    <div
+      class="category"
+      onclick="showCategory('Electronics', this)"
+    >
       <div class="category-icon">📱</div>
       Electronics
     </div>
 
-    <div class="category" onclick="showCategory('Clothing')">
+
+    <div
+      class="category"
+      onclick="showCategory('Clothing', this)"
+    >
       <div class="category-icon">👕</div>
       Clothing
     </div>
 
-    <div class="category" onclick="showCategory('Pharmacy')">
+
+    <div
+      class="category"
+      onclick="showCategory('Pharmacy', this)"
+    >
       <div class="category-icon">💊</div>
       Pharmacy
     </div>
@@ -250,21 +290,32 @@
 
 </section>
 
+
 <section class="section">
 
-  <h2>Popular Products</h2>
+  <h2>
+    Popular Products
+  </h2>
 
-  <div class="products" id="products">
+  <div
+    class="products"
+    id="products"
+  >
+
     <div class="message">
-      Connecting to Get-It database...
+      Loading products...
     </div>
+
   </div>
 
 </section>
 
+
 <footer>
 
-  <p>GET-IT 🇧🇼</p>
+  <p>
+    GET-IT 🇧🇼
+  </p>
 
   <p>
     Helping Botswana find products, compare prices and save time.
@@ -278,6 +329,7 @@
 
 </footer>
 
+
 <script>
 
 const SUPABASE_URL =
@@ -286,6 +338,15 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
   "sb_publishable_3jRUAQ88ntmpnA42QwTuew_TJ7NYgFw";
 
+
+let allProducts = [];
+
+let selectedCategory = "";
+
+
+/* =========================
+   LOAD PRODUCTS
+========================= */
 
 async function loadProducts() {
 
@@ -298,176 +359,130 @@ async function loadProducts() {
       new AbortController();
 
     const timeout =
-      setTimeout(() => {
+      setTimeout(function() {
+
         controller.abort();
+
       }, 10000);
 
 
     const response =
       await fetch(
+
         SUPABASE_URL +
         "/rest/v1/products?select=*",
+
         {
           method: "GET",
 
           headers: {
-            "apikey": SUPABASE_KEY,
+
+            "apikey":
+              SUPABASE_KEY,
+
             "Authorization":
               "Bearer " + SUPABASE_KEY
+
           },
 
-          signal: controller.signal
+          signal:
+            controller.signal
+
         }
+
       );
 
 
     clearTimeout(timeout);
 
 
-    const responseText =
+    const text =
       await response.text();
 
 
     if (!response.ok) {
 
       console.error(
-        "Supabase status:",
-        response.status
+        "Supabase error:",
+        response.status,
+        text
       );
 
-      console.error(
-        "Supabase response:",
-        responseText
-      );
+      container.innerHTML =
 
-      container.innerHTML = `
-        <div class="message error">
+        `<div class="message error">
           <strong>Database error</strong>
-          <p>Status: ${response.status}</p>
-          <p>Please check the Supabase read policy.</p>
-        </div>
-      `;
+          <br><br>
+          Status: ${response.status}
+        </div>`;
 
       return;
+
     }
 
 
-    let data;
-
-    try {
-
-      data =
-        JSON.parse(responseText);
-
-    } catch {
-
-      container.innerHTML = `
-        <div class="message error">
-          <strong>Database returned invalid data.</strong>
-        </div>
-      `;
-
-      return;
-    }
+    allProducts =
+      JSON.parse(text);
 
 
     console.log(
-      "Products received:",
-      data
+      "Products loaded:",
+      allProducts
     );
 
 
-    if (!data || data.length === 0) {
+    if (
+      !allProducts ||
+      allProducts.length === 0
+    ) {
 
-      container.innerHTML = `
-        <div class="message">
-          No products found in the database.
-        </div>
-      `;
+      container.innerHTML =
+
+        `<div class="message">
+          No products found.
+        </div>`;
 
       return;
+
     }
 
 
-    container.innerHTML = "";
-
-
-    data.forEach(product => {
-
-      const productCard =
-        document.createElement("div");
-
-      productCard.className =
-        "product";
-
-      productCard.dataset.category =
-        product.Category || "";
-
-
-      productCard.innerHTML = `
-
-        <h3>
-          ${product.Name || "Unnamed product"}
-        </h3>
-
-        <p>
-          <strong>Brand:</strong>
-          ${product.Brand || "Not listed"}
-        </p>
-
-        <p>
-          <strong>Category:</strong>
-          ${product.Category || "Not listed"}
-        </p>
-
-        <p>
-          <strong>Size:</strong>
-          ${product.Size || "Not listed"}
-        </p>
-
-        <p>
-          <strong>Allergens:</strong>
-          ${product.Allergens || "Not listed"}
-        </p>
-
-        <p>
-          <strong>Ingredients:</strong>
-          ${product.Ingredients || "Not listed"}
-        </p>
-
-      `;
-
-      container.appendChild(productCard);
-
-    });
+    renderProducts();
 
   }
+
 
   catch (error) {
 
     console.error(
-      "Get-It database error:",
+      "Connection error:",
       error
     );
 
 
-    if (error.name === "AbortError") {
+    if (
+      error.name === "AbortError"
+    ) {
 
-      container.innerHTML = `
-        <div class="message error">
+      container.innerHTML =
+
+        `<div class="message error">
           <strong>Database connection timed out.</strong>
-          <p>Supabase did not respond within 10 seconds.</p>
-        </div>
-      `;
+          <br><br>
+          Please check your Supabase connection.
+        </div>`;
 
-    } else {
+    }
 
-      container.innerHTML = `
-        <div class="message error">
+    else {
+
+      container.innerHTML =
+
+        `<div class="message error">
           <strong>Could not connect to the database.</strong>
-          <p>${error.message}</p>
-        </div>
-      `;
+          <br><br>
+          ${error.message}
+        </div>`;
 
     }
 
@@ -476,34 +491,45 @@ async function loadProducts() {
 }
 
 
-function showCategory(category) {
+/* =========================
+   DISPLAY PRODUCTS
+========================= */
 
-  const products =
-    document.querySelectorAll(".product");
+function renderProducts() {
 
-
-  products.forEach(product => {
-
-    if (
-      product.dataset.category === category
-    ) {
-
-      product.style.display = "";
-
-    } else {
-
-      product.style.display = "none";
-
-    }
-
-  });
-
-}
+  const container =
+    document.getElementById("products");
 
 
-function searchProduct() {
+  let products =
+    allProducts;
 
-  const input =
+
+  /* Category filter */
+
+  if (
+    selectedCategory !== ""
+  ) {
+
+    products =
+      products.filter(function(product) {
+
+        return (
+          String(
+            product.Category || ""
+          ).toLowerCase()
+          ===
+          selectedCategory.toLowerCase()
+        );
+
+      });
+
+  }
+
+
+  /* Search filter */
+
+  const search =
     document
       .getElementById("searchInput")
       .value
@@ -511,36 +537,187 @@ function searchProduct() {
       .toLowerCase();
 
 
-  const products =
-    document.querySelectorAll(".product");
+  if (search !== "") {
+
+    products =
+      products.filter(function(product) {
+
+        return String(
+          product.Name || ""
+        )
+        .toLowerCase()
+        .includes(search);
+
+      });
+
+  }
 
 
-  products.forEach(product => {
+  /* Nothing found */
 
-    const name =
-      product
-        .querySelector("h3")
-        .textContent
-        .toLowerCase();
+  if (
+    products.length === 0
+  ) {
+
+    container.innerHTML =
+
+      `<div class="message">
+        No products found in this category.
+      </div>`;
+
+    return;
+
+  }
 
 
-    if (
-      input === "" ||
-      name.includes(input)
-    ) {
+  container.innerHTML = "";
 
-      product.style.display = "";
 
-    } else {
+  /* Create product cards */
 
-      product.style.display = "none";
+  products.forEach(function(product) {
 
-    }
+    const card =
+      document.createElement("div");
+
+
+    card.className =
+      "product";
+
+
+    card.innerHTML = `
+
+      <h3>
+        ${product.Name || "Unnamed product"}
+      </h3>
+
+      <p>
+        <strong>Brand:</strong>
+        ${product.Brand || "Not listed"}
+      </p>
+
+      <p>
+        <strong>Category:</strong>
+        ${product.Category || "Not listed"}
+      </p>
+
+      <p>
+        <strong>Size:</strong>
+        ${product.Size || "Not listed"}
+      </p>
+
+      <p>
+        <strong>Allergens:</strong>
+        ${product.Allergens || "Not listed"}
+      </p>
+
+      <p>
+        <strong>Ingredients:</strong>
+        ${product.Ingredients || "Not listed"}
+      </p>
+
+    `;
+
+
+    container.appendChild(card);
 
   });
 
 }
 
+
+/* =========================
+   CATEGORY BUTTON
+========================= */
+
+function showCategory(
+  category,
+  button
+) {
+
+  /*
+    If the same category is
+    clicked again, turn it off.
+  */
+
+  if (
+    selectedCategory === category
+  ) {
+
+    selectedCategory = "";
+
+  }
+
+  else {
+
+    selectedCategory =
+      category;
+
+  }
+
+
+  /*
+    Remove active style
+    from every category.
+  */
+
+  document
+    .querySelectorAll(".category")
+    .forEach(function(item) {
+
+      item.classList.remove(
+        "active"
+      );
+
+    });
+
+
+  /*
+    Highlight selected category.
+  */
+
+  if (
+    selectedCategory !== ""
+  ) {
+
+    button.classList.add(
+      "active"
+    );
+
+  }
+
+
+  /*
+    Display products again.
+  */
+
+  renderProducts();
+
+}
+
+
+/* =========================
+   SEARCH
+========================= */
+
+function searchProduct() {
+
+  renderProducts();
+
+}
+
+
+document
+  .getElementById("searchInput")
+  .addEventListener(
+    "input",
+    renderProducts
+  );
+
+
+/* =========================
+   START
+========================= */
 
 loadProducts();
 
@@ -548,4 +725,3 @@ loadProducts();
 
 </body>
 </html>
-
