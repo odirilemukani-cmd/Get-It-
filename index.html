@@ -675,54 +675,42 @@ function openProduct(product){
 async function comparePrices(){
 
   if(!selectedProduct){
-
     alert("Please select a product first.");
-
     return;
   }
 
-  const productId =
-    getProductId(selectedProduct);
+  const productId = getProductId(selectedProduct);
 
   if(
     productId === undefined ||
     productId === null ||
     String(productId).trim() === ""
   ){
-
     document.getElementById("comparisonContent").innerHTML =
-      `<div class="message">
-        Product ID not found.
-      </div>`;
+      `<div class="message">Product ID not found.</div>`;
 
     showScreen("comparisonScreen");
-
     return;
   }
 
-
   document.getElementById("comparisonContent").innerHTML =
-    `<div class="message">
-      Loading prices...
-    </div>`;
+    `<div class="message">Loading prices...</div>`;
 
   showScreen("comparisonScreen");
 
-
   try{
 
-    /* Get prices */
+    /* ==========================
+       GET PRODUCT PRICES
+    ========================== */
 
     const endpoint =
       "product_prices" +
-      "?select=id,shop_id,product_id,Price,available" +
+      "?select=%22Id%22,shop_id,product_id,price,available" +
       "&product_id=eq." +
       encodeURIComponent(String(productId));
 
-
-    const prices =
-      await supabaseFetch(endpoint);
-
+    const prices = await supabaseFetch(endpoint);
 
     if(!prices || prices.length === 0){
 
@@ -741,46 +729,52 @@ async function comparePrices(){
 
     const shopMap = {};
 
-
     allShops.forEach(shop => {
 
-      const shopId =
-        String(getShopId(shop) ?? "")
-          .trim()
-          .toLowerCase();
+      const shopId = String(
+        shop.Shop_id ??
+        shop.shop_id ??
+        shop.shopId ??
+        shop.id ??
+        ""
+      ).trim().toLowerCase();
 
       if(shopId){
 
         shopMap[shopId] = {
-
           name:
-            getShopName(shop),
+            shop.Name ??
+            shop.name ??
+            "Unknown shop",
 
           location:
-            getShopLocation(shop),
+            shop.Location ??
+            shop.location ??
+            "",
 
           address:
-            getShopAddress(shop)
-
+            shop.Address ??
+            shop.address ??
+            ""
         };
-
       }
 
     });
 
 
+    console.log("SHOP MAP:", shopMap);
+    console.log("PRICE ROWS:", prices);
+
+
     /* ==========================
-       PREPARE PRICE RESULTS
+       PREPARE RESULTS
     ========================== */
 
     const results = [];
 
-
     prices.forEach(item => {
 
-      const available =
-        item.available;
-
+      const available = item.available;
 
       const isAvailable =
         available === true ||
@@ -788,38 +782,35 @@ async function comparePrices(){
         available === 1 ||
         available === "1";
 
-
       if(!isAvailable){
-
         return;
       }
 
 
-      const price =
-        Number(item.Price);
+      /* IMPORTANT: column is lowercase price */
 
+      const price = Number(item.price);
 
       if(isNaN(price)){
-
         return;
       }
 
 
-      const shopId =
-        String(item.shop_id ?? "")
-          .trim()
-          .toLowerCase();
+      /* Match shop_id */
+
+      const shopId = String(
+        item.shop_id ?? ""
+      ).trim().toLowerCase();
 
 
-      const shop =
-        shopMap[shopId];
+      const shop = shopMap[shopId];
 
 
       results.push({
 
-        price:price,
+        price: price,
 
-        shopId:shopId,
+        shopId: shopId,
 
         shopName:
           shop
@@ -856,7 +847,9 @@ async function comparePrices(){
     }
 
 
-    /* Cheapest first */
+    /* ==========================
+       CHEAPEST FIRST
+    ========================== */
 
     results.sort(
       (a,b) => a.price - b.price
@@ -910,7 +903,6 @@ async function comparePrices(){
 
           </div>
 
-
           <div class="comparison-price">
 
             ${
@@ -940,19 +932,21 @@ async function comparePrices(){
 
   }catch(error){
 
-  console.error("PRICE COMPARISON ERROR:", error);
+    console.error("PRICE COMPARISON ERROR:", error);
 
-  document.getElementById("comparisonContent").innerHTML =
-    `<div class="message">
-      <h3>Price comparison error</h3>
-      <p style="margin-top:10px;color:red;">
-        ${escapeHtml(error.message)}
-      </p>
-    </div>`;
+    document.getElementById("comparisonContent").innerHTML =
+      `<div class="message">
 
-}
+        <h3>Price comparison error</h3>
 
-}
+        <p style="margin-top:10px;color:red;">
+          ${escapeHtml(error.message)}
+        </p>
+
+      </div>`;
+  }
+
+}  
 
 
 /* ==============================
