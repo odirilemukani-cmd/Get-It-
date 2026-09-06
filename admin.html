@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Get-It 🇧🇼 | Admin</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  background:#f4f7fb;
+  color:#172033;
+  min-height:100vh;
+}
+
+header{
+  background:#0b7a4b;
+  color:white;
+  padding:18px 16px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+header h1{
+  font-size:21px;
+}
+
+.logout{
+  background:white;
+  color:#0b7a4b;
+  border:0;
+  padding:9px 13px;
+  border-radius:8px;
+  font-weight:bold;
+}
+
+.container{
+  width:100%;
+  max-width:850px;
+  margin:auto;
+  padding:18px;
+}
+
+.card{
+  background:white;
+  border-radius:14px;
+  padding:20px;
+  margin-bottom:18px;
+  box-shadow:0 3px 15px rgba(0,0,0,.07);
+}
+
+.card h2{
+  font-size:20px;
+  margin-bottom:6px;
+}
+
+.card p{
+  color:#687386;
+  font-size:14px;
+  margin-bottom:18px;
+}
+
+label{
+  display:block;
+  font-weight:bold;
+  margin:12px 0 6px;
+  font-size:14px;
+}
+
+input,select,textarea{
+  width:100%;
+  padding:12px;
+  border:1px solid #d7dce5;
+  border-radius:9px;
+  font-size:15px;
+  outline:none;
+  background:white;
+}
+
+textarea{
+  min-height:80px;
+  resize:vertical;
+}
+
+input:focus,select:focus,textarea:focus{
+  border-color:#0b7a4b;
+}
+
+button.action{
+  width:100%;
+  margin-top:16px;
+  padding:13px;
+  border:0;
+  border-radius:9px;
+  background:#0b7a4b;
+  color:white;
+  font-size:15px;
+  font-weight:bold;
+}
+
+button.action:disabled{
+  opacity:.6;
+}
+
+.message{
+  padding:13px;
+  border-radius:9px;
+  margin-bottom:15px;
+  display:none;
+  font-size:14px;
+}
+
+.success{
+  background:#e8f8ef;
+  color:#09683e;
+}
+
+.error{
+  background:#ffecec;
+  color:#b42318;
+}
+
+.info{
+  background:#eef5ff;
+  color:#2456a6;
+}
+
+.login{
+  max-width:430px;
+  margin:60px auto;
+}
+
+.hidden{
+  display:none !important;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+}
+
+.small-btn{
+  margin-top:10px;
+  width:100%;
+  padding:10px;
+  border:1px solid #0b7a4b;
+  background:white;
+  color:#0b7a4b;
+  border-radius:8px;
+  font-weight:bold;
+}
+
+.price-note{
+  background:#fff8df;
+  padding:12px;
+  border-radius:9px;
+  color:#725b00;
+  font-size:13px;
+  margin-top:12px;
+}
+
+@media(max-width:600px){
+  .grid{
+    grid-template-columns:1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<div id="loginPage" class="container">
+  <div class="card login">
+    <h2>🔐 Get-It Admin</h2>
+    <p>Sign in to manage shops, products and prices.</p>
+
+    <div id="loginMessage" class="message"></div>
+
+    <label>Email</label>
+    <input
+      type="email"
+      id="email"
+      placeholder="Admin email"
+      autocomplete="email"
+    >
+
+    <label>Password</label>
+    <input
+      type="password"
+      id="password"
+      placeholder="Password"
+      autocomplete="current-password"
+    >
+
+    <button class="action" id="loginBtn" onclick="login()">
+      Sign In
+    </button>
+  </div>
+</div>
+
+
+<!-- ADMIN APP -->
+<div id="adminPage" class="hidden">
+
+<header>
+  <h1>Get-It 🇧🇼 Admin</h1>
+  <button class="logout" onclick="logout()">Logout</button>
+</header>
+
+<div class="container">
+
+  <div id="mainMessage" class="message"></div>
+
+
+  <!-- ADD SHOP -->
+  <div class="card">
+    <h2>🏪 Add Shop</h2>
+    <p>Add a real shop that customers can compare prices from.</p>
+
+    <label>Shop Name *</label>
+    <input id="shopName" placeholder="e.g. Choppies">
+
+    <label>Location</label>
+    <input id="shopLocation" placeholder="e.g. Gaborone">
+
+    <label>Address</label>
+    <input id="shopAddress" placeholder="e.g. Main Mall">
+
+    <button class="action" onclick="addShop()">
+      Add Shop
+    </button>
+  </div>
+
+
+  <!-- ADD PRODUCT -->
+  <div class="card">
+    <h2>🛒 Add Product</h2>
+    <p>Add a product that customers will search for.</p>
+
+    <label>Product Name *</label>
+    <input id="productName" placeholder="e.g. Cooking Oil">
+
+    <div class="grid">
+
+      <div>
+        <label>Brand</label>
+        <input id="productBrand" placeholder="e.g. Sunfoil">
+      </div>
+
+      <div>
+        <label>Category</label>
+        <input id="productCategory" placeholder="e.g. Groceries">
+      </div>
+
+    </div>
+
+    <label>Size</label>
+    <input id="productSize" placeholder="e.g. 2L">
+
+    <label>Allergens</label>
+    <input id="productAllergens" placeholder="e.g. None">
+
+    <label>Ingredients</label>
+    <textarea id="productIngredients" placeholder="Enter ingredients if available"></textarea>
+
+    <button class="action" onclick="addProduct()">
+      Add Product
+    </button>
+  </div>
+
+
+  <!-- ADD PRICE -->
+  <div class="card">
+    <h2>💰 Add / Update Price</h2>
+    <p>Enter the current price of a product at a specific shop.</p>
+
+    <label>Product *</label>
+    <select id="priceProduct">
+      <option value="">Loading products...</option>
+    </select>
+
+    <label>Shop *</label>
+    <select id="priceShop">
+      <option value="">Loading shops...</option>
+    </select>
+
+    <label>Price (P) *</label>
+    <input
+      type="number"
+      id="priceAmount"
+      placeholder="e.g. 45.00"
+      min="0"
+      step="0.01"
+    >
+
+    <label>Availability</label>
+    <select id="priceAvailable">
+      <option value="true">Available</option>
+      <option value="false">Not Available</option>
+    </select>
+
+    <div class="price-note">
+      💡 If this product already has a price at this shop, the existing
+      price will be updated instead of creating another one.
+    </div>
+
+    <button class="action" onclick="savePrice()">
+      Save Price
+    </button>
+
+    <button class="small-btn" onclick="loadLists()">
+      🔄 Refresh Products & Shops
+    </button>
+  </div>
+
+
+  <!-- CURRENT DATA -->
+  <div class="card">
+    <h2>📊 Current Data</h2>
+    <p>Refresh the dropdowns after adding new products or shops.</p>
+
+    <button class="action" onclick="loadLists()">
+      Refresh Data
+    </button>
+  </div>
+
+</div>
+</div>
+
+
+<script>
+
+/* ==============================
+   SUPABASE SETTINGS
+============================== */
+
+const SUPABASE_URL =
+  "https://snjrlhkmixiamgqhfhug.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_3jRUAQ88ntmpnA42QwTuew_TJ7NYgFw";
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+
+/* ==============================
+   HELPERS
+============================== */
+
+function showMessage(elementId,message,type){
+
+  const el=document.getElementById(elementId);
+
+  el.textContent=message;
+
+  el.className="message "+type;
+
+  el.style.display="block";
+
+  setTimeout(()=>{
+    el.style.display="none";
+  },5000);
+}
+
+
+function clean(value){
+  return value == null ? "" : String(value).trim();
+}
+
+
+/* ==============================
+   CHECK CURRENT SESSION
+============================== */
+
+async function checkSession(){
+
+  const {
+    data:{
+      session
+    }
+  } = await supabaseClient.auth.getSession();
+
+  if(!session){
+
+    document.getElementById("loginPage")
+      .classList.remove("hidden");
+
+    document.getElementById("adminPage")
+      .classList.add("hidden");
+
+    return;
+  }
+
+  const isAdmin =
+    await checkAdmin(session.user.id);
+
+  if(!isAdmin){
+
+    await supabaseClient.auth.signOut();
+
+    document.getElementById("loginPage")
+      .classList.remove("hidden");
+
+    document.getElementById("adminPage")
+      .classList.add("hidden");
+
+    showMessage(
+      "loginMessage",
+      "This account is not an administrator.",
+      "error"
+    );
+
+    return;
+  }
+
+  document.getElementById("loginPage")
+    .classList.add("hidden");
+
+  document.getElementById("adminPage")
+    .classList.remove("hidden");
+
+  await loadLists();
+}
+
+
+/* ==============================
+   CHECK ADMIN
+============================== */
+
+async function checkAdmin(userId){
+
+  try{
+
+    const {
+      data,
+      error
+    } = await supabaseClient
+      .from("admins")
+      .select("user_id")
+      .eq("user_id",userId)
+      .maybeSingle();
+
+    if(error){
+
+      console.error("ADMIN CHECK ERROR:",error);
+
+      return false;
+    }
+
+    return !!data;
+
+  }catch(error){
+
+    console.error(error);
+
+    return false;
+  }
+}
+
+
+/* ==============================
+   LOGIN
+============================== */
+
+async function login(){
+
+  const email =
+    document.getElementById("email").value.trim();
+
+  const password =
+    document.getElementById("password").value;
+
+  if(!email || !password){
+
+    showMessage(
+      "loginMessage",
+      "Please enter your email and password.",
+      "error"
+    );
+
+    return;
+  }
+
+  const button =
+    document.getElementById("loginBtn");
+
+  button.disabled=true;
+  button.textContent="Signing in...";
+
+  try{
+
+    const {
+      data,
+      error
+    } = await supabaseClient.auth.signInWithPassword({
+      email:email,
+      password:password
+    });
+
+    if(error) throw error;
+
+    if(!data.user){
+
+      throw new Error("Unable to sign in.");
+    }
+
+    const isAdmin =
+      await checkAdmin(data.user.id);
+
+    if(!isAdmin){
+
+      await supabaseClient.auth.signOut();
+
+      throw new Error(
+        "This account is not registered as an administrator."
+      );
+    }
+
+    document.getElementById("loginPage")
+      .classList.add("hidden");
+
+    document.getElementById("adminPage")
+      .classList.remove("hidden");
+
+    await loadLists();
+
+  }catch(error){
+
+    console.error("LOGIN ERROR:",error);
+
+    showMessage(
+      "loginMessage",
+      error.message || "Login failed.",
+      "error"
+    );
+
+  }finally{
+
+    button.disabled=false;
+    button.textContent="Sign In";
+  }
+}
+
+
+/* ==============================
+   LOGOUT
+============================== */
+
+async function logout(){
+
+  await supabaseClient.auth.signOut();
+
+  document.getElementById("adminPage")
+    .classList.add("hidden");
+
+  document.getElementById("loginPage")
+    .classList.remove("hidden");
+
+  document.getElementById("password").value="";
+}
+
+
+/* ==============================
+   ADD SHOP
+============================== */
+
+async function addShop(){
+
+  const name =
+    document.getElementById("shopName").value.trim();
+
+  const location =
+    document.getElementById("shopLocation").value.trim();
+
+  const address =
+    document.getElementById("shopAddress").value.trim();
+
+  if(!name){
+
+    showMessage(
+      "mainMessage",
+      "Please enter the shop name.",
+      "error"
+    );
+
+    return;
+  }
+
+  try{
+
+    const {
+      data:{
+        user
+      }
+    } = await supabaseClient.auth.getUser();
+
+    if(!user){
+
+      throw new Error("Your session has expired. Please login again.");
+    }
+
+    const isAdmin =
+      await checkAdmin(user.id);
+
+    if(!isAdmin){
+
+      throw new Error("Administrator access required.");
+    }
+
+    const {
+      error
+    } = await supabaseClient
+      .from("shops")
+      .insert({
+        shop_id:crypto.randomUUID(),
+        created_at:new Date().toISOString(),
+        name:name,
+        location:location || null,
+        address:address || null
+      });
+
+    if(error) throw error;
+
+    document.getElementById("shopName").value="";
+    document.getElementById("shopLocation").value="";
+    document.getElementById("shopAddress").value="";
+
+    showMessage(
+      "mainMessage",
+      "✅ Shop added successfully.",
+      "success"
+    );
+
+    await loadLists();
+
+  }catch(error){
+
+    console.error("ADD SHOP ERROR:",error);
+
+    showMessage(
+      "mainMessage",
+      "Could not add shop: "+error.message,
+      "error"
+    );
+  }
+}
+
+
+/* ==============================
+   ADD PRODUCT
+============================== */
+
+async function addProduct(){
+
+  const name =
+    document.getElementById("productName").value.trim();
+
+  const brand =
+    document.getElementById("productBrand").value.trim();
+
+  const category =
+    document.getElementById("productCategory").value.trim();
+
+  const size =
+    document.getElementById("productSize").value.trim();
+
+  const allergens =
+    document.getElementById("productAllergens").value.trim();
+
+  const ingredients =
+    document.getElementById("productIngredients").value.trim();
+
+  if(!name){
+
+    showMessage(
+      "mainMessage",
+      "Please enter the product name.",
+      "error"
+    );
+
+    return;
+  }
+
+  try{
+
+    const {
+      data:{
+        user
+      }
+    } = await supabaseClient.auth.getUser();
+
+    if(!user){
+
+      throw new Error("Your session has expired. Please login again.");
+    }
+
+    const isAdmin =
+      await checkAdmin(user.id);
+
+    if(!isAdmin){
+
+      throw new Error("Administrator access required.");
+    }
+
+    const {
+      error
+    } = await supabaseClient
+      .from("products")
+      .insert({
+
+        Id:crypto.randomUUID(),
+
+        Created_at:new Date().toISOString(),
+
+        Name:name,
+
+        Brand:brand || null,
+
+        Category:category || null,
+
+        Size:size || null,
+
+        Allergens:allergens || null,
+
+        Ingredients:ingredients || null
+    });
+
+    if(error) throw error;
+
+    document.getElementById("productName").value="";
+    document.getElementById("productBrand").value="";
+    document.getElementById("productCategory").value="";
+    document.getElementById("productSize").value="";
+    document.getElementById("productAllergens").value="";
+    document.getElementById("productIngredients").value="";
+
+    showMessage(
+      "mainMessage",
+      "✅ Product added successfully.",
+      "success"
+    );
+
+    await loadLists();
+
+  }catch(error){
+
+    console.error("ADD PRODUCT ERROR:",error);
+
+    showMessage(
+      "mainMessage",
+      "Could not add product: "+error.message,
+      "error"
+    );
+  }
+}
+
+
+/* ==============================
+   LOAD PRODUCTS + SHOPS
+============================== */
+
+async function loadLists(){
+
+  try{
+
+    const [
+      productsResult,
+      shopsResult
+    ] = await Promise.all([
+
+      supabaseClient
+        .from("products")
+        .select("Id,Name,Brand,Category,Size")
+        .order("Name",{ascending:true}),
+
+      supabaseClient
+        .from("shops")
+        .select("shop_id,name,location,address")
+        .order("name",{ascending:true})
+
+    ]);
+
+
+    if(productsResult.error)
+      throw productsResult.error;
+
+    if(shopsResult.error)
+      throw shopsResult.error;
+
+
+    const products =
+      productsResult.data || [];
+
+    const shops =
+      shopsResult.data || [];
+
+
+    const productSelect =
+      document.getElementById("priceProduct");
+
+    const shopSelect =
+      document.getElementById("priceShop");
+
+
+    productSelect.innerHTML =
+      '<option value="">Select a product</option>';
+
+    shopSelect.innerHTML =
+      '<option value="">Select a shop</option>';
+
+
+    products.forEach(product=>{
+
+      const option =
+        document.createElement("option");
+
+      option.value =
+        product.Id;
+
+      let text =
+        clean(product.Name);
+
+      if(product.Brand)
+        text += " — "+clean(product.Brand);
+
+      if(product.Size)
+        text += " ("+clean(product.Size)+")";
+
+      option.textContent=text;
+
+      productSelect.appendChild(option);
+    });
+
+
+    shops.forEach(shop=>{
+
+      const option =
+        document.createElement("option");
+
+      option.value =
+        shop.shop_id;
+
+      option.textContent =
+        clean(shop.name) ||
+        "Unnamed shop";
+
+      shopSelect.appendChild(option);
+    });
+
+
+  }catch(error){
+
+    console.error("LOAD LISTS ERROR:",error);
+
+    showMessage(
+      "mainMessage",
+      "Could not load products/shops: "+error.message,
+      "error"
+    );
+  }
+}
+
+
+/* ==============================
+   SAVE / UPDATE PRICE
+============================== */
+
+async function savePrice(){
+
+  const productId =
+    document.getElementById("priceProduct").value;
+
+  const shopId =
+    document.getElementById("priceShop").value;
+
+  const priceText =
+    document.getElementById("priceAmount").value;
+
+  const available =
+    document.getElementById("priceAvailable").value === "true";
+
+
+  if(!productId){
+
+    showMessage(
+      "mainMessage",
+      "Please select a product.",
+      "error"
+    );
+
+    return;
+  }
+
+  if(!shopId){
+
+    showMessage(
+      "mainMessage",
+      "Please select a shop.",
+      "error"
+    );
+
+    return;
+  }
+
+  if(priceText === ""){
+
+    showMessage(
+      "mainMessage",
+      "Please enter a price.",
+      "error"
+    );
+
+    return;
+  }
+
+  const price =
+    Number(priceText);
+
+  if(!Number.isFinite(price) || price < 0){
+
+    showMessage(
+      "mainMessage",
+      "Please enter a valid price.",
+      "error"
+    );
+
+    return;
+  }
+
+
+  try{
+
+    const {
+      data:{
+        user
+      }
+    } = await supabaseClient.auth.getUser();
+
+    if(!user){
+
+      throw new Error("Your session has expired. Please login again.");
+    }
+
+    const isAdmin =
+      await checkAdmin(user.id);
+
+    if(!isAdmin){
+
+      throw new Error("Administrator access required.");
+    }
+
+
+    /*
+      First check whether this product already
+      has a price at this shop.
+    */
+
+    const {
+      data:existing,
+      error:findError
+    } = await supabaseClient
+      .from("product_prices")
+      .select("id")
+      .eq("product_id",productId)
+      .eq("shop_id",shopId)
+      .limit(1)
+      .maybeSingle();
+
+
+    if(findError)
+      throw findError;
+
+
+    if(existing){
+
+      /*
+        UPDATE EXISTING PRICE
+      */
+
+      const {
+        error:updateError
+      } = await supabaseClient
+        .from("product_prices")
+        .update({
+          price:price,
+          available:available
+        })
+        .eq("id",existing.id);
+
+      if(updateError)
+        throw updateError;
+
+
+      showMessage(
+        "mainMessage",
+        "✅ Existing price updated successfully.",
+        "success"
+      );
+
+    }else{
+
+      /*
+        INSERT NEW PRICE
+      */
+
+      const {
+        error:insertError
+      } = await supabaseClient
+        .from("product_prices")
+        .insert({
+
+          id:crypto.randomUUID(),
+
+          product_id:productId,
+
+          shop_id:shopId,
+
+          price:price,
+
+          available:available
+
+        });
+
+      if(insertError)
+        throw insertError;
+
+
+      showMessage(
+        "mainMessage",
+        "✅ New price added successfully.",
+        "success"
+      );
+    }
+
+
+    document.getElementById("priceAmount").value="";
+
+
+  }catch(error){
+
+    console.error("SAVE PRICE ERROR:",error);
+
+    showMessage(
+      "mainMessage",
+      "Could not save price: "+error.message,
+      "error"
+    );
+  }
+}
+
+
+/* ==============================
+   START
+============================== */
+
+checkSession();
+
+
+/*
+   Keep login state updated.
+*/
+
+supabaseClient.auth.onAuthStateChange(
+  async(event,session)=>{
+
+    if(event === "SIGNED_OUT"){
+
+      document.getElementById("adminPage")
+        .classList.add("hidden");
+
+      document.getElementById("loginPage")
+        .classList.remove("hidden");
+    }
+  }
+);
+
+</script>
+
+</body>
+</html>
