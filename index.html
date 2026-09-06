@@ -272,79 +272,71 @@ const supabase = window.supabase.createClient(
 </script>
 <script>
  alert("Get-It JavaScript is working!"); 
-async function loadProducts() {
-  alert("Before Supabase query"); 
-alert("Starting Supabase...");  
+  async function loadProducts() {
 
- const result = await Promise.race([
-  supabase
-    .from('products')
-    .select('*'),
+  alert("Starting Supabase...");
 
-  new Promise(resolve =>
-    setTimeout(
-      () => resolve({ timeout: true }),
-      10000
-    )
-  )
-]);
+  try {
 
-if (result.timeout) {
-  alert("Supabase is taking too long to respond.");
-  return;
-}
+    const response = await fetch(
+      SUPABASE_URL + "/rest/v1/products?select=*",
+      {
+        method: "GET",
+        headers: {
+          "apikey": SUPABASE_KEY,
+          "Authorization": "Bearer " + SUPABASE_KEY
+        }
+      }
+    );
 
-const { data, error } = result;
-  
-  alert("Supabase finished!");
+    alert("Supabase replied! Status: " + response.status);
 
-  console.log("Products:", data);
-console.log("Error:", error);
+    if (!response.ok) {
+      const errorText = await response.text();
+      alert("Supabase error: " + errorText);
+      return;
+    }
 
-alert(
-  "Products: " + (data ? data.length : 0) +
-  "\nError: " + (error ? error.message : "None")
-);
+    const data = await response.json();
 
-  if (error) {
+    alert("Products found: " + data.length);
 
-    document.getElementById("products").innerHTML =
-      "<p>Unable to load products.</p>";
+    const container =
+      document.getElementById("products");
 
-    return;
+    container.innerHTML = "";
+
+    data.forEach(product => {
+
+      const productCard =
+        document.createElement("div");
+
+      productCard.className = "product";
+
+      productCard.dataset.category =
+        product.Category;
+
+      productCard.innerHTML = `
+
+        <h3>${product.Name}</h3>
+
+        <p><strong>Brand:</strong> ${product.Brand}</p>
+
+        <p><strong>Category:</strong> ${product.Category}</p>
+
+        <p><strong>Size:</strong> ${product.Size}</p>
+
+      `;
+
+      container.appendChild(productCard);
+
+    });
+
+  } catch (err) {
+
+    alert("Connection error: " + err.message);
+
   }
-
-  const container =
-    document.getElementById("products");
-
-  container.innerHTML = "";
-
-  data.forEach(product => {
-
-    const productCard =
-      document.createElement("div");
-
-    productCard.className = "product";
-
-    productCard.dataset.category =
-      product.Category;
-
-    productCard.innerHTML = `
-
-      <h3>${product.Name}</h3>
-
-      <p><strong>Brand:</strong> ${product.Brand}</p>
-
-      <p><strong>Category:</strong> ${product.Category}</p>
-
-      <p><strong>Size:</strong> ${product.Size}</p>
-
-    `;
-
-    container.appendChild(productCard);
-
-  });
-
 }
 
 loadProducts();
