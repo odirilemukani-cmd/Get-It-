@@ -256,7 +256,6 @@ footer{
   <p>Find. Compare. Get.</p>
 </header>
 
-
 <section class="hero">
 
   <h2>Find the best prices in Botswana</h2>
@@ -281,7 +280,6 @@ footer{
   </div>
 
 </section>
-
 
 <div class="categories">
 
@@ -317,9 +315,7 @@ footer{
 
 </div>
 
-
 <main class="container">
-
 
   <!-- HOME -->
 
@@ -343,7 +339,6 @@ footer{
 
   </section>
 
-
   <!-- DETAILS -->
 
   <section
@@ -361,7 +356,6 @@ footer{
     <div id="detailsContent"></div>
 
   </section>
-
 
   <!-- COMPARISON -->
 
@@ -387,9 +381,7 @@ footer{
 
   </section>
 
-
 </main>
-
 
 <footer>
 
@@ -402,7 +394,6 @@ footer{
   </p>
 
 </footer>
-
 
 <script>
 
@@ -435,11 +426,9 @@ let selectedProduct = null;
 async function supabaseFetch(endpoint){
 
   const response = await fetch(
-
     SUPABASE_URL +
     "/rest/v1/" +
     endpoint,
-
     {
       method:"GET",
 
@@ -453,9 +442,7 @@ async function supabaseFetch(endpoint){
         "application/json"
       }
     }
-
   );
-
 
   if(!response.ok){
 
@@ -463,12 +450,9 @@ async function supabaseFetch(endpoint){
       await response.text();
 
     throw new Error(errorText);
-
   }
 
-
   return await response.json();
-
 }
 
 
@@ -479,12 +463,10 @@ async function supabaseFetch(endpoint){
 function getProductId(product){
 
   return (
-
     product.product_id ??
     product.Product_id ??
     product.id ??
     product.Id
-
   );
 
 }
@@ -493,7 +475,6 @@ function getProductId(product){
 function getProductName(product){
 
   return (
-
     product.name ??
     product.Name ??
     product.product_name ??
@@ -501,7 +482,6 @@ function getProductName(product){
     product.product ??
     product.Product ??
     "Unnamed product"
-
   );
 
 }
@@ -510,13 +490,11 @@ function getProductName(product){
 function getProductCategory(product){
 
   return (
-
     product.category ??
     product.Category ??
     product.category_name ??
     product.Category_name ??
     "Other"
-
   );
 
 }
@@ -524,17 +502,23 @@ function getProductCategory(product){
 
 /* ==========================================
    SHOP HELPERS
+
+   YOUR SHOPS TABLE USES:
+
+   id
+   created_at
+   name
+   location
+
 ========================================== */
 
 function getShopId(shop){
 
   return (
-
-    shop.Shop_id ??
+    shop.id ??
+    shop.Id ??
     shop.shop_id ??
-    shop.shopId ??
-    shop.id
-
+    shop.Shop_id
   );
 
 }
@@ -543,11 +527,9 @@ function getShopId(shop){
 function getShopName(shop){
 
   return (
-
-    shop.Name ??
     shop.name ??
+    shop.Name ??
     "Unknown shop"
-
   );
 
 }
@@ -556,24 +538,9 @@ function getShopName(shop){
 function getShopLocation(shop){
 
   return (
-
-    shop.Location ??
     shop.location ??
+    shop.Location ??
     ""
-
-  );
-
-}
-
-
-function getShopAddress(shop){
-
-  return (
-
-    shop.Address ??
-    shop.address ??
-    ""
-
   );
 
 }
@@ -592,11 +559,9 @@ async function loadProducts(){
         "products?select=*"
       );
 
-
     displayProducts(
       allProducts
     );
-
 
   }catch(error){
 
@@ -605,7 +570,6 @@ async function loadProducts(){
       error
     );
 
-
     document.getElementById(
       "productsContainer"
     ).innerHTML =
@@ -613,11 +577,9 @@ async function loadProducts(){
       `<div class="message">
 
         Unable to load products.<br>
-
         Please try again.
 
       </div>`;
-
   }
 
 }
@@ -625,6 +587,12 @@ async function loadProducts(){
 
 /* ==========================================
    LOAD SHOPS
+
+   FIXED:
+   We use id,name,location
+
+   NOT Shop_id,Name,Address
+
 ========================================== */
 
 async function loadShops(){
@@ -633,15 +601,13 @@ async function loadShops(){
 
     allShops =
       await supabaseFetch(
-        "shops?select=Shop_id,Name,Location,Address"
+        "shops?select=id,name,location"
       );
 
-
     console.log(
-      "SHOPS:",
+      "SHOPS LOADED:",
       allShops
     );
-
 
   }catch(error){
 
@@ -668,14 +634,12 @@ function displayProducts(products){
       "productsContainer"
     );
 
-
   if(
     !products ||
     products.length === 0
   ){
 
     container.innerHTML =
-
       `<div class="message">
 
         No products found.
@@ -683,12 +647,9 @@ function displayProducts(products){
       </div>`;
 
     return;
-
   }
 
-
   container.innerHTML = "";
-
 
   products.forEach(product => {
 
@@ -701,16 +662,13 @@ function displayProducts(products){
     const category =
       getProductCategory(product);
 
-
     const card =
       document.createElement(
         "div"
       );
 
-
     card.className =
       "product-card";
-
 
     card.innerHTML = `
 
@@ -729,14 +687,12 @@ function displayProducts(products){
 
     `;
 
-
     card.onclick =
       function(){
 
         openProduct(product);
 
       };
-
 
     container.appendChild(card);
 
@@ -762,7 +718,6 @@ function escapeHtml(value){
     .replace(/"/g,"&quot;")
 
     .replace(/'/g,"&#039;");
-
 }
 
 
@@ -781,7 +736,6 @@ function searchProducts(){
       .trim()
       .toLowerCase();
 
-
   const filtered =
     allProducts.filter(
       product => {
@@ -790,23 +744,17 @@ function searchProducts(){
           getProductName(product)
             .toLowerCase();
 
-
         const category =
           getProductCategory(product)
             .toLowerCase();
 
-
         return (
-
           name.includes(search) ||
-
           category.includes(search)
-
         );
 
       }
     );
-
 
   displayProducts(
     filtered
@@ -828,9 +776,7 @@ function filterCategory(category){
     );
 
     return;
-
   }
-
 
   const filtered =
     allProducts.filter(
@@ -853,7 +799,6 @@ function filterCategory(category){
       }
     );
 
-
   displayProducts(
     filtered
   );
@@ -870,14 +815,11 @@ function openProduct(product){
   selectedProduct =
     product;
 
-
   const name =
     getProductName(product);
 
-
   const category =
     getProductCategory(product);
-
 
   document.getElementById(
     "detailsContent"
@@ -899,7 +841,6 @@ function openProduct(product){
 
       </p>
 
-
       <button
         class="btn"
         onclick="comparePrices()">
@@ -911,7 +852,6 @@ function openProduct(product){
     </div>
 
   `;
-
 
   showScreen(
     "detailsScreen"
@@ -933,7 +873,6 @@ async function comparePrices(){
     );
 
     return;
-
   }
 
 
@@ -944,13 +883,9 @@ async function comparePrices(){
 
 
   if(
-
     productId === undefined ||
-
     productId === null ||
-
     String(productId).trim() === ""
-
   ){
 
     document.getElementById(
@@ -963,13 +898,11 @@ async function comparePrices(){
 
       </div>`;
 
-
     showScreen(
       "comparisonScreen"
     );
 
     return;
-
   }
 
 
@@ -991,27 +924,14 @@ async function comparePrices(){
 
   try{
 
-
     /* ======================================
        GET PRICES
-
-       IMPORTANT:
-       product_prices uses:
-       id
-       product_id
-       shop_id
-       price
-       available
     ====================================== */
 
     const endpoint =
-
       "product_prices" +
-
       "?select=id,product_id,shop_id,price,available" +
-
       "&product_id=eq." +
-
       encodeURIComponent(
         String(productId)
       );
@@ -1021,6 +941,12 @@ async function comparePrices(){
       await supabaseFetch(
         endpoint
       );
+
+
+    console.log(
+      "PRICE ROWS:",
+      prices
+    );
 
 
     if(
@@ -1039,12 +965,18 @@ async function comparePrices(){
         </div>`;
 
       return;
-
     }
 
 
     /* ======================================
        CREATE SHOP LOOKUP
+
+       IMPORTANT:
+
+       shops.id
+       matches
+       product_prices.shop_id
+
     ====================================== */
 
     const shopMap = {};
@@ -1053,12 +985,22 @@ async function comparePrices(){
     allShops.forEach(
       shop => {
 
+        const rawShopId =
+          getShopId(shop);
+
+        if(
+          rawShopId === undefined ||
+          rawShopId === null
+        ){
+
+          return;
+        }
+
+
         const shopId =
-          String(
-            getShopId(shop) ?? ""
-          )
-          .trim()
-          .toLowerCase();
+          String(rawShopId)
+            .trim()
+            .toLowerCase();
 
 
         if(shopId){
@@ -1069,10 +1011,7 @@ async function comparePrices(){
               getShopName(shop),
 
             location:
-              getShopLocation(shop),
-
-            address:
-              getShopAddress(shop)
+              getShopLocation(shop)
 
           };
 
@@ -1088,12 +1027,6 @@ async function comparePrices(){
     );
 
 
-    console.log(
-      "PRICE ROWS:",
-      prices
-    );
-
-
     /* ======================================
        PREPARE RESULTS
     ====================================== */
@@ -1104,56 +1037,63 @@ async function comparePrices(){
     prices.forEach(
       item => {
 
+        /* AVAILABLE */
 
         const available =
           item.available;
 
-
         const isAvailable =
-
           available === true ||
-
           available === "true" ||
-
           available === 1 ||
-
           available === "1";
 
 
         if(!isAvailable){
 
           return;
-
         }
 
 
-        /* LOWERCASE price */
+        /* PRICE */
 
         const price =
-          Number(
-            item.price
-          );
+          Number(item.price);
 
 
         if(isNaN(price)){
 
           return;
-
         }
 
 
-        /* MATCH SHOP ID */
+        /* SHOP ID */
+
+        const rawShopId =
+          item.shop_id;
+
 
         const shopId =
           String(
-            item.shop_id ?? ""
+            rawShopId ?? ""
           )
           .trim()
           .toLowerCase();
 
 
+        /* FIND SHOP */
+
         const shop =
           shopMap[shopId];
+
+
+        console.log(
+          "MATCHING SHOP:",
+          {
+            priceShopId:shopId,
+            matchedShop:shop
+          }
+        );
 
 
         results.push({
@@ -1163,21 +1103,13 @@ async function comparePrices(){
           shopId:shopId,
 
           shopName:
-
             shop
               ? shop.name
               : "Unknown shop",
 
           location:
-
             shop
               ? shop.location
-              : "",
-
-          address:
-
-            shop
-              ? shop.address
               : ""
 
         });
@@ -1205,7 +1137,6 @@ async function comparePrices(){
         </div>`;
 
       return;
-
     }
 
 
@@ -1252,56 +1183,30 @@ async function comparePrices(){
     results.forEach(
       (item,index) => {
 
-
         html += `
 
           <div
-            class="comparison-card
-            ${index === 0 ? "cheapest" : ""}"
+            class="comparison-card ${index === 0 ? "cheapest" : ""}"
           >
 
             <div>
 
               <h3>
-
                 ${escapeHtml(
                   item.shopName
                 )}
-
               </h3>
-
 
               ${
                 item.location
-
                 ?
-
                 `<p>
                   📍
                   ${escapeHtml(
                     item.location
                   )}
                 </p>`
-
                 :
-
-                ""
-              }
-
-
-              ${
-                item.address
-
-                ?
-
-                `<p>
-                  ${escapeHtml(
-                    item.address
-                  )}
-                </p>`
-
-                :
-
                 ""
               }
 
@@ -1314,23 +1219,16 @@ async function comparePrices(){
 
               ${
                 index === 0
-
                 ?
-
                 `<span>
                   🏆 Cheapest price
                 </span>`
-
                 :
-
                 ""
               }
 
-
               <strong>
-
                 P${item.price.toFixed(2)}
-
               </strong>
 
             </div>
