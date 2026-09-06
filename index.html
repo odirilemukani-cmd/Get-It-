@@ -8,285 +8,301 @@
 
 <style>
 *{
-box-sizing:border-box;
-margin:0;
-padding:0;
-font-family:Arial,sans-serif;
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,sans-serif;
 }
 
 body{
-background:#f5f7fa;
-color:#222;
+  background:#f5f7fa;
+  color:#222;
 }
 
 header{
-background:#003f7d;
-color:white;
-padding:15px 20px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-position:sticky;
-top:0;
-z-index:1000;
+  background:#0b6b3a;
+  color:white;
+  padding:18px;
+  text-align:center;
 }
 
-.logo{
-font-size:24px;
-font-weight:bold;
+header h1{
+  font-size:28px;
 }
 
-.location{
-font-size:14px;
+header p{
+  margin-top:5px;
+  font-size:14px;
 }
 
 .hero{
-background:linear-gradient(135deg,#003f7d,#0077b6);
-color:white;
-padding:40px 20px;
-text-align:center;
+  background:white;
+  padding:25px 18px;
+  text-align:center;
 }
 
-.hero h1{
-font-size:32px;
-margin-bottom:10px;
+.hero h2{
+  font-size:25px;
+  color:#0b6b3a;
+  margin-bottom:8px;
 }
 
 .hero p{
-margin-bottom:20px;
+  color:#666;
+  margin-bottom:18px;
 }
 
 .search-box{
-max-width:600px;
-margin:auto;
-display:flex;
-background:white;
-border-radius:8px;
-overflow:hidden;
+  max-width:600px;
+  margin:auto;
 }
 
 .search-box input{
-flex:1;
-padding:14px;
-border:none;
-outline:none;
-font-size:16px;
-}
-
-.search-box button{
-padding:14px 20px;
-border:none;
-background:#f4c430;
-cursor:pointer;
-font-weight:bold;
-}
-
-.container{
-max-width:1100px;
-margin:auto;
-padding:25px 15px;
-}
-
-.section-title{
-margin-bottom:15px;
-font-size:24px;
+  width:100%;
+  padding:15px;
+  border:1px solid #ddd;
+  border-radius:12px;
+  font-size:16px;
+  outline:none;
 }
 
 .categories{
-display:flex;
-gap:10px;
-overflow-x:auto;
-padding-bottom:15px;
-margin-bottom:20px;
+  display:flex;
+  gap:10px;
+  overflow-x:auto;
+  padding:15px;
+  background:white;
 }
 
-.category-btn{
-flex-shrink:0;
-padding:12px 18px;
-border:none;
-border-radius:25px;
-background:white;
-cursor:pointer;
-box-shadow:0 2px 6px rgba(0,0,0,0.1);
-font-weight:bold;
+.category{
+  min-width:105px;
+  padding:12px;
+  border:1px solid #ddd;
+  border-radius:12px;
+  background:#fff;
+  text-align:center;
+  cursor:pointer;
+  font-size:14px;
 }
 
-.category-btn.active{
-background:#003f7d;
-color:white;
+.category:hover{
+  background:#eaf7f0;
+}
+
+.container{
+  max-width:900px;
+  margin:auto;
+  padding:18px;
+}
+
+.section-title{
+  margin-bottom:15px;
+  font-size:22px;
 }
 
 .products{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:18px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:15px;
 }
 
 .product-card{
-background:white;
-border-radius:10px;
-padding:18px;
-box-shadow:0 3px 10px rgba(0,0,0,0.08);
+  background:white;
+  border-radius:15px;
+  padding:15px;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
+  cursor:pointer;
+  transition:.2s;
+}
+
+.product-card:hover{
+  transform:translateY(-2px);
 }
 
 .product-icon{
-font-size:45px;
-text-align:center;
-margin-bottom:12px;
+  font-size:38px;
+  text-align:center;
+  margin-bottom:10px;
 }
 
-.product-card h3{
-margin-bottom:8px;
+.product-name{
+  font-weight:bold;
+  font-size:17px;
+  margin-bottom:6px;
 }
 
-.product-card p{
-color:#666;
-margin-bottom:6px;
+.product-category{
+  color:#777;
+  font-size:13px;
 }
 
-.product-card button{
-width:100%;
-margin-top:12px;
-padding:11px;
-border:none;
-border-radius:6px;
-background:#003f7d;
-color:white;
-cursor:pointer;
-font-weight:bold;
-}
-
-.message{
-background:white;
-padding:25px;
-text-align:center;
-border-radius:10px;
-color:#666;
-grid-column:1/-1;
+.screen{
+  max-width:900px;
+  margin:auto;
+  padding:18px;
 }
 
 .hidden{
-display:none!important;
-}
-
-.details-box{
-background:white;
-border-radius:10px;
-padding:25px;
-box-shadow:0 3px 10px rgba(0,0,0,0.08);
-}
-
-.details-box h2{
-margin-bottom:15px;
-color:#003f7d;
-}
-
-.details-row{
-padding:10px 0;
-border-bottom:1px solid #eee;
+  display:none!important;
 }
 
 .back-btn{
-margin-bottom:20px;
-padding:10px 16px;
-border:none;
-border-radius:6px;
-background:#555;
-color:white;
-cursor:pointer;
+  border:none;
+  background:#0b6b3a;
+  color:white;
+  padding:11px 17px;
+  border-radius:9px;
+  cursor:pointer;
+  margin-bottom:18px;
+  font-size:14px;
+}
+
+.details-card{
+  background:white;
+  border-radius:16px;
+  padding:22px;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.details-icon{
+  font-size:65px;
+  text-align:center;
+  margin-bottom:12px;
+}
+
+.details-name{
+  text-align:center;
+  font-size:25px;
+  font-weight:bold;
+  margin-bottom:8px;
+}
+
+.details-category{
+  text-align:center;
+  color:#777;
+  margin-bottom:22px;
 }
 
 .compare-btn{
-background:#f4c430!important;
-color:#222!important;
+  width:100%;
+  border:none;
+  background:#0b6b3a;
+  color:white;
+  padding:15px;
+  border-radius:10px;
+  font-size:16px;
+  cursor:pointer;
+}
+
+.compare-header{
+  margin-bottom:18px;
+}
+
+.compare-header h2{
+  font-size:24px;
+  margin-bottom:6px;
+}
+
+.compare-header p{
+  color:#666;
 }
 
 .price-list{
-margin-top:20px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
 }
 
 .price-item{
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:15px;
-padding:15px;
-margin-bottom:10px;
-background:#f8f9fa;
-border-radius:8px;
-border:1px solid #ddd;
+  background:white;
+  padding:17px;
+  border-radius:14px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  box-shadow:0 2px 7px rgba(0,0,0,.08);
+  border:2px solid transparent;
 }
 
 .price-item.cheapest{
-border:2px solid #198754;
-background:#eaf8ef;
+  border-color:#0b6b3a;
+  background:#effaf4;
 }
 
 .shop-name{
-font-weight:bold;
-font-size:17px;
+  font-size:17px;
+  font-weight:bold;
 }
 
 .shop-price{
-font-weight:bold;
-font-size:18px;
-white-space:nowrap;
+  font-size:20px;
+  font-weight:bold;
+  white-space:nowrap;
 }
 
 .cheapest-label{
-display:block;
-color:#198754;
-font-size:13px;
-margin-top:4px;
+  display:inline-block;
+  margin-top:7px;
+  background:#0b6b3a;
+  color:white;
+  padding:5px 9px;
+  border-radius:7px;
+  font-size:12px;
+  font-weight:bold;
+}
+
+.message{
+  background:white;
+  padding:20px;
+  text-align:center;
+  border-radius:12px;
+  color:#666;
+}
+
+.loading{
+  text-align:center;
+  padding:30px;
+  color:#666;
+}
+
+.error{
+  background:#fff0f0;
+  color:#b00020;
+  padding:15px;
+  border-radius:10px;
+  text-align:center;
 }
 
 footer{
-margin-top:40px;
-background:#003f7d;
-color:white;
-text-align:center;
-padding:20px;
+  margin-top:40px;
+  padding:25px;
+  background:#0b6b3a;
+  color:white;
+  text-align:center;
+  font-size:13px;
 }
 
-@media(max-width:600px){
+@media(max-width:500px){
+  .products{
+    grid-template-columns:repeat(2,1fr);
+  }
 
-.hero h1{
-font-size:26px;
-}
+  .product-card{
+    padding:12px;
+  }
 
-.logo{
-font-size:20px;
-}
+  .price-item{
+    padding:14px;
+  }
 
-.location{
-font-size:12px;
-}
+  .shop-name{
+    font-size:15px;
+  }
 
-.products{
-grid-template-columns:repeat(2,1fr);
-gap:10px;
-}
-
-.product-card{
-padding:12px;
-}
-
-.product-icon{
-font-size:35px;
-}
-
-.product-card h3{
-font-size:16px;
-}
-
-.product-card p{
-font-size:13px;
-}
-
-.price-item{
-padding:12px;
-}
-
+  .shop-price{
+    font-size:18px;
+  }
 }
 </style>
 </head>
@@ -294,1379 +310,849 @@ padding:12px;
 <body>
 
 <header>
-
-<div class="logo">
-Get-It 🇧🇼
-</div>
-
-<div class="location">
-📍 Botswana
-</div>
-
+  <h1>Get-It 🇧🇼</h1>
+  <p>Find. Compare. Get.</p>
 </header>
 
-
 <section class="hero">
+  <h2>Find the best price near you</h2>
+  <p>Search products and compare prices across shops in Botswana.</p>
 
-<h1>
-Find. Compare. Get.
-</h1>
-
-<p>
-Find products and compare prices across Botswana.
-</p>
-
-<div class="search-box">
-
-<input
-type="text"
-id="searchInput"
-placeholder="Search for a product..."
->
-
-<button onclick="searchProducts()">
-Search
-</button>
-
-</div>
-
+  <div class="search-box">
+    <input
+      type="text"
+      id="searchInput"
+      placeholder="Search for a product..."
+      oninput="searchProducts()"
+    >
+  </div>
 </section>
-
-
-<div class="container">
-
-
-<section id="productsScreen">
-
-<h2
-class="section-title"
-id="productsTitle"
->
-Popular Products
-</h2>
-
 
 <div class="categories">
-
-<button
-class="category-btn active"
-onclick="showCategory('',this)"
->
-🛒 All
-</button>
-
-<button
-class="category-btn"
-onclick="showCategory('Groceries',this)"
->
-🛒 Groceries
-</button>
-
-<button
-class="category-btn"
-onclick="showCategory('Electronics',this)"
->
-📱 Electronics
-</button>
-
-<button
-class="category-btn"
-onclick="showCategory('Clothing',this)"
->
-👕 Clothing
-</button>
-
-<button
-class="category-btn"
-onclick="showCategory('Beauty',this)"
->
-💄 Beauty
-</button>
-
-<button
-class="category-btn"
-onclick="showCategory('Household',this)"
->
-🏠 Household
-</button>
-
+  <div class="category" onclick="filterCategory('All')">🛒 All</div>
+  <div class="category" onclick="filterCategory('Groceries')">🛍️ Groceries</div>
+  <div class="category" onclick="filterCategory('Electronics')">📱 Electronics</div>
+  <div class="category" onclick="filterCategory('Clothing')">👕 Clothing</div>
+  <div class="category" onclick="filterCategory('Home')">🏠 Home</div>
 </div>
 
+<!-- PRODUCTS SCREEN -->
+<section id="productsScreen" class="container">
 
-<div
-id="productsContainer"
-class="products"
->
+  <h2 class="section-title">Products</h2>
 
-<div class="message">
-Loading products...
-</div>
-
-</div>
+  <div id="productsContainer" class="products">
+    <div class="loading">Loading products...</div>
+  </div>
 
 </section>
 
+<!-- DETAILS SCREEN -->
+<section id="detailsScreen" class="screen hidden">
 
+  <button class="back-btn" onclick="backToProducts()">← Back</button>
 
-<section
-id="detailsScreen"
-class="hidden"
->
+  <div class="details-card">
 
-<button
-class="back-btn"
-onclick="backToProducts()"
->
-← Back to Products
-</button>
+    <div id="detailsIcon" class="details-icon">🛒</div>
 
+    <div id="detailsName" class="details-name">
+      Product
+    </div>
 
-<div
-id="productDetails"
-class="details-box"
->
-</div>
+    <div id="detailsCategory" class="details-category">
+      Category
+    </div>
 
-</section>
+    <button class="compare-btn" onclick="comparePrices()">
+      💰 Compare Prices
+    </button>
 
-
-
-<section
-id="compareScreen"
-class="hidden"
->
-
-<button
-class="back-btn"
-onclick="backToDetails()"
->
-← Back to Product
-</button>
-
-
-<div class="details-box">
-
-<h2 id="compareTitle">
-💰 Price Comparison
-</h2>
-
-<p id="compareSubtitle">
-Comparing prices...
-</p>
-
-
-<div
-id="priceContainer"
-class="price-list"
->
-
-<div class="message">
-Loading prices...
-</div>
-
-</div>
-
-</div>
+  </div>
 
 </section>
 
-</div>
+<!-- COMPARISON SCREEN -->
+<section id="compareScreen" class="screen hidden">
 
+  <button class="back-btn" onclick="backToDetails()">← Back</button>
+
+  <div class="compare-header">
+    <h2>💰 Price Comparison</h2>
+    <p id="compareSubtitle">Prices across shops</p>
+  </div>
+
+  <div id="priceContainer" class="price-list">
+    <div class="loading">Loading prices...</div>
+  </div>
+
+</section>
 
 <footer>
-
-<p>
-© 2026 Get-It 🇧🇼
-</p>
-
-<p>
-Find. Compare. Get.
-</p>
-
+  Get-It 🇧🇼 — Find. Compare. Get.
 </footer>
-
 
 <script>
 
-/* =========================================
-SUPABASE
-========================================= */
+/* ================================
+   SUPABASE SETTINGS
+================================ */
 
 const SUPABASE_URL =
-"https://snjrlhkmixiamgqhfhug.supabase.co";
+  "https://snjrlhkmixiamgqhfhug.supabase.co";
 
 const SUPABASE_KEY =
-"sb_publishable_3jRUAQ88ntmpnA42QwTuew_TJ7NYgFw";
+  "sb_publishable_3jRUAQ88ntmpnA42QwTuew_TJ7NYgFw";
 
 
-/* =========================================
-VARIABLES
-========================================= */
+/* ================================
+   APP DATA
+================================ */
 
 let allProducts = [];
-
 let allShops = [];
-
-let selectedCategory = "";
-
 let selectedProduct = null;
+let currentCategory = "All";
 
 
-/* =========================================
-NORMALIZE
-========================================= */
-
-function normalize(value){
-
-return String(value ?? "")
-.trim()
-.toLowerCase()
-.replace(/\s+/g," ");
-
-}
-
-
-/* =========================================
-ESCAPE HTML
-========================================= */
+/* ================================
+   HELPER FUNCTIONS
+================================ */
 
 function escapeHtml(value){
 
-return String(value ?? "")
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;");
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 
 }
 
-
-/* =========================================
-GET PRODUCT ID
-========================================= */
 
 function getProductId(product){
 
-return (
-product.product_id ??
-product.Product_id ??
-product.id ??
-product.Id ??
-""
-);
+  return (
+    product.product_id ??
+    product.Product_id ??
+    product.id ??
+    product.Id
+  );
 
 }
 
 
-/* =========================================
-GET SHOP ID
-========================================= */
+function getProductName(product){
+
+  return (
+    product.name ??
+    product.Name ??
+    product.product_name ??
+    product.Product_name ??
+    "Unnamed product"
+  );
+
+}
+
+
+function getProductCategory(product){
+
+  return (
+    product.category ??
+    product.Category ??
+    product.product_category ??
+    product.Product_category ??
+    "Other"
+  );
+
+}
+
 
 function getShopId(shop){
 
-return (
-shop.shop_id ??
-shop.Shop_id ??
-shop.id ??
-shop.Id ??
-""
-);
+  return (
+    shop.shop_id ??
+    shop.Shop_id ??
+    shop.id ??
+    shop.Id
+  );
 
 }
 
-
-/* =========================================
-GET SHOP NAME
-========================================= */
 
 function getShopName(shop){
 
-return (
-shop.Name ??
-shop.name ??
-shop.Shop_name ??
-shop.shop_name ??
-"Unknown shop"
-);
+  return (
+    shop.name ??
+    shop.Name ??
+    shop.shop_name ??
+    shop.Shop_name ??
+    "Unknown shop"
+  );
 
 }
 
-
-/* =========================================
-GET SHOP LOCATION
-========================================= */
 
 function getShopLocation(shop){
 
-return (
-shop.Location ??
-shop.location ??
-""
-);
+  return (
+    shop.location ??
+    shop.Location ??
+    ""
+  );
 
 }
 
-
-/* =========================================
-GET SHOP ADDRESS
-========================================= */
 
 function getShopAddress(shop){
 
-return (
-shop.Address ??
-shop.address ??
-""
-);
+  return (
+    shop.address ??
+    shop.Address ??
+    ""
+  );
 
 }
 
 
-/* =========================================
-LOAD PRODUCTS
-========================================= */
+function getProductIcon(product){
+
+  const category =
+    getProductCategory(product).toLowerCase();
+
+  if(category.includes("grocery"))
+    return "🛒";
+
+  if(category.includes("electronic"))
+    return "📱";
+
+  if(category.includes("cloth"))
+    return "👕";
+
+  if(category.includes("home"))
+    return "🏠";
+
+  return "📦";
+
+}
+
+
+/* ================================
+   LOAD PRODUCTS
+================================ */
 
 async function loadProducts(){
 
-const container =
-document.getElementById("productsContainer");
+  const container =
+    document.getElementById("productsContainer");
 
-container.innerHTML =
-'<div class="message">Loading products...</div>';
+  container.innerHTML =
+    '<div class="loading">Loading products...</div>';
 
-try{
+  try{
 
-const response =
-await fetch(
-SUPABASE_URL +
-"/rest/v1/products?select=*",
-{
-headers:{
-"apikey":SUPABASE_KEY,
-"Authorization":"Bearer "+SUPABASE_KEY
-}
-}
-);
+    const url =
+      SUPABASE_URL +
+      "/rest/v1/products" +
+      "?select=*";
 
+    const response = await fetch(url,{
+      headers:{
+        "apikey":SUPABASE_KEY,
+        "Authorization":"Bearer "+SUPABASE_KEY
+      }
+    });
 
-if(!response.ok){
+    if(!response.ok){
 
-throw new Error(
-"Products error: "+response.status
-);
+      const errorText =
+        await response.text();
 
-}
+      console.error("PRODUCT ERROR:",errorText);
 
+      throw new Error(errorText);
+    }
 
-const data =
-await response.json();
+    const data =
+      await response.json();
 
-allProducts =
-Array.isArray(data) ? data : [];
+    allProducts =
+      Array.isArray(data) ? data : [];
 
-renderProducts();
+    displayProducts(allProducts);
 
-}
+  }catch(error){
 
-catch(error){
+    console.error("LOAD PRODUCTS ERROR:",error);
 
-console.error(
-"LOAD PRODUCTS ERROR:",
-error
-);
+    container.innerHTML =
+      '<div class="error">Unable to load products. Please refresh and try again.</div>';
 
-container.innerHTML =
-'<div class="message">' +
-'Unable to load products. Please refresh the page.' +
-'</div>';
-
-}
+  }
 
 }
 
 
-/* =========================================
-LOAD SHOPS
-========================================= */
+/* ================================
+   LOAD SHOPS
+================================ */
 
 async function loadShops(){
 
-try{
+  try{
 
-const response =
-await fetch(
-SUPABASE_URL +
-"/rest/v1/shops?select=*",
-{
-headers:{
-"apikey":SUPABASE_KEY,
-"Authorization":"Bearer "+SUPABASE_KEY
-}
-}
-);
+    const url =
+      SUPABASE_URL +
+      "/rest/v1/shops" +
+      "?select=*";
 
+    const response = await fetch(url,{
+      headers:{
+        "apikey":SUPABASE_KEY,
+        "Authorization":"Bearer "+SUPABASE_KEY
+      }
+    });
 
-if(!response.ok){
+    if(!response.ok){
 
-throw new Error(
-"Shops error: "+response.status
-);
+      const errorText =
+        await response.text();
 
-}
+      console.error("SHOP ERROR:",errorText);
 
+      throw new Error(errorText);
+    }
 
-const data =
-await response.json();
+    const data =
+      await response.json();
 
-allShops =
-Array.isArray(data) ? data : [];
+    allShops =
+      Array.isArray(data) ? data : [];
 
+    console.log("SHOPS LOADED:",allShops);
 
-console.log(
-"SHOPS:",
-allShops
-);
+  }catch(error){
 
-}
+    console.error("LOAD SHOPS ERROR:",error);
 
-catch(error){
+    allShops = [];
 
-console.error(
-"LOAD SHOPS ERROR:",
-error
-);
-
-allShops = [];
-
-}
+  }
 
 }
 
 
-/* =========================================
-RENDER PRODUCTS
-========================================= */
+/* ================================
+   DISPLAY PRODUCTS
+================================ */
 
-function renderProducts(){
+function displayProducts(products){
 
-const container =
-document.getElementById("productsContainer");
+  const container =
+    document.getElementById("productsContainer");
 
-const title =
-document.getElementById("productsTitle");
+  if(!products.length){
 
-const search =
-normalize(
-document.getElementById("searchInput").value
-);
+    container.innerHTML =
+      '<div class="message">No products found.</div>';
 
+    return;
+  }
 
-const filtered =
-allProducts.filter(function(product){
+  container.innerHTML =
+    products.map(function(product){
 
-const category =
-normalize(
-product.Category ??
-product.category
-);
+      const name =
+        getProductName(product);
 
-const name =
-normalize(
-product.Name ??
-product.name
-);
+      const category =
+        getProductCategory(product);
 
-const brand =
-normalize(
-product.Brand ??
-product.brand
-);
+      const icon =
+        getProductIcon(product);
 
+      return `
+        <div
+          class="product-card"
+          onclick="openProduct(${JSON.stringify(product).replace(/"/g,'&quot;')})"
+        >
 
-const categoryMatch =
-!selectedCategory ||
-category === normalize(selectedCategory);
+          <div class="product-icon">
+            ${icon}
+          </div>
 
+          <div class="product-name">
+            ${escapeHtml(name)}
+          </div>
 
-const searchMatch =
-!search ||
-name.includes(search) ||
-brand.includes(search);
+          <div class="product-category">
+            ${escapeHtml(category)}
+          </div>
 
+        </div>
+      `;
 
-return categoryMatch && searchMatch;
-
-});
-
-
-if(selectedCategory){
-
-title.textContent =
-selectedCategory;
-
-}
-
-else if(search){
-
-title.textContent =
-"Search Results";
-
-}
-
-else{
-
-title.textContent =
-"Popular Products";
+    }).join("");
 
 }
 
 
-if(filtered.length===0){
+/* ================================
+   OPEN PRODUCT
+================================ */
 
-container.innerHTML =
-'<div class="message">No products found.</div>';
+function openProduct(product){
 
-return;
+  selectedProduct = product;
 
-}
+  document
+    .getElementById("productsScreen")
+    .classList.add("hidden");
 
+  document
+    .getElementById("compareScreen")
+    .classList.add("hidden");
 
-container.innerHTML =
-filtered.map(function(product){
+  document
+    .getElementById("detailsScreen")
+    .classList.remove("hidden");
 
-const name =
-product.Name ??
-product.name ??
-"Unnamed Product";
+  document.getElementById("detailsName").textContent =
+    getProductName(product);
 
-const brand =
-product.Brand ??
-product.brand ??
-"No brand";
+  document.getElementById("detailsCategory").textContent =
+    getProductCategory(product);
 
-const category =
-product.Category ??
-product.category ??
-"Other";
-
-const size =
-product.Size ??
-product.size ??
-"";
-
-const productId =
-getProductId(product);
-
-
-return `
-
-<div class="product-card">
-
-<div class="product-icon">
-🛍️
-</div>
-
-<h3>
-${escapeHtml(name)}
-</h3>
-
-<p>
-<strong>Brand:</strong>
-${escapeHtml(brand)}
-</p>
-
-<p>
-<strong>Category:</strong>
-${escapeHtml(category)}
-</p>
-
-${
-size
-?
-`
-<p>
-<strong>Size:</strong>
-${escapeHtml(size)}
-</p>
-`
-:""
-}
-
-<button
-onclick='openProduct(${JSON.stringify(String(productId))})'
->
-View Product
-</button>
-
-</div>
-
-`;
-
-}).join("");
+  document.getElementById("detailsIcon").textContent =
+    getProductIcon(product);
 
 }
 
 
-/* =========================================
-CATEGORY
-========================================= */
-
-function showCategory(category,button){
-
-selectedCategory =
-category;
-
-
-document
-.querySelectorAll(".category-btn")
-.forEach(function(btn){
-
-btn.classList.remove("active");
-
-});
-
-
-button.classList.add("active");
-
-renderProducts();
-
-}
-
-
-/* =========================================
-SEARCH
-========================================= */
+/* ================================
+   SEARCH PRODUCTS
+================================ */
 
 function searchProducts(){
 
-renderProducts();
+  const search =
+    document
+      .getElementById("searchInput")
+      .value
+      .toLowerCase()
+      .trim();
+
+  let filtered =
+    allProducts.filter(function(product){
+
+      const name =
+        getProductName(product).toLowerCase();
+
+      const category =
+        getProductCategory(product).toLowerCase();
+
+      return (
+        name.includes(search) ||
+        category.includes(search)
+      );
+
+    });
+
+  if(currentCategory !== "All"){
+
+    filtered =
+      filtered.filter(function(product){
+
+        return getProductCategory(product)
+          .toLowerCase()
+          .includes(currentCategory.toLowerCase());
+
+      });
+
+  }
+
+  displayProducts(filtered);
 
 }
 
 
-document
-.getElementById("searchInput")
-.addEventListener(
-"input",
-renderProducts
-);
+/* ================================
+   CATEGORY FILTER
+================================ */
 
+function filterCategory(category){
 
-/* =========================================
-OPEN PRODUCT
-========================================= */
+  currentCategory = category;
 
-function openProduct(productId){
-
-const product =
-allProducts.find(function(item){
-
-return String(
-getProductId(item)
-).trim() ===
-String(productId).trim();
-
-});
-
-
-if(!product){
-
-alert("Product not found.");
-
-return;
+  searchProducts();
 
 }
 
 
-selectedProduct =
-product;
-
-
-document
-.getElementById("productsScreen")
-.classList.add("hidden");
-
-document
-.getElementById("compareScreen")
-.classList.add("hidden");
-
-document
-.getElementById("detailsScreen")
-.classList.remove("hidden");
-
-
-const details =
-document.getElementById("productDetails");
-
-
-const name =
-product.Name ??
-product.name ??
-"Unnamed Product";
-
-const brand =
-product.Brand ??
-product.brand ??
-"Not listed";
-
-const category =
-product.Category ??
-product.category ??
-"Not listed";
-
-const size =
-product.Size ??
-product.size ??
-"Not listed";
-
-const allergens =
-product.Allergens ??
-product.allergens ??
-"Not listed";
-
-const ingredients =
-product.Ingredients ??
-product.ingredients ??
-"Not listed";
-
-
-details.innerHTML = `
-
-<div class="product-icon">
-🛍️
-</div>
-
-<h2>
-${escapeHtml(name)}
-</h2>
-
-<div class="details-row">
-<strong>Brand:</strong>
-${escapeHtml(brand)}
-</div>
-
-<div class="details-row">
-<strong>Category:</strong>
-${escapeHtml(category)}
-</div>
-
-<div class="details-row">
-<strong>Size:</strong>
-${escapeHtml(size)}
-</div>
-
-<div class="details-row">
-<strong>Allergens:</strong>
-${escapeHtml(allergens)}
-</div>
-
-<div class="details-row">
-<strong>Ingredients:</strong>
-${escapeHtml(ingredients)}
-</div>
-
-<button
-class="compare-btn"
-onclick="comparePrices()"
-style="
-width:100%;
-margin-top:20px;
-padding:13px;
-border:none;
-border-radius:6px;
-cursor:pointer;
-font-weight:bold;
-"
->
-💰 Compare Prices
-</button>
-
-`;
-
-}
-
-
-/* =========================================
-COMPARE PRICES
-========================================= */
+/* ================================
+   COMPARE PRICES
+================================ */
 
 async function comparePrices(){
 
-if(!selectedProduct) return;
+  if(!selectedProduct){
 
-document.getElementById("detailsScreen").classList.add("hidden");
-document.getElementById("compareScreen").classList.remove("hidden");
-
-const priceContainer = document.getElementById("priceContainer");
-
-const productName =
-selectedProduct.Name ??
-selectedProduct.name ??
-"Product";
-
-const productId = getProductId(selectedProduct);
-
-document.getElementById("compareSubtitle").textContent =
-productName + " — prices across shops";
-
-priceContainer.innerHTML =
-'<div class="message">Loading prices...</div>';
-
-try{
-
-/* LOAD SHOPS IF NEEDED */
-if(!allShops.length){
-await loadShops();
-}
-
-/* LOAD PRICES */
-const url =
-SUPABASE_URL +
-"/rest/v1/product_prices" +
-"?select=product_id,shop_id,prices,available" +
-"&product_id=eq." +
-encodeURIComponent(String(productId));
-
-const response = await fetch(url,{
-headers:{
-"apikey":SUPABASE_KEY,
-"Authorization":"Bearer "+SUPABASE_KEY
-}
-});
-
-if(!response.ok){
-
-const error = await response.text();
-
-console.error("PRICE ERROR:",error);
-
-throw new Error(error);
-}
-
-const prices = await response.json();
-
-console.log("PRICES:",prices);
-console.log("SHOPS:",allShops);
-
-/* NO PRICES */
-if(!Array.isArray(prices) || prices.length === 0){
-
-priceContainer.innerHTML =
-'<div class="message">No prices available for this product yet.</div>';
-
-return;
-}
-
-/* MATCH PRICES TO SHOPS */
-let comparison = prices.map(function(item){
-
-const priceShopId = String(
-item.shop_id ?? ""
-).trim();
-
-/* FIND SHOP BY SHOP_ID */
-const shop = allShops.find(function(s){
-
-return String(
-getShopId(s)
-).trim() === priceShopId;
-
-});
-
-/* GET PRICE */
-const price = Number(item.prices);
-
-/* CHECK AVAILABLE */
-const available =
-item.available === true ||
-item.available === "true" ||
-item.available === 1 ||
-item.available === "1" ||
-item.available === null ||
-item.available === undefined;
-
-if(!available || !Number.isFinite(price)){
-return null;
-}
-
-return{
-
-shopName: shop
-? getShopName(shop)
-: "Unknown shop",
-
-location: shop
-? getShopLocation(shop)
-: "",
-
-address: shop
-? getShopAddress(shop)
-: "",
-
-price: price
-
-};
-
-}).filter(Boolean);
-
-/* NO VALID PRICES */
-if(comparison.length === 0){
-
-priceContainer.innerHTML =
-'<div class="message">No available prices found.</div>';
-
-return;
-}
-
-/* SORT CHEAPEST FIRST */
-comparison.sort(function(a,b){
-return a.price - b.price;
-});
-
-const cheapest = comparison[0].price;
-
-/* DISPLAY */
-priceContainer.innerHTML = comparison.map(function(item){
-
-const isCheapest =
-item.price === cheapest;
-
-return `
-<div class="price-item ${isCheapest ? "cheapest" : ""}">
-
-<div>
-
-<div class="shop-name">
-🏪 ${escapeHtml(item.shopName)}
-</div>
-
-${
-item.location
-? `<div style="font-size:13px;color:#666;margin-top:4px;">
-📍 ${escapeHtml(item.location)}
-</div>`
-: ""
-}
-
-${
-item.address
-? `<div style="font-size:12px;color:#777;margin-top:3px;">
-${escapeHtml(item.address)}
-</div>`
-: ""
-}
-
-${
-isCheapest
-? `<span class="cheapest-label">
-🏆 Cheapest price
-</span>`
-: ""
-}
-
-</div>
-
-<div class="shop-price">
-P${item.price.toFixed(2)}
-</div>
-
-</div>
-`;
-
-}).join("");
-
-}
-catch(error){
-
-console.error("COMPARISON ERROR:",error);
-
-priceContainer.innerHTML =
-'<div class="message">' +
-'Unable to load price comparison. Please try again.' +
-'</div>';
-
-}
-
-}
-
-
-document
-.getElementById("detailsScreen")
-.classList.add("hidden");
-
-document
-.getElementById("compareScreen")
-.classList.remove("hidden");
-
-
-const compareSubtitle =
-document.getElementById("compareSubtitle");
-
-const priceContainer =
-document.getElementById("priceContainer");
-
-
-const productName =
-selectedProduct.Name ??
-selectedProduct.name ??
-"Product";
-
-
-const productId =
-getProductId(selectedProduct);
-
-
-compareSubtitle.textContent =
-productName +
-" — prices across shops";
-
-
-priceContainer.innerHTML =
-'<div class="message">Loading prices...</div>';
-
-
-try{
-
-/* =====================================
-MAKE SURE SHOPS ARE LOADED
-===================================== */
-
-if(!allShops.length){
-
-await loadShops();
-
-}
-
-
-/* =====================================
-LOAD PRODUCT PRICES
-IMPORTANT:
-YOUR COLUMN IS prices
-===================================== */
-
-const priceUrl =
-SUPABASE_URL +
-"/rest/v1/product_prices" +
-"?select=*" +
-"&product_id=eq." +
-encodeURIComponent(String(productId));
-
-
-const priceResponse =
-await fetch(
-priceUrl,
-{
-headers:{
-"apikey":SUPABASE_KEY,
-"Authorization":"Bearer "+SUPABASE_KEY
-}
-}
-);
-
-
-if(!priceResponse.ok){
-
-const errorText =
-await priceResponse.text();
-
-console.error(
-"PRICE DATABASE ERROR:",
-errorText
-);
-
-throw new Error(
-"Price database error: "+
-priceResponse.status
-);
-
-}
-
-
-const prices =
-await priceResponse.json();
-
-
-console.log(
-"PRODUCT PRICES:",
-prices
-);
-
-
-if(!Array.isArray(prices) ||
-prices.length===0){
-
-priceContainer.innerHTML =
-'<div class="message">' +
-'No prices available for this product yet.' +
-'</div>';
-
-return;
-
-}
-
-
-/* =====================================
-MATCH PRICES WITH SHOPS
-===================================== */
-
-const comparison =
-prices
-
-.filter(function(item){
-
-return (
-item.available === true ||
-item.available === "true" ||
-item.available === 1 ||
-item.available === "1" ||
-item.available === null ||
-item.available === undefined
-);
-
-})
-
-.map(function(item){
-
-/* PRICE SHOP ID */
-
-const priceShopId =
-normalize(
-item.shop_id ??
-item.Shop_id ??
-item.shopId ??
-""
-);
-
-
-/* FIND SHOP */
-
-const matchingShop =
-allShops.find(function(shop){
-
-const shopId =
-normalize(
-getShopId(shop)
-);
-
-return (
-shopId === priceShopId
-);
-
-});
-
-
-/* =====================================
-IMPORTANT FIX:
-USE prices, NOT price
-===================================== */
-
-const rawPrice =
-item.prices ??
-item.Price ??
-item.price ??
-"";
-
-
-const priceValue =
-Number(
-String(rawPrice)
-.replace(/[^0-9.-]/g,"")
-);
-
-
-return{
-
-shopName:
-matchingShop
-? getShopName(matchingShop)
-: "Unknown shop",
-
-location:
-matchingShop
-? getShopLocation(matchingShop)
-: "",
-
-address:
-matchingShop
-? getShopAddress(matchingShop)
-: "",
-
-price:
-priceValue,
-
-shopId:
-priceShopId
-
-};
-
-})
-
-.filter(function(item){
-
-return (
-Number.isFinite(item.price) &&
-item.price >= 0
-);
-
-});
-
-
-/* =====================================
-NO VALID PRICES
-===================================== */
-
-if(comparison.length===0){
-
-priceContainer.innerHTML =
-'<div class="message">' +
-'This product is currently unavailable.' +
-'</div>';
-
-return;
-
-}
-
-
-/* =====================================
-CHEAPEST PRICE
-===================================== */
-
-comparison.sort(function(a,b){
-
-return a.price-b.price;
-
-});
-
-
-const cheapest =
-comparison[0].price;
-
-
-/* =====================================
-DISPLAY
-===================================== */
-
-priceContainer.innerHTML =
-comparison.map(function(item){
-
-const isCheapest =
-item.price === cheapest;
-
-
-return `
-
-<div class="
-price-item
-${isCheapest ? "cheapest" : ""}
-">
-
-<div>
-
-<div class="shop-name">
-🏪 ${escapeHtml(item.shopName)}
-</div>
-
-${
-item.location
-?
-`
-<div style="
-font-size:13px;
-color:#666;
-margin-top:4px;
-">
-📍 ${escapeHtml(item.location)}
-</div>
-`
-:""
-}
-
-${
-item.address
-?
-`
-<div style="
-font-size:12px;
-color:#777;
-margin-top:3px;
-">
-${escapeHtml(item.address)}
-</div>
-`
-:""
-}
-
-${
-isCheapest
-?
-`
-<span class="cheapest-label">
-🏆 Cheapest price
-</span>
-`
-:""
-}
-
-</div>
-
-<div class="shop-price">
-P${item.price.toFixed(2)}
-</div>
-
-</div>
-
-`;
-
-}).join("");
-
-}
-
-catch(error){
-
-console.error(
-"COMPARISON ERROR:",
-error
-);
-
-priceContainer.innerHTML =
-'<div class="message">' +
-'Unable to load price comparison. Please try again.' +
-'</div>';
-
-  }
-  
+    return;
   }
 
-/* =========================================
-BACK TO DETAILS
-========================================= */
+  document
+    .getElementById("detailsScreen")
+    .classList.add("hidden");
+
+  document
+    .getElementById("compareScreen")
+    .classList.remove("hidden");
+
+  const priceContainer =
+    document.getElementById("priceContainer");
+
+  const productName =
+    getProductName(selectedProduct);
+
+  const productId =
+    getProductId(selectedProduct);
+
+  document.getElementById("compareSubtitle").textContent =
+    productName + " — prices across shops";
+
+  priceContainer.innerHTML =
+    '<div class="loading">Loading prices...</div>';
+
+
+  try{
+
+    /* Make sure shops are loaded */
+
+    if(!allShops.length){
+
+      await loadShops();
+
+    }
+
+
+    /* Make sure we actually have a product ID */
+
+    if(
+      productId === null ||
+      productId === undefined ||
+      productId === ""
+    ){
+
+      throw new Error("Product ID is missing.");
+
+    }
+
+
+    /*
+      Get prices using the exact columns:
+      product_id
+      shop_id
+      prices
+      available
+    */
+
+    const url =
+      SUPABASE_URL +
+      "/rest/v1/product_prices" +
+      "?select=product_id,shop_id,prices,available" +
+      "&product_id=eq." +
+      encodeURIComponent(String(productId));
+
+
+    console.log("PRICE URL:",url);
+
+    const response =
+      await fetch(url,{
+        headers:{
+          "apikey":SUPABASE_KEY,
+          "Authorization":"Bearer "+SUPABASE_KEY
+        }
+      });
+
+
+    if(!response.ok){
+
+      const errorText =
+        await response.text();
+
+      console.error(
+        "PRICE COMPARISON ERROR:",
+        errorText
+      );
+
+      throw new Error(errorText);
+
+    }
+
+
+    const prices =
+      await response.json();
+
+    console.log("PRICES:",prices);
+
+    if(
+      !Array.isArray(prices) ||
+      prices.length === 0
+    ){
+
+      priceContainer.innerHTML =
+        '<div class="message">No prices available for this product yet.</div>';
+
+      return;
+
+    }
+
+
+    /*
+      Match every price shop_id
+      with the shops table shop_id.
+    */
+
+    const comparison =
+      prices
+        .map(function(item){
+
+          const priceShopId =
+            String(
+              item.shop_id ?? ""
+            ).trim();
+
+
+          const shop =
+            allShops.find(function(shop){
+
+              return String(
+                getShopId(shop) ?? ""
+              ).trim() === priceShopId;
+
+            });
+
+
+          const price =
+            Number(item.prices);
+
+
+          /*
+            Handle Supabase boolean values
+            correctly.
+          */
+
+          const available =
+            item.available === true ||
+            item.available === "true" ||
+            item.available === 1 ||
+            item.available === "1" ||
+            item.available === null ||
+            item.available === undefined;
+
+
+          if(
+            !available ||
+            !Number.isFinite(price)
+          ){
+
+            return null;
+
+          }
+
+
+          return {
+
+            shopName:
+              shop
+                ? getShopName(shop)
+                : "Unknown shop",
+
+            location:
+              shop
+                ? getShopLocation(shop)
+                : "",
+
+            address:
+              shop
+                ? getShopAddress(shop)
+                : "",
+
+            price:price
+
+          };
+
+        })
+        .filter(Boolean);
+
+
+    if(!comparison.length){
+
+      priceContainer.innerHTML =
+        '<div class="message">No available prices found.</div>';
+
+      return;
+
+    }
+
+
+    /*
+      Cheapest price first.
+    */
+
+    comparison.sort(function(a,b){
+
+      return a.price - b.price;
+
+    });
+
+
+    const cheapest =
+      comparison[0].price;
+
+
+    /*
+      Display shops and prices.
+    */
+
+    priceContainer.innerHTML =
+      comparison.map(function(item){
+
+        const isCheapest =
+          item.price === cheapest;
+
+        return `
+
+          <div class="price-item ${
+            isCheapest ? "cheapest" : ""
+          }">
+
+            <div>
+
+              <div class="shop-name">
+                🏪 ${escapeHtml(item.shopName)}
+              </div>
+
+              ${
+                item.location
+                  ? `
+                    <div style="
+                      font-size:13px;
+                      color:#666;
+                      margin-top:4px;
+                    ">
+                      📍 ${escapeHtml(item.location)}
+                    </div>
+                  `
+                  : ""
+              }
+
+              ${
+                item.address
+                  ? `
+                    <div style="
+                      font-size:12px;
+                      color:#777;
+                      margin-top:3px;
+                    ">
+                      ${escapeHtml(item.address)}
+                    </div>
+                  `
+                  : ""
+              }
+
+              ${
+                isCheapest
+                  ? `
+                    <span class="cheapest-label">
+                      🏆 Cheapest price
+                    </span>
+                  `
+                  : ""
+              }
+
+            </div>
+
+            <div class="shop-price">
+              P${item.price.toFixed(2)}
+            </div>
+
+          </div>
+
+        `;
+
+      }).join("");
+
+
+  }catch(error){
+
+    console.error(
+      "COMPARISON ERROR:",
+      error
+    );
+
+    priceContainer.innerHTML =
+      '<div class="error">Unable to load price comparison. Please try again.</div>';
+
+  }
+
+}
+
+
+/* ================================
+   BACK TO PRODUCTS
+================================ */
+
+function backToProducts(){
+
+  document
+    .getElementById("detailsScreen")
+    .classList.add("hidden");
+
+  document
+    .getElementById("compareScreen")
+    .classList.add("hidden");
+
+  document
+    .getElementById("productsScreen")
+    .classList.remove("hidden");
+
+}
+
+
+/* ================================
+   BACK TO DETAILS
+================================ */
 
 function backToDetails(){
 
-document
-.getElementById("compareScreen")
-.classList.add("hidden");
+  document
+    .getElementById("compareScreen")
+    .classList.add("hidden");
 
-document
-.getElementById("detailsScreen")
-.classList.remove("hidden");
+  document
+    .getElementById("detailsScreen")
+    .classList.remove("hidden");
 
 }
 
 
-/* =========================================
-START APPLICATION
-========================================= */
+/* ================================
+   START APP
+================================ */
 
 async function startApp(){
 
-await Promise.all([
-loadProducts(),
-loadShops()
-]);
+  await Promise.all([
+    loadProducts(),
+    loadShops()
+  ]);
 
 }
+
+
+/* START */
 
 startApp();
 
