@@ -1,475 +1,506 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Get-It 🇧🇼 | Find. Compare. Get.</title>
+<title>Get-It 🇧🇼 | Find. Compare. Get.</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-    }
+<style>
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+font-family:Arial,sans-serif;
+}
 
-    body {
-      background: #f5f7fa;
-      color: #222;
-    }
+body{
+background:#f5f7fa;
+color:#222;
+}
 
-    header {
-      background: #003f7d;
-      color: white;
-      padding: 15px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
+header{
+background:#003f7d;
+color:white;
+padding:15px 20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+position:sticky;
+top:0;
+z-index:1000;
+}
 
-    .logo {
-      font-size: 24px;
-      font-weight: bold;
-    }
+.logo{
+font-size:24px;
+font-weight:bold;
+}
 
-    .location {
-      font-size: 14px;
-    }
+.location{
+font-size:14px;
+}
 
-    .hero {
-      background: linear-gradient(135deg, #003f7d, #0077b6);
-      color: white;
-      padding: 40px 20px;
-      text-align: center;
-    }
+.hero{
+background:linear-gradient(135deg,#003f7d,#0077b6);
+color:white;
+padding:40px 20px;
+text-align:center;
+}
 
-    .hero h1 {
-      font-size: 32px;
-      margin-bottom: 10px;
-    }
+.hero h1{
+font-size:32px;
+margin-bottom:10px;
+}
 
-    .hero p {
-      margin-bottom: 20px;
-    }
+.hero p{
+margin-bottom:20px;
+}
 
-    .search-box {
-      max-width: 600px;
-      margin: auto;
-      display: flex;
-      background: white;
-      border-radius: 8px;
-      overflow: hidden;
-    }
+.search-box{
+max-width:600px;
+margin:auto;
+display:flex;
+background:white;
+border-radius:8px;
+overflow:hidden;
+}
 
-    .search-box input {
-      flex: 1;
-      padding: 14px;
-      border: none;
-      outline: none;
-      font-size: 16px;
-    }
+.search-box input{
+flex:1;
+padding:14px;
+border:none;
+outline:none;
+font-size:16px;
+}
 
-    .search-box button {
-      padding: 14px 20px;
-      border: none;
-      background: #f4c430;
-      cursor: pointer;
-      font-weight: bold;
-    }
+.search-box button{
+padding:14px 20px;
+border:none;
+background:#f4c430;
+cursor:pointer;
+font-weight:bold;
+}
 
-    .container {
-      max-width: 1100px;
-      margin: auto;
-      padding: 25px 15px;
-    }
+.container{
+max-width:1100px;
+margin:auto;
+padding:25px 15px;
+}
 
-    .section-title {
-      margin-bottom: 15px;
-      font-size: 24px;
-    }
+.section-title{
+margin-bottom:15px;
+font-size:24px;
+}
 
-    .categories {
-      display: flex;
-      gap: 10px;
-      overflow-x: auto;
-      padding-bottom: 15px;
-      margin-bottom: 20px;
-    }
+.categories{
+display:flex;
+gap:10px;
+overflow-x:auto;
+padding-bottom:15px;
+margin-bottom:20px;
+}
 
-    .category-btn {
-      flex-shrink: 0;
-      padding: 12px 18px;
-      border: none;
-      border-radius: 25px;
-      background: white;
-      cursor: pointer;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      font-weight: bold;
-    }
+.category-btn{
+flex-shrink:0;
+padding:12px 18px;
+border:none;
+border-radius:25px;
+background:white;
+cursor:pointer;
+box-shadow:0 2px 6px rgba(0,0,0,0.1);
+font-weight:bold;
+}
 
-    .category-btn.active {
-      background: #003f7d;
-      color: white;
-    }
+.category-btn.active{
+background:#003f7d;
+color:white;
+}
 
-    .products {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 18px;
-    }
+.products{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:18px;
+}
 
-    .product-card {
-      background: white;
-      border-radius: 10px;
-      padding: 18px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-    }
+.product-card{
+background:white;
+border-radius:10px;
+padding:18px;
+box-shadow:0 3px 10px rgba(0,0,0,0.08);
+}
 
-    .product-icon {
-      font-size: 45px;
-      text-align: center;
-      margin-bottom: 12px;
-    }
+.product-icon{
+font-size:45px;
+text-align:center;
+margin-bottom:12px;
+}
 
-    .product-card h3 {
-      margin-bottom: 8px;
-    }
+.product-card h3{
+margin-bottom:8px;
+}
 
-    .product-card p {
-      color: #666;
-      margin-bottom: 6px;
-    }
+.product-card p{
+color:#666;
+margin-bottom:6px;
+}
 
-    .product-card button {
-      width: 100%;
-      margin-top: 12px;
-      padding: 11px;
-      border: none;
-      border-radius: 6px;
-      background: #003f7d;
-      color: white;
-      cursor: pointer;
-      font-weight: bold;
-    }
+.product-card button{
+width:100%;
+margin-top:12px;
+padding:11px;
+border:none;
+border-radius:6px;
+background:#003f7d;
+color:white;
+cursor:pointer;
+font-weight:bold;
+}
 
-    .message {
-      background: white;
-      padding: 25px;
-      text-align: center;
-      border-radius: 10px;
-      color: #666;
-      grid-column: 1 / -1;
-    }
+.message{
+background:white;
+padding:25px;
+text-align:center;
+border-radius:10px;
+color:#666;
+grid-column:1/-1;
+}
 
-    .hidden {
-      display: none !important;
-    }
+.hidden{
+display:none!important;
+}
 
-    .details-box {
-      background: white;
-      border-radius: 10px;
-      padding: 25px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-    }
+.details-box{
+background:white;
+border-radius:10px;
+padding:25px;
+box-shadow:0 3px 10px rgba(0,0,0,0.08);
+}
 
-    .details-box h2 {
-      margin-bottom: 15px;
-      color: #003f7d;
-    }
+.details-box h2{
+margin-bottom:15px;
+color:#003f7d;
+}
 
-    .details-row {
-      padding: 10px 0;
-      border-bottom: 1px solid #eee;
-    }
+.details-row{
+padding:10px 0;
+border-bottom:1px solid #eee;
+}
 
-    .back-btn {
-      margin-bottom: 20px;
-      padding: 10px 16px;
-      border: none;
-      border-radius: 6px;
-      background: #555;
-      color: white;
-      cursor: pointer;
-    }
+.back-btn{
+margin-bottom:20px;
+padding:10px 16px;
+border:none;
+border-radius:6px;
+background:#555;
+color:white;
+cursor:pointer;
+}
 
-    .compare-btn {
-      background: #f4c430 !important;
-      color: #222 !important;
-    }
+.compare-btn{
+background:#f4c430!important;
+color:#222!important;
+}
 
-    .price-list {
-      margin-top: 20px;
-    }
+.price-list{
+margin-top:20px;
+}
 
-    .price-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-      padding: 15px;
-      margin-bottom: 10px;
-      background: #f8f9fa;
-      border-radius: 8px;
-      border: 1px solid #ddd;
-    }
+.price-item{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:15px;
+padding:15px;
+margin-bottom:10px;
+background:#f8f9fa;
+border-radius:8px;
+border:1px solid #ddd;
+}
 
-    .price-item.cheapest {
-      border: 2px solid #198754;
-      background: #eaf8ef;
-    }
+.price-item.cheapest{
+border:2px solid #198754;
+background:#eaf8ef;
+}
 
-    .shop-name {
-      font-weight: bold;
-      font-size: 17px;
-    }
+.shop-name{
+font-weight:bold;
+font-size:17px;
+}
 
-    .shop-price {
-      font-weight: bold;
-      font-size: 18px;
-      white-space: nowrap;
-    }
+.shop-price{
+font-weight:bold;
+font-size:18px;
+white-space:nowrap;
+}
 
-    .cheapest-label {
-      display: block;
-      color: #198754;
-      font-size: 13px;
-      margin-top: 4px;
-    }
+.cheapest-label{
+display:block;
+color:#198754;
+font-size:13px;
+margin-top:4px;
+}
 
-    footer {
-      margin-top: 40px;
-      background: #003f7d;
-      color: white;
-      text-align: center;
-      padding: 20px;
-    }
+footer{
+margin-top:40px;
+background:#003f7d;
+color:white;
+text-align:center;
+padding:20px;
+}
 
-    @media (max-width: 600px) {
-      .hero h1 {
-        font-size: 26px;
-      }
+@media(max-width:600px){
 
-      .logo {
-        font-size: 20px;
-      }
+.hero h1{
+font-size:26px;
+}
 
-      .location {
-        font-size: 12px;
-      }
+.logo{
+font-size:20px;
+}
 
-      .products {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-      }
+.location{
+font-size:12px;
+}
 
-      .product-card {
-        padding: 12px;
-      }
+.products{
+grid-template-columns:repeat(2,1fr);
+gap:10px;
+}
 
-      .product-icon {
-        font-size: 35px;
-      }
+.product-card{
+padding:12px;
+}
 
-      .product-card h3 {
-        font-size: 16px;
-      }
+.product-icon{
+font-size:35px;
+}
 
-      .product-card p {
-        font-size: 13px;
-      }
+.product-card h3{
+font-size:16px;
+}
 
-      .price-item {
-        padding: 12px;
-      }
-    }
-  </style>
+.product-card p{
+font-size:13px;
+}
+
+.price-item{
+padding:12px;
+}
+
+}
+</style>
 </head>
 
 <body>
 
 <header>
-  <div class="logo">Get-It 🇧🇼</div>
-  <div class="location">📍 Botswana</div>
+
+<div class="logo">
+Get-It 🇧🇼
+</div>
+
+<div class="location">
+📍 Botswana
+</div>
+
 </header>
+
 
 <section class="hero">
 
-  <h1>Find. Compare. Get.</h1>
+<h1>
+Find. Compare. Get.
+</h1>
 
-  <p>
-    Find products and compare prices across Botswana.
-  </p>
+<p>
+Find products and compare prices across Botswana.
+</p>
 
-  <div class="search-box">
+<div class="search-box">
 
-    <input
-      type="text"
-      id="searchInput"
-      placeholder="Search for a product..."
-    >
+<input
+type="text"
+id="searchInput"
+placeholder="Search for a product..."
+>
 
-    <button onclick="searchProducts()">
-      Search
-    </button>
-
-  </div>
-
-</section>
-
-<div class="container">
-
-  <!-- PRODUCTS -->
-
-  <section id="productsScreen">
-
-    <h2 class="section-title" id="productsTitle">
-      Popular Products
-    </h2>
-
-    <div class="categories">
-
-      <button
-        class="category-btn active"
-        onclick="showCategory('', this)"
-      >
-        🛒 All
-      </button>
-
-      <button
-        class="category-btn"
-        onclick="showCategory('Groceries', this)"
-      >
-        🛒 Groceries
-      </button>
-
-      <button
-        class="category-btn"
-        onclick="showCategory('Electronics', this)"
-      >
-        📱 Electronics
-      </button>
-
-      <button
-        class="category-btn"
-        onclick="showCategory('Clothing', this)"
-      >
-        👕 Clothing
-      </button>
-
-      <button
-        class="category-btn"
-        onclick="showCategory('Beauty', this)"
-      >
-        💄 Beauty
-      </button>
-
-      <button
-        class="category-btn"
-        onclick="showCategory('Household', this)"
-      >
-        🏠 Household
-      </button>
-
-    </div>
-
-    <div
-      id="productsContainer"
-      class="products"
-    >
-      <div class="message">
-        Loading products...
-      </div>
-    </div>
-
-  </section>
-
-  <!-- PRODUCT DETAILS -->
-
-  <section
-    id="detailsScreen"
-    class="hidden"
-  >
-
-    <button
-      class="back-btn"
-      onclick="backToProducts()"
-    >
-      ← Back to Products
-    </button>
-
-    <div
-      id="productDetails"
-      class="details-box"
-    ></div>
-
-  </section>
-
-  <!-- PRICE COMPARISON -->
-
-  <section
-    id="compareScreen"
-    class="hidden"
-  >
-
-    <button
-      class="back-btn"
-      onclick="backToDetails()"
-    >
-      ← Back to Product
-    </button>
-
-    <div class="details-box">
-
-      <h2 id="compareTitle">
-        💰 Price Comparison
-      </h2>
-
-      <p id="compareSubtitle">
-        Comparing prices...
-      </p>
-
-      <div
-        id="priceContainer"
-        class="price-list"
-      >
-        <div class="message">
-          Loading prices...
-        </div>
-      </div>
-
-    </div>
-
-  </section>
+<button onclick="searchProducts()">
+Search
+</button>
 
 </div>
 
+</section>
+
+
+<div class="container">
+
+
+<section id="productsScreen">
+
+<h2
+class="section-title"
+id="productsTitle"
+>
+Popular Products
+</h2>
+
+
+<div class="categories">
+
+<button
+class="category-btn active"
+onclick="showCategory('',this)"
+>
+🛒 All
+</button>
+
+<button
+class="category-btn"
+onclick="showCategory('Groceries',this)"
+>
+🛒 Groceries
+</button>
+
+<button
+class="category-btn"
+onclick="showCategory('Electronics',this)"
+>
+📱 Electronics
+</button>
+
+<button
+class="category-btn"
+onclick="showCategory('Clothing',this)"
+>
+👕 Clothing
+</button>
+
+<button
+class="category-btn"
+onclick="showCategory('Beauty',this)"
+>
+💄 Beauty
+</button>
+
+<button
+class="category-btn"
+onclick="showCategory('Household',this)"
+>
+🏠 Household
+</button>
+
+</div>
+
+
+<div
+id="productsContainer"
+class="products"
+>
+
+<div class="message">
+Loading products...
+</div>
+
+</div>
+
+</section>
+
+
+
+<section
+id="detailsScreen"
+class="hidden"
+>
+
+<button
+class="back-btn"
+onclick="backToProducts()"
+>
+← Back to Products
+</button>
+
+
+<div
+id="productDetails"
+class="details-box"
+>
+</div>
+
+</section>
+
+
+
+<section
+id="compareScreen"
+class="hidden"
+>
+
+<button
+class="back-btn"
+onclick="backToDetails()"
+>
+← Back to Product
+</button>
+
+
+<div class="details-box">
+
+<h2 id="compareTitle">
+💰 Price Comparison
+</h2>
+
+<p id="compareSubtitle">
+Comparing prices...
+</p>
+
+
+<div
+id="priceContainer"
+class="price-list"
+>
+
+<div class="message">
+Loading prices...
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+</div>
+
+
 <footer>
 
-  <p>© 2026 Get-It 🇧🇼</p>
+<p>
+© 2026 Get-It 🇧🇼
+</p>
 
-  <p>Find. Compare. Get.</p>
+<p>
+Find. Compare. Get.
+</p>
 
 </footer>
+
 
 <script>
 
 /* =========================================
-   SUPABASE
+SUPABASE
 ========================================= */
 
 const SUPABASE_URL =
-  "https://snjrlhkmixiamgqhfhug.supabase.co";
+"https://snjrlhkmixiamgqhfhug.supabase.co";
 
 const SUPABASE_KEY =
-  "sb_publishable_3jRUAQ88ntmpnA42QwTuew_TJ7NYgFw";
+"sb_publishable_3jRUAQ88ntmpnA42QwTuew_TJ7NYgFw";
 
 
 /* =========================================
-   VARIABLES
+VARIABLES
 ========================================= */
 
 let allProducts = [];
@@ -482,1109 +513,991 @@ let selectedProduct = null;
 
 
 /* =========================================
-   NORMALIZE
+NORMALIZE
 ========================================= */
 
-function normalize(value) {
+function normalize(value){
 
-  return String(value ?? "")
-    .trim()
-    .toLowerCase()
-    .replace(/\s+/g, " ");
+return String(value ?? "")
+.trim()
+.toLowerCase()
+.replace(/\s+/g," ");
 
 }
 
 
 /* =========================================
-   ESCAPE HTML
+ESCAPE HTML
 ========================================= */
 
-function escapeHtml(value) {
+function escapeHtml(value){
 
-  return String(value ?? "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+return String(value ?? "")
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
 
 }
 
 
 /* =========================================
-   GET PRODUCT ID
+GET PRODUCT ID
 ========================================= */
 
-function getProductId(product) {
+function getProductId(product){
 
-  return (
-    product.Id ??
-    product.id ??
-    product.Product_id ??
-    product.product_id ??
-    ""
-  );
+return (
+product.product_id ??
+product.Product_id ??
+product.id ??
+product.Id ??
+""
+);
 
 }
 
 
 /* =========================================
-   GET SHOP ID
+GET SHOP ID
 ========================================= */
 
-function getShopId(shop) {
+function getShopId(shop){
 
-  return (
-    shop.Shop_id ??
-    shop.shop_id ??
-    shop.Id ??
-    shop.id ??
-    ""
-  );
+return (
+shop.shop_id ??
+shop.Shop_id ??
+shop.id ??
+shop.Id ??
+""
+);
 
 }
 
 
 /* =========================================
-   GET SHOP NAME
+GET SHOP NAME
 ========================================= */
 
-function getShopName(shop) {
+function getShopName(shop){
 
-  return (
-    shop.Name ??
-    shop.name ??
-    shop.Shop_name ??
-    shop.shop_name ??
-    "Unknown shop"
-  );
+return (
+shop.Name ??
+shop.name ??
+shop.Shop_name ??
+shop.shop_name ??
+"Unknown shop"
+);
 
 }
 
 
 /* =========================================
-   GET SHOP LOCATION
+GET SHOP LOCATION
 ========================================= */
 
-function getShopLocation(shop) {
+function getShopLocation(shop){
 
-  return (
-    shop.Location ??
-    shop.location ??
-    ""
-  );
+return (
+shop.Location ??
+shop.location ??
+""
+);
 
 }
 
 
 /* =========================================
-   GET SHOP ADDRESS
+GET SHOP ADDRESS
 ========================================= */
 
-function getShopAddress(shop) {
+function getShopAddress(shop){
 
-  return (
-    shop.Address ??
-    shop.address ??
-    ""
-  );
+return (
+shop.Address ??
+shop.address ??
+""
+);
 
 }
 
 
 /* =========================================
-   LOAD PRODUCTS
+LOAD PRODUCTS
 ========================================= */
 
-async function loadProducts() {
+async function loadProducts(){
 
-  const container =
-    document.getElementById(
-      "productsContainer"
-    );
+const container =
+document.getElementById("productsContainer");
 
-  container.innerHTML =
-    '<div class="message">Loading products...</div>';
+container.innerHTML =
+'<div class="message">Loading products...</div>';
 
-  try {
+try{
 
-    const response =
-      await fetch(
-        SUPABASE_URL +
-        "/rest/v1/products?select=*",
-        {
-          method: "GET",
-
-          headers: {
-            "apikey": SUPABASE_KEY,
-
-            "Authorization":
-              "Bearer " + SUPABASE_KEY
-          }
-        }
-      );
+const response =
+await fetch(
+SUPABASE_URL +
+"/rest/v1/products?select=*",
+{
+headers:{
+"apikey":SUPABASE_KEY,
+"Authorization":"Bearer "+SUPABASE_KEY
+}
+}
+);
 
 
-    if (!response.ok) {
+if(!response.ok){
 
-      throw new Error(
-        "Products error: " +
-        response.status
-      );
+throw new Error(
+"Products error: "+response.status
+);
 
-    }
-
-
-    const data =
-      await response.json();
+}
 
 
-    allProducts =
-      Array.isArray(data)
-        ? data
-        : [];
+const data =
+await response.json();
 
+allProducts =
+Array.isArray(data) ? data : [];
 
-    renderProducts();
+renderProducts();
 
-  }
+}
 
-  catch(error) {
+catch(error){
 
-    console.error(
-      "LOAD PRODUCTS ERROR:",
-      error
-    );
+console.error(
+"LOAD PRODUCTS ERROR:",
+error
+);
 
-    container.innerHTML =
-      '<div class="message">' +
-      'Unable to load products. Please refresh the page.' +
-      '</div>';
+container.innerHTML =
+'<div class="message">' +
+'Unable to load products. Please refresh the page.' +
+'</div>';
 
-  }
+}
 
 }
 
 
 /* =========================================
-   LOAD SHOPS
+LOAD SHOPS
 ========================================= */
 
-async function loadShops() {
+async function loadShops(){
 
-  try {
+try{
 
-    const response =
-      await fetch(
-        SUPABASE_URL +
-        "/rest/v1/shops?select=*",
-        {
-          method: "GET",
-
-          headers: {
-            "apikey": SUPABASE_KEY,
-
-            "Authorization":
-              "Bearer " + SUPABASE_KEY
-          }
-        }
-      );
+const response =
+await fetch(
+SUPABASE_URL +
+"/rest/v1/shops?select=*",
+{
+headers:{
+"apikey":SUPABASE_KEY,
+"Authorization":"Bearer "+SUPABASE_KEY
+}
+}
+);
 
 
-    if (!response.ok) {
+if(!response.ok){
 
-      throw new Error(
-        "Shops error: " +
-        response.status
-      );
+throw new Error(
+"Shops error: "+response.status
+);
 
-    }
-
-
-    const data =
-      await response.json();
+}
 
 
-    allShops =
-      Array.isArray(data)
-        ? data
-        : [];
+const data =
+await response.json();
+
+allShops =
+Array.isArray(data) ? data : [];
 
 
-    console.log(
-      "Get-It shops loaded:",
-      allShops
-    );
+console.log(
+"SHOPS:",
+allShops
+);
 
-  }
+}
 
-  catch(error) {
+catch(error){
 
-    console.error(
-      "LOAD SHOPS ERROR:",
-      error
-    );
+console.error(
+"LOAD SHOPS ERROR:",
+error
+);
 
-    allShops = [];
+allShops = [];
 
-  }
+}
 
 }
 
 
 /* =========================================
-   RENDER PRODUCTS
+RENDER PRODUCTS
 ========================================= */
 
-function renderProducts() {
+function renderProducts(){
 
-  const container =
-    document.getElementById(
-      "productsContainer"
-    );
+const container =
+document.getElementById("productsContainer");
 
-  const title =
-    document.getElementById(
-      "productsTitle"
-    );
+const title =
+document.getElementById("productsTitle");
 
-  const search =
-    normalize(
-      document.getElementById(
-        "searchInput"
-      ).value
-    );
+const search =
+normalize(
+document.getElementById("searchInput").value
+);
 
 
-  const filtered =
-    allProducts.filter(
-      function(product) {
+const filtered =
+allProducts.filter(function(product){
 
-        const category =
-          normalize(
-            product.Category ??
-            product.category
-          );
+const category =
+normalize(
+product.Category ??
+product.category
+);
 
-        const name =
-          normalize(
-            product.Name ??
-            product.name
-          );
+const name =
+normalize(
+product.Name ??
+product.name
+);
 
-        const brand =
-          normalize(
-            product.Brand ??
-            product.brand
-          );
-
-
-        const categoryMatch =
-          !selectedCategory ||
-          category ===
-          normalize(
-            selectedCategory
-          );
+const brand =
+normalize(
+product.Brand ??
+product.brand
+);
 
 
-        const searchMatch =
-          !search ||
-          name.includes(search) ||
-          brand.includes(search);
+const categoryMatch =
+!selectedCategory ||
+category === normalize(selectedCategory);
 
 
-        return (
-          categoryMatch &&
-          searchMatch
-        );
-
-      }
-    );
+const searchMatch =
+!search ||
+name.includes(search) ||
+brand.includes(search);
 
 
-  if (selectedCategory) {
+return categoryMatch && searchMatch;
 
-    title.textContent =
-      selectedCategory;
-
-  }
-
-  else if (search) {
-
-    title.textContent =
-      "Search Results";
-
-  }
-
-  else {
-
-    title.textContent =
-      "Popular Products";
-
-  }
+});
 
 
-  if (filtered.length === 0) {
+if(selectedCategory){
 
-    container.innerHTML =
-      '<div class="message">' +
-      'No products found.' +
-      '</div>';
+title.textContent =
+selectedCategory;
 
-    return;
+}
 
-  }
+else if(search){
 
+title.textContent =
+"Search Results";
 
-  container.innerHTML =
-    filtered.map(
-      function(product) {
+}
 
-        const name =
-          product.Name ??
-          product.name ??
-          "Unnamed Product";
+else{
 
+title.textContent =
+"Popular Products";
 
-        const brand =
-          product.Brand ??
-          product.brand ??
-          "No brand";
+}
 
 
-        const category =
-          product.Category ??
-          product.category ??
-          "Other";
+if(filtered.length===0){
+
+container.innerHTML =
+'<div class="message">No products found.</div>';
+
+return;
+
+}
 
 
-        const size =
-          product.Size ??
-          product.size ??
-          "";
+container.innerHTML =
+filtered.map(function(product){
+
+const name =
+product.Name ??
+product.name ??
+"Unnamed Product";
+
+const brand =
+product.Brand ??
+product.brand ??
+"No brand";
+
+const category =
+product.Category ??
+product.category ??
+"Other";
+
+const size =
+product.Size ??
+product.size ??
+"";
+
+const productId =
+getProductId(product);
 
 
-        const productId =
-          getProductId(product);
+return `
 
+<div class="product-card">
 
-        return `
+<div class="product-icon">
+🛍️
+</div>
 
-          <div class="product-card">
+<h3>
+${escapeHtml(name)}
+</h3>
 
-            <div class="product-icon">
-              🛍️
-            </div>
+<p>
+<strong>Brand:</strong>
+${escapeHtml(brand)}
+</p>
 
-            <h3>
-              ${escapeHtml(name)}
-            </h3>
+<p>
+<strong>Category:</strong>
+${escapeHtml(category)}
+</p>
 
-            <p>
-              <strong>Brand:</strong>
-              ${escapeHtml(brand)}
-            </p>
+${
+size
+?
+`
+<p>
+<strong>Size:</strong>
+${escapeHtml(size)}
+</p>
+`
+:""
+}
 
-            <p>
-              <strong>Category:</strong>
-              ${escapeHtml(category)}
-            </p>
+<button
+onclick='openProduct(${JSON.stringify(String(productId))})'
+>
+View Product
+</button>
 
-            ${
-              size
-              ? `
-                <p>
-                  <strong>Size:</strong>
-                  ${escapeHtml(size)}
-                </p>
-              `
-              : ""
-            }
+</div>
 
-            <button
-              onclick='openProduct(${JSON.stringify(
-                String(productId)
-              )})'
-            >
-              View Product
-            </button>
+`;
 
-          </div>
-
-        `;
-
-      }
-    ).join("");
+}).join("");
 
 }
 
 
 /* =========================================
-   CATEGORY
+CATEGORY
 ========================================= */
 
-function showCategory(
-  category,
-  button
-) {
+function showCategory(category,button){
 
-  selectedCategory =
-    category;
+selectedCategory =
+category;
 
 
-  document
-    .querySelectorAll(".category-btn")
-    .forEach(
-      function(btn) {
+document
+.querySelectorAll(".category-btn")
+.forEach(function(btn){
 
-        btn.classList.remove(
-          "active"
-        );
+btn.classList.remove("active");
 
-      }
-    );
+});
 
 
-  button.classList.add("active");
+button.classList.add("active");
 
-
-  renderProducts();
+renderProducts();
 
 }
 
 
 /* =========================================
-   SEARCH
+SEARCH
 ========================================= */
 
-function searchProducts() {
+function searchProducts(){
 
-  renderProducts();
+renderProducts();
 
 }
 
 
 document
-  .getElementById("searchInput")
-  .addEventListener(
-    "input",
-    function() {
-
-      renderProducts();
-
-    }
-  );
+.getElementById("searchInput")
+.addEventListener(
+"input",
+renderProducts
+);
 
 
 /* =========================================
-   OPEN PRODUCT
+OPEN PRODUCT
 ========================================= */
 
-function openProduct(productId) {
+function openProduct(productId){
 
-  const product =
-    allProducts.find(
-      function(item) {
+const product =
+allProducts.find(function(item){
 
-        return String(
-          getProductId(item)
-        ) ===
-        String(productId);
+return String(
+getProductId(item)
+).trim() ===
+String(productId).trim();
 
-      }
-    );
+});
 
 
-  if (!product) {
+if(!product){
 
-    alert(
-      "Product not found."
-    );
+alert("Product not found.");
 
-    return;
+return;
 
-  }
+}
 
 
-  selectedProduct =
-    product;
+selectedProduct =
+product;
 
 
-  document
-    .getElementById("productsScreen")
-    .classList.add("hidden");
+document
+.getElementById("productsScreen")
+.classList.add("hidden");
+
+document
+.getElementById("compareScreen")
+.classList.add("hidden");
+
+document
+.getElementById("detailsScreen")
+.classList.remove("hidden");
 
 
-  document
-    .getElementById("compareScreen")
-    .classList.add("hidden");
+const details =
+document.getElementById("productDetails");
 
 
-  document
-    .getElementById("detailsScreen")
-    .classList.remove("hidden");
+const name =
+product.Name ??
+product.name ??
+"Unnamed Product";
+
+const brand =
+product.Brand ??
+product.brand ??
+"Not listed";
+
+const category =
+product.Category ??
+product.category ??
+"Not listed";
+
+const size =
+product.Size ??
+product.size ??
+"Not listed";
+
+const allergens =
+product.Allergens ??
+product.allergens ??
+"Not listed";
+
+const ingredients =
+product.Ingredients ??
+product.ingredients ??
+"Not listed";
 
 
-  const details =
-    document.getElementById(
-      "productDetails"
-    );
+details.innerHTML = `
 
+<div class="product-icon">
+🛍️
+</div>
 
-  const name =
-    product.Name ??
-    product.name ??
-    "Unnamed Product";
+<h2>
+${escapeHtml(name)}
+</h2>
 
+<div class="details-row">
+<strong>Brand:</strong>
+${escapeHtml(brand)}
+</div>
 
-  const brand =
-    product.Brand ??
-    product.brand ??
-    "Not listed";
+<div class="details-row">
+<strong>Category:</strong>
+${escapeHtml(category)}
+</div>
 
+<div class="details-row">
+<strong>Size:</strong>
+${escapeHtml(size)}
+</div>
 
-  const category =
-    product.Category ??
-    product.category ??
-    "Not listed";
+<div class="details-row">
+<strong>Allergens:</strong>
+${escapeHtml(allergens)}
+</div>
 
+<div class="details-row">
+<strong>Ingredients:</strong>
+${escapeHtml(ingredients)}
+</div>
 
-  const size =
-    product.Size ??
-    product.size ??
-    "Not listed";
+<button
+class="compare-btn"
+onclick="comparePrices()"
+style="
+width:100%;
+margin-top:20px;
+padding:13px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+font-weight:bold;
+"
+>
+💰 Compare Prices
+</button>
 
-
-  const allergens =
-    product.Allergens ??
-    product.allergens ??
-    "Not listed";
-
-
-  const ingredients =
-    product.Ingredients ??
-    product.ingredients ??
-    "Not listed";
-
-
-  details.innerHTML = `
-
-    <div class="product-icon">
-      🛍️
-    </div>
-
-    <h2>
-      ${escapeHtml(name)}
-    </h2>
-
-    <div class="details-row">
-      <strong>Brand:</strong>
-      ${escapeHtml(brand)}
-    </div>
-
-    <div class="details-row">
-      <strong>Category:</strong>
-      ${escapeHtml(category)}
-    </div>
-
-    <div class="details-row">
-      <strong>Size:</strong>
-      ${escapeHtml(size)}
-    </div>
-
-    <div class="details-row">
-      <strong>Allergens:</strong>
-      ${escapeHtml(allergens)}
-    </div>
-
-    <div class="details-row">
-      <strong>Ingredients:</strong>
-      ${escapeHtml(ingredients)}
-    </div>
-
-    <button
-      class="compare-btn"
-      onclick="comparePrices()"
-      style="
-        width:100%;
-        margin-top:20px;
-        padding:13px;
-        border:none;
-        border-radius:6px;
-        cursor:pointer;
-        font-weight:bold;
-      "
-    >
-      💰 Compare Prices
-    </button>
-
-  `;
+`;
 
 }
 
 
 /* =========================================
-   COMPARE PRICES
+COMPARE PRICES
 ========================================= */
 
-async function comparePrices() {
+async function comparePrices(){
 
-  if (!selectedProduct) {
+if(!selectedProduct){
 
-    return;
+return;
 
-  }
+}
 
 
-  document
-    .getElementById("detailsScreen")
-    .classList.add("hidden");
+document
+.getElementById("detailsScreen")
+.classList.add("hidden");
 
+document
+.getElementById("compareScreen")
+.classList.remove("hidden");
 
-  document
-    .getElementById("compareScreen")
-    .classList.remove("hidden");
 
+const compareSubtitle =
+document.getElementById("compareSubtitle");
 
-  const compareTitle =
-    document.getElementById(
-      "compareTitle"
-    );
+const priceContainer =
+document.getElementById("priceContainer");
 
 
-  const compareSubtitle =
-    document.getElementById(
-      "compareSubtitle"
-    );
+const productName =
+selectedProduct.Name ??
+selectedProduct.name ??
+"Product";
 
 
-  const priceContainer =
-    document.getElementById(
-      "priceContainer"
-    );
+const productId =
+getProductId(selectedProduct);
 
 
-  const productName =
-    selectedProduct.Name ??
-    selectedProduct.name ??
-    "Product";
+compareSubtitle.textContent =
+productName +
+" — prices across shops";
 
 
-  const productId =
-    getProductId(
-      selectedProduct
-    );
+priceContainer.innerHTML =
+'<div class="message">Loading prices...</div>';
 
 
-  compareTitle.textContent =
-    "💰 Price Comparison";
+try{
 
+/* =====================================
+MAKE SURE SHOPS ARE LOADED
+===================================== */
 
-  compareSubtitle.textContent =
-    productName +
-    " — prices across shops";
+if(!allShops.length){
 
+await loadShops();
 
-  priceContainer.innerHTML =
-    '<div class="message">' +
-    'Loading prices...' +
-    '</div>';
+}
 
 
-  try {
+/* =====================================
+LOAD PRODUCT PRICES
+IMPORTANT:
+YOUR COLUMN IS prices
+===================================== */
 
-    /* =====================================
-       LOAD SHOPS AGAIN IF NECESSARY
-    ===================================== */
+const priceUrl =
+SUPABASE_URL +
+"/rest/v1/product_prices" +
+"?select=*" +
+"&product_id=eq." +
+encodeURIComponent(String(productId));
 
-    if (
-      !Array.isArray(allShops) ||
-      allShops.length === 0
-    ) {
 
-      await loadShops();
+const priceResponse =
+await fetch(
+priceUrl,
+{
+headers:{
+"apikey":SUPABASE_KEY,
+"Authorization":"Bearer "+SUPABASE_KEY
+}
+}
+);
 
-    }
 
+if(!priceResponse.ok){
 
-    /* =====================================
-       GET PRICES
-    ===================================== */
+const errorText =
+await priceResponse.text();
 
-    const priceUrl =
-      SUPABASE_URL +
-      "/rest/v1/product_prices" +
-      "?select=*" +
-      "&product_id=eq." +
-      encodeURIComponent(
-        String(productId)
-      );
+console.error(
+"PRICE DATABASE ERROR:",
+errorText
+);
 
+throw new Error(
+"Price database error: "+
+priceResponse.status
+);
 
-    const priceResponse =
-      await fetch(
-        priceUrl,
-        {
-          method: "GET",
+}
 
-          headers: {
-            "apikey": SUPABASE_KEY,
 
-            "Authorization":
-              "Bearer " + SUPABASE_KEY
-          }
-        }
-      );
+const prices =
+await priceResponse.json();
 
 
-    if (!priceResponse.ok) {
+console.log(
+"PRODUCT PRICES:",
+prices
+);
 
-      const errorText =
-        await priceResponse.text();
 
-      console.error(
-        "PRICE ERROR:",
-        errorText
-      );
+if(!Array.isArray(prices) ||
+prices.length===0){
 
-      throw new Error(
-        "Price database error: " +
-        priceResponse.status
-      );
+priceContainer.innerHTML =
+'<div class="message">' +
+'No prices available for this product yet.' +
+'</div>';
 
-    }
+return;
 
+}
 
-    const prices =
-      await priceResponse.json();
 
+/* =====================================
+MATCH PRICES WITH SHOPS
+===================================== */
 
-    console.log(
-      "Get-It prices:",
-      prices
-    );
+const comparison =
+prices
 
+.filter(function(item){
 
-    if (
-      !Array.isArray(prices) ||
-      prices.length === 0
-    ) {
+return (
+item.available === true ||
+item.available === "true" ||
+item.available === 1 ||
+item.available === "1" ||
+item.available === null ||
+item.available === undefined
+);
 
-      priceContainer.innerHTML =
-        '<div class="message">' +
-        'No prices available for this product yet.' +
-        '</div>';
+})
 
-      return;
+.map(function(item){
 
-    }
+/* PRICE SHOP ID */
 
+const priceShopId =
+normalize(
+item.shop_id ??
+item.Shop_id ??
+item.shopId ??
+""
+);
 
-    /* =====================================
-       MATCH PRICES TO SHOPS
-    ===================================== */
 
-    const comparison =
-      prices
-        .filter(
-          function(item) {
+/* FIND SHOP */
 
-            return (
-              item.available !== false
-            );
+const matchingShop =
+allShops.find(function(shop){
 
-          }
-        )
-        .map(
-          function(item) {
+const shopId =
+normalize(
+getShopId(shop)
+);
 
-            const priceShopId =
-              String(
-                item.shop_id ??
-                item.Shop_id ??
-                item.shopId ??
-                ""
-              ).trim();
+return (
+shopId === priceShopId
+);
 
+});
 
-            const matchingShop =
-              allShops.find(
-                function(shop) {
 
-                  const shopId =
-                    String(
-                      getShopId(shop)
-                    ).trim();
+/* =====================================
+IMPORTANT FIX:
+USE prices, NOT price
+===================================== */
 
-                  return (
-                    shopId ===
-                    priceShopId
-                  );
+const rawPrice =
+item.prices ??
+item.Price ??
+item.price ??
+"";
 
-                }
-              );
 
+const priceValue =
+Number(
+String(rawPrice)
+.replace(/[^0-9.-]/g,"")
+);
 
-            const priceValue =
-              Number(
-                item.price ??
-                item.Price
-              );
 
+return{
 
-            return {
+shopName:
+matchingShop
+? getShopName(matchingShop)
+: "Unknown shop",
 
-              shopName:
-                matchingShop
-                  ? getShopName(
-                      matchingShop
-                    )
-                  : "Unknown shop",
+location:
+matchingShop
+? getShopLocation(matchingShop)
+: "",
 
-              location:
-                matchingShop
-                  ? getShopLocation(
-                      matchingShop
-                    )
-                  : "",
+address:
+matchingShop
+? getShopAddress(matchingShop)
+: "",
 
-              address:
-                matchingShop
-                  ? getShopAddress(
-                      matchingShop
-                    )
-                  : "",
+price:
+priceValue,
 
-              price:
-                priceValue
+shopId:
+priceShopId
 
-            };
+};
 
-          }
-        )
-        .filter(
-          function(item) {
+})
 
-            return !isNaN(
-              item.price
-            );
+.filter(function(item){
 
-          }
-        );
+return (
+Number.isFinite(item.price) &&
+item.price >= 0
+);
 
+});
 
-    /* =====================================
-       NO VALID PRICES
-    ===================================== */
 
-    if (
-      comparison.length === 0
-    ) {
+/* =====================================
+NO VALID PRICES
+===================================== */
 
-      priceContainer.innerHTML =
-        '<div class="message">' +
-        'This product is currently unavailable.' +
-        '</div>';
+if(comparison.length===0){
 
-      return;
+priceContainer.innerHTML =
+'<div class="message">' +
+'This product is currently unavailable.' +
+'</div>';
 
-    }
+return;
 
+}
 
-    /* =====================================
-       FIND CHEAPEST
-    ===================================== */
 
-    const cheapest =
-      Math.min.apply(
-        null,
-        comparison.map(
-          function(item) {
+/* =====================================
+CHEAPEST PRICE
+===================================== */
 
-            return item.price;
+comparison.sort(function(a,b){
 
-          }
-        )
-      );
+return a.price-b.price;
 
+});
 
-    /* =====================================
-       SORT
-    ===================================== */
 
-    comparison.sort(
-      function(a, b) {
+const cheapest =
+comparison[0].price;
 
-        return (
-          a.price -
-          b.price
-        );
 
-      }
-    );
+/* =====================================
+DISPLAY
+===================================== */
 
+priceContainer.innerHTML =
+comparison.map(function(item){
 
-    /* =====================================
-       DISPLAY
-    ===================================== */
+const isCheapest =
+item.price === cheapest;
 
-    priceContainer.innerHTML =
-      comparison.map(
-        function(item) {
 
-          const isCheapest =
-            item.price ===
-            cheapest;
+return `
 
+<div class="
+price-item
+${isCheapest ? "cheapest" : ""}
+">
 
-          return `
+<div>
 
-            <div class="
-              price-item
-              ${isCheapest
-                ? "cheapest"
-                : ""}
-            ">
+<div class="shop-name">
+🏪 ${escapeHtml(item.shopName)}
+</div>
 
-              <div>
+${
+item.location
+?
+`
+<div style="
+font-size:13px;
+color:#666;
+margin-top:4px;
+">
+📍 ${escapeHtml(item.location)}
+</div>
+`
+:""
+}
 
-                <div class="shop-name">
-                  🏪 ${escapeHtml(
-                    item.shopName
-                  )}
-                </div>
+${
+item.address
+?
+`
+<div style="
+font-size:12px;
+color:#777;
+margin-top:3px;
+">
+${escapeHtml(item.address)}
+</div>
+`
+:""
+}
 
-                ${
-                  item.location
-                  ? `
-                    <div style="
-                      font-size:13px;
-                      color:#666;
-                      margin-top:4px;
-                    ">
-                      📍 ${escapeHtml(
-                        item.location
-                      )}
-                    </div>
-                  `
-                  : ""
-                }
+${
+isCheapest
+?
+`
+<span class="cheapest-label">
+🏆 Cheapest price
+</span>
+`
+:""
+}
 
-                ${
-                  item.address
-                  ? `
-                    <div style="
-                      font-size:12px;
-                      color:#777;
-                      margin-top:3px;
-                    ">
-                      ${escapeHtml(
-                        item.address
-                      )}
-                    </div>
-                  `
-                  : ""
-                }
+</div>
 
-                ${
-                  isCheapest
-                  ? `
-                    <span class="cheapest-label">
-                      🏆 Cheapest price
-                    </span>
-                  `
-                  : ""
-                }
+<div class="shop-price">
+P${item.price.toFixed(2)}
+</div>
 
-              </div>
+</div>
 
-              <div class="shop-price">
-                P${item.price.toFixed(2)}
-              </div>
+`;
 
-            </div>
+}).join("");
 
-          `;
+}
 
-        }
-      ).join("");
+catch(error){
 
-  }
+console.error(
+"COMPARISON ERROR:",
+error
+);
 
-  catch(error) {
+priceContainer.innerHTML =
+'<div class="message">' +
+'Unable to load price comparison. Please try again.' +
+'</div>';
 
-    console.error(
-      "COMPARISON ERROR:",
-      error
-    );
-
-
-    priceContainer.innerHTML =
-      '<div class="message">' +
-      'Unable to load price comparison. Please try again.' +
-      '</div>';
-
-  }
+}
 
 }
 
 
 /* =========================================
-   BACK TO PRODUCTS
+BACK TO PRODUCTS
 ========================================= */
 
-function backToProducts() {
+function backToProducts(){
 
-  document
-    .getElementById("detailsScreen")
-    .classList.add("hidden");
+document
+.getElementById("detailsScreen")
+.classList.add("hidden");
 
+document
+.getElementById("compareScreen")
+.classList.add("hidden");
 
-  document
-    .getElementById("compareScreen")
-    .classList.add("hidden");
-
-
-  document
-    .getElementById("productsScreen")
-    .classList.remove("hidden");
+document
+.getElementById("productsScreen")
+.classList.remove("hidden");
 
 }
 
 
 /* =========================================
-   BACK TO DETAILS
+BACK TO DETAILS
 ========================================= */
 
-function backToDetails() {
+function backToDetails(){
 
-  document
-    .getElementById("compareScreen")
-    .classList.add("hidden");
+document
+.getElementById("compareScreen")
+.classList.add("hidden");
 
-
-  document
-    .getElementById("detailsScreen")
-    .classList.remove("hidden");
+document
+.getElementById("detailsScreen")
+.classList.remove("hidden");
 
 }
 
 
 /* =========================================
-   START APPLICATION
+START APPLICATION
 ========================================= */
 
-async function startApp() {
+async function startApp(){
 
-  await Promise.all([
-    loadProducts(),
-    loadShops()
-  ]);
+await Promise.all([
+loadProducts(),
+loadShops()
+]);
 
 }
-
-
-/* START */
 
 startApp();
 
