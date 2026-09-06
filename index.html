@@ -20,7 +20,7 @@
     }
 
     header {
-      background: #ffffff;
+      background: white;
       padding: 20px;
       display: flex;
       justify-content: space-between;
@@ -146,6 +146,19 @@
       margin-bottom: 8px;
     }
 
+    .message {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+    }
+
+    .error {
+      color: #b91c1c;
+      background: #fef2f2;
+      border-color: #fecaca;
+    }
+
     footer {
       text-align: center;
       padding: 30px;
@@ -242,7 +255,9 @@
   <h2>Popular Products</h2>
 
   <div class="products" id="products">
-    <p>Loading products...</p>
+    <div class="message">
+      Connecting to Get-It database...
+    </div>
   </div>
 
 </section>
@@ -263,8 +278,6 @@
 
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script>
 
 const SUPABASE_URL =
@@ -281,43 +294,96 @@ async function loadProducts() {
 
   try {
 
-    const response = await fetch(
-      SUPABASE_URL + "/rest/v1/products?select=*",
-      {
-        method: "GET",
+    const controller =
+      new AbortController();
 
-        headers: {
-          "apikey": SUPABASE_KEY,
-          "Authorization": "Bearer " + SUPABASE_KEY
+    const timeout =
+      setTimeout(() => {
+        controller.abort();
+      }, 10000);
+
+
+    const response =
+      await fetch(
+        SUPABASE_URL +
+        "/rest/v1/products?select=*",
+        {
+          method: "GET",
+
+          headers: {
+            "apikey": SUPABASE_KEY,
+            "Authorization":
+              "Bearer " + SUPABASE_KEY
+          },
+
+          signal: controller.signal
         }
-      }
-    );
+      );
+
+
+    clearTimeout(timeout);
+
+
+    const responseText =
+      await response.text();
+
 
     if (!response.ok) {
 
-      const errorText =
-        await response.text();
-
       console.error(
-        "Supabase error:",
-        errorText
+        "Supabase status:",
+        response.status
       );
 
-      container.innerHTML =
-        "<p>Unable to load products.</p>";
+      console.error(
+        "Supabase response:",
+        responseText
+      );
+
+      container.innerHTML = `
+        <div class="message error">
+          <strong>Database error</strong>
+          <p>Status: ${response.status}</p>
+          <p>Please check the Supabase read policy.</p>
+        </div>
+      `;
 
       return;
     }
 
 
-    const data =
-      await response.json();
+    let data;
+
+    try {
+
+      data =
+        JSON.parse(responseText);
+
+    } catch {
+
+      container.innerHTML = `
+        <div class="message error">
+          <strong>Database returned invalid data.</strong>
+        </div>
+      `;
+
+      return;
+    }
+
+
+    console.log(
+      "Products received:",
+      data
+    );
 
 
     if (!data || data.length === 0) {
 
-      container.innerHTML =
-        "<p>No products found.</p>";
+      container.innerHTML = `
+        <div class="message">
+          No products found in the database.
+        </div>
+      `;
 
       return;
     }
@@ -334,14 +400,15 @@ async function loadProducts() {
       productCard.className =
         "product";
 
-
       productCard.dataset.category =
         product.Category || "";
 
 
       productCard.innerHTML = `
 
-        <h3>${product.Name || "Unnamed product"}</h3>
+        <h3>
+          ${product.Name || "Unnamed product"}
+        </h3>
 
         <p>
           <strong>Brand:</strong>
@@ -358,23 +425,51 @@ async function loadProducts() {
           ${product.Size || "Not listed"}
         </p>
 
-      `;
+        <p>
+          <strong>Allergens:</strong>
+          ${product.Allergens || "Not listed"}
+        </p>
 
+        <p>
+          <strong>Ingredients:</strong>
+          ${product.Ingredients || "Not listed"}
+        </p>
+
+      `;
 
       container.appendChild(productCard);
 
     });
 
+  }
 
-  } catch (error) {
+  catch (error) {
 
     console.error(
-      "Connection error:",
+      "Get-It database error:",
       error
     );
 
-    container.innerHTML =
-      "<p>Unable to connect to the product database.</p>";
+
+    if (error.name === "AbortError") {
+
+      container.innerHTML = `
+        <div class="message error">
+          <strong>Database connection timed out.</strong>
+          <p>Supabase did not respond within 10 seconds.</p>
+        </div>
+      `;
+
+    } else {
+
+      container.innerHTML = `
+        <div class="message error">
+          <strong>Could not connect to the database.</strong>
+          <p>${error.message}</p>
+        </div>
+      `;
+
+    }
 
   }
 
@@ -409,7 +504,9 @@ function showCategory(category) {
 function searchProduct() {
 
   const input =
-    document.getElementById("searchInput").value
+    document
+      .getElementById("searchInput")
+      .value
       .trim()
       .toLowerCase();
 
@@ -418,26 +515,18 @@ function searchProduct() {
     document.querySelectorAll(".product");
 
 
-  if (input === "") {
-
-    products.forEach(product => {
-      product.style.display = "";
-    });
-
-    return;
-  }
-
-
   products.forEach(product => {
 
-    const productName =
-      product.querySelector("h3")
+    const name =
+      product
+        .querySelector("h3")
         .textContent
         .toLowerCase();
 
 
     if (
-      productName.includes(input)
+      input === "" ||
+      name.includes(input)
     ) {
 
       product.style.display = "";
