@@ -273,6 +273,7 @@ const supabase = window.supabase.createClient(
 <script>
  alert("Get-It JavaScript is working!"); 
 async function loadProducts() {
+  alert("Before Supabase query"); 
 alert("Starting Supabase...");  
 
  const result = await Promise.race([
