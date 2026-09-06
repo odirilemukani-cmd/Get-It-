@@ -89,7 +89,8 @@ header p{
   background:#eaf7f0;
 }
 
-.container{
+.container,
+.screen{
   max-width:900px;
   margin:auto;
   padding:18px;
@@ -134,12 +135,6 @@ header p{
 .product-category{
   color:#777;
   font-size:13px;
-}
-
-.screen{
-  max-width:900px;
-  margin:auto;
-  padding:18px;
 }
 
 .hidden{
@@ -284,6 +279,7 @@ footer{
 }
 
 @media(max-width:500px){
+
   .products{
     grid-template-columns:repeat(2,1fr);
   }
@@ -315,46 +311,83 @@ footer{
 </header>
 
 <section class="hero">
+
   <h2>Find the best price near you</h2>
-  <p>Search products and compare prices across shops in Botswana.</p>
+
+  <p>
+    Search products and compare prices across shops in Botswana.
+  </p>
 
   <div class="search-box">
+
     <input
       type="text"
       id="searchInput"
       placeholder="Search for a product..."
       oninput="searchProducts()"
     >
+
   </div>
+
 </section>
 
 <div class="categories">
-  <div class="category" onclick="filterCategory('All')">🛒 All</div>
-  <div class="category" onclick="filterCategory('Groceries')">🛍️ Groceries</div>
-  <div class="category" onclick="filterCategory('Electronics')">📱 Electronics</div>
-  <div class="category" onclick="filterCategory('Clothing')">👕 Clothing</div>
-  <div class="category" onclick="filterCategory('Home')">🏠 Home</div>
+
+  <div class="category" onclick="filterCategory('All')">
+    🛒 All
+  </div>
+
+  <div class="category" onclick="filterCategory('Groceries')">
+    🛍️ Groceries
+  </div>
+
+  <div class="category" onclick="filterCategory('Electronics')">
+    📱 Electronics
+  </div>
+
+  <div class="category" onclick="filterCategory('Clothing')">
+    👕 Clothing
+  </div>
+
+  <div class="category" onclick="filterCategory('Home')">
+    🏠 Home
+  </div>
+
 </div>
 
-<!-- PRODUCTS SCREEN -->
+
+<!-- PRODUCTS -->
+
 <section id="productsScreen" class="container">
 
-  <h2 class="section-title">Products</h2>
+  <h2 class="section-title">
+    Products
+  </h2>
 
   <div id="productsContainer" class="products">
-    <div class="loading">Loading products...</div>
+
+    <div class="loading">
+      Loading products...
+    </div>
+
   </div>
 
 </section>
 
-<!-- DETAILS SCREEN -->
+
+<!-- DETAILS -->
+
 <section id="detailsScreen" class="screen hidden">
 
-  <button class="back-btn" onclick="backToProducts()">← Back</button>
+  <button class="back-btn" onclick="backToProducts()">
+    ← Back
+  </button>
 
   <div class="details-card">
 
-    <div id="detailsIcon" class="details-icon">🛒</div>
+    <div id="detailsIcon" class="details-icon">
+      🛒
+    </div>
 
     <div id="detailsName" class="details-name">
       Product
@@ -372,31 +405,48 @@ footer{
 
 </section>
 
-<!-- COMPARISON SCREEN -->
+
+<!-- COMPARISON -->
+
 <section id="compareScreen" class="screen hidden">
 
-  <button class="back-btn" onclick="backToDetails()">← Back</button>
+  <button class="back-btn" onclick="backToDetails()">
+    ← Back
+  </button>
 
   <div class="compare-header">
-    <h2>💰 Price Comparison</h2>
-    <p id="compareSubtitle">Prices across shops</p>
+
+    <h2>
+      💰 Price Comparison
+    </h2>
+
+    <p id="compareSubtitle">
+      Prices across shops
+    </p>
+
   </div>
 
   <div id="priceContainer" class="price-list">
-    <div class="loading">Loading prices...</div>
+
+    <div class="loading">
+      Loading prices...
+    </div>
+
   </div>
 
 </section>
+
 
 <footer>
   Get-It 🇧🇼 — Find. Compare. Get.
 </footer>
 
+
 <script>
 
-/* ================================
-   SUPABASE SETTINGS
-================================ */
+/* =========================
+   SUPABASE
+========================= */
 
 const SUPABASE_URL =
   "https://snjrlhkmixiamgqhfhug.supabase.co";
@@ -405,9 +455,9 @@ const SUPABASE_KEY =
   "sb_publishable_3jRUAQ88ntmpnA42QwTuew_TJ7NYgFw";
 
 
-/* ================================
-   APP DATA
-================================ */
+/* =========================
+   APP VARIABLES
+========================= */
 
 let allProducts = [];
 let allShops = [];
@@ -415,9 +465,9 @@ let selectedProduct = null;
 let currentCategory = "All";
 
 
-/* ================================
-   HELPER FUNCTIONS
-================================ */
+/* =========================
+   HELPERS
+========================= */
 
 function escapeHtml(value){
 
@@ -431,6 +481,8 @@ function escapeHtml(value){
 }
 
 
+/* PRODUCT ID */
+
 function getProductId(product){
 
   return (
@@ -442,6 +494,8 @@ function getProductId(product){
 
 }
 
+
+/* PRODUCT NAME */
 
 function getProductName(product){
 
@@ -456,6 +510,8 @@ function getProductName(product){
 }
 
 
+/* PRODUCT CATEGORY */
+
 function getProductCategory(product){
 
   return (
@@ -469,52 +525,58 @@ function getProductCategory(product){
 }
 
 
+/* SHOP ID */
+
 function getShopId(shop){
 
   return (
-    shop.shop_id ??
     shop.Shop_id ??
-    shop.id ??
-    shop.Id
+    shop.shop_id
   );
 
 }
 
 
+/* SHOP NAME */
+
 function getShopName(shop){
 
   return (
-    shop.name ??
     shop.Name ??
-    shop.shop_name ??
-    shop.Shop_name ??
+    shop.name ??
     "Unknown shop"
   );
 
 }
 
 
+/* LOCATION */
+
 function getShopLocation(shop){
 
   return (
-    shop.location ??
     shop.Location ??
+    shop.location ??
     ""
   );
 
 }
 
+
+/* ADDRESS */
 
 function getShopAddress(shop){
 
   return (
-    shop.address ??
     shop.Address ??
+    shop.address ??
     ""
   );
 
 }
 
+
+/* ICON */
 
 function getProductIcon(product){
 
@@ -538,9 +600,9 @@ function getProductIcon(product){
 }
 
 
-/* ================================
+/* =========================
    LOAD PRODUCTS
-================================ */
+========================= */
 
 async function loadProducts(){
 
@@ -552,26 +614,25 @@ async function loadProducts(){
 
   try{
 
-    const url =
-      SUPABASE_URL +
-      "/rest/v1/products" +
-      "?select=*";
-
-    const response = await fetch(url,{
-      headers:{
-        "apikey":SUPABASE_KEY,
-        "Authorization":"Bearer "+SUPABASE_KEY
-      }
-    });
+    const response =
+      await fetch(
+        SUPABASE_URL +
+        "/rest/v1/products?select=*",
+        {
+          headers:{
+            "apikey":SUPABASE_KEY,
+            "Authorization":"Bearer "+SUPABASE_KEY
+          }
+        }
+      );
 
     if(!response.ok){
 
-      const errorText =
+      const text =
         await response.text();
 
-      console.error("PRODUCT ERROR:",errorText);
+      throw new Error(text);
 
-      throw new Error(errorText);
     }
 
     const data =
@@ -584,7 +645,7 @@ async function loadProducts(){
 
   }catch(error){
 
-    console.error("LOAD PRODUCTS ERROR:",error);
+    console.error(error);
 
     container.innerHTML =
       '<div class="error">Unable to load products. Please refresh and try again.</div>';
@@ -594,34 +655,44 @@ async function loadProducts(){
 }
 
 
-/* ================================
+/* =========================
    LOAD SHOPS
-================================ */
+========================= */
 
 async function loadShops(){
 
   try{
 
-    const url =
-      SUPABASE_URL +
-      "/rest/v1/shops" +
-      "?select=*";
+    /*
+      IMPORTANT:
+      We request the exact columns
+      from the shops table.
+    */
 
-    const response = await fetch(url,{
-      headers:{
-        "apikey":SUPABASE_KEY,
-        "Authorization":"Bearer "+SUPABASE_KEY
-      }
-    });
+    const response =
+      await fetch(
+        SUPABASE_URL +
+        "/rest/v1/shops?select=Shop_id,Name,Location,Address",
+        {
+          headers:{
+            "apikey":SUPABASE_KEY,
+            "Authorization":"Bearer "+SUPABASE_KEY
+          }
+        }
+      );
 
     if(!response.ok){
 
-      const errorText =
+      const text =
         await response.text();
 
-      console.error("SHOP ERROR:",errorText);
+      console.error(
+        "SHOP ERROR:",
+        text
+      );
 
-      throw new Error(errorText);
+      throw new Error(text);
+
     }
 
     const data =
@@ -630,11 +701,17 @@ async function loadShops(){
     allShops =
       Array.isArray(data) ? data : [];
 
-    console.log("SHOPS LOADED:",allShops);
+    console.log(
+      "SHOPS LOADED:",
+      allShops
+    );
 
   }catch(error){
 
-    console.error("LOAD SHOPS ERROR:",error);
+    console.error(
+      "LOAD SHOPS ERROR:",
+      error
+    );
 
     allShops = [];
 
@@ -643,9 +720,9 @@ async function loadShops(){
 }
 
 
-/* ================================
+/* =========================
    DISPLAY PRODUCTS
-================================ */
+========================= */
 
 function displayProducts(products){
 
@@ -658,6 +735,7 @@ function displayProducts(products){
       '<div class="message">No products found.</div>';
 
     return;
+
   }
 
   container.innerHTML =
@@ -672,10 +750,17 @@ function displayProducts(products){
       const icon =
         getProductIcon(product);
 
+      const productJson =
+        JSON.stringify(product)
+          .replace(/'/g,"&#039;")
+          .replace(/"/g,"&quot;");
+
       return `
+
         <div
           class="product-card"
-          onclick="openProduct(${JSON.stringify(product).replace(/"/g,'&quot;')})"
+          onclick="openProduct(JSON.parse(this.dataset.product))"
+          data-product="${productJson}"
         >
 
           <div class="product-icon">
@@ -691,6 +776,7 @@ function displayProducts(products){
           </div>
 
         </div>
+
       `;
 
     }).join("");
@@ -698,13 +784,14 @@ function displayProducts(products){
 }
 
 
-/* ================================
+/* =========================
    OPEN PRODUCT
-================================ */
+========================= */
 
 function openProduct(product){
 
-  selectedProduct = product;
+  selectedProduct =
+    product;
 
   document
     .getElementById("productsScreen")
@@ -718,21 +805,24 @@ function openProduct(product){
     .getElementById("detailsScreen")
     .classList.remove("hidden");
 
-  document.getElementById("detailsName").textContent =
+  document.getElementById("detailsName")
+    .textContent =
     getProductName(product);
 
-  document.getElementById("detailsCategory").textContent =
+  document.getElementById("detailsCategory")
+    .textContent =
     getProductCategory(product);
 
-  document.getElementById("detailsIcon").textContent =
+  document.getElementById("detailsIcon")
+    .textContent =
     getProductIcon(product);
 
 }
 
 
-/* ================================
-   SEARCH PRODUCTS
-================================ */
+/* =========================
+   SEARCH
+========================= */
 
 function searchProducts(){
 
@@ -747,10 +837,12 @@ function searchProducts(){
     allProducts.filter(function(product){
 
       const name =
-        getProductName(product).toLowerCase();
+        getProductName(product)
+          .toLowerCase();
 
       const category =
-        getProductCategory(product).toLowerCase();
+        getProductCategory(product)
+          .toLowerCase();
 
       return (
         name.includes(search) ||
@@ -759,6 +851,7 @@ function searchProducts(){
 
     });
 
+
   if(currentCategory !== "All"){
 
     filtered =
@@ -766,7 +859,9 @@ function searchProducts(){
 
         return getProductCategory(product)
           .toLowerCase()
-          .includes(currentCategory.toLowerCase());
+          .includes(
+            currentCategory.toLowerCase()
+          );
 
       });
 
@@ -777,29 +872,29 @@ function searchProducts(){
 }
 
 
-/* ================================
-   CATEGORY FILTER
-================================ */
+/* =========================
+   CATEGORY
+========================= */
 
 function filterCategory(category){
 
-  currentCategory = category;
+  currentCategory =
+    category;
 
   searchProducts();
 
 }
 
 
-/* ================================
+/* =========================
    COMPARE PRICES
-================================ */
+========================= */
 
 async function comparePrices(){
 
-  if(!selectedProduct){
-
+  if(!selectedProduct)
     return;
-  }
+
 
   document
     .getElementById("detailsScreen")
@@ -809,8 +904,10 @@ async function comparePrices(){
     .getElementById("compareScreen")
     .classList.remove("hidden");
 
-  const priceContainer =
+
+  const container =
     document.getElementById("priceContainer");
+
 
   const productName =
     getProductName(selectedProduct);
@@ -818,16 +915,21 @@ async function comparePrices(){
   const productId =
     getProductId(selectedProduct);
 
-  document.getElementById("compareSubtitle").textContent =
-    productName + " — prices across shops";
 
-  priceContainer.innerHTML =
+  document.getElementById(
+    "compareSubtitle"
+  ).textContent =
+    productName +
+    " — prices across shops";
+
+
+  container.innerHTML =
     '<div class="loading">Loading prices...</div>';
 
 
   try{
 
-    /* Make sure shops are loaded */
+    /* Make sure shops exist */
 
     if(!allShops.length){
 
@@ -836,44 +938,58 @@ async function comparePrices(){
     }
 
 
-    /* Make sure we actually have a product ID */
-
     if(
       productId === null ||
       productId === undefined ||
       productId === ""
     ){
 
-      throw new Error("Product ID is missing.");
+      throw new Error(
+        "Product ID is missing."
+      );
 
     }
 
 
     /*
-      Get prices using the exact columns:
-      product_id
-      shop_id
+      IMPORTANT FIX:
+
+      Your actual price column is:
+
+      Price
+
+      NOT:
+
       prices
-      available
     */
 
     const url =
       SUPABASE_URL +
       "/rest/v1/product_prices" +
-      "?select=product_id,shop_id,prices,available" +
+      "?select=id,shop_id,product_id,Price,available" +
       "&product_id=eq." +
-      encodeURIComponent(String(productId));
+      encodeURIComponent(
+        String(productId)
+      );
 
 
-    console.log("PRICE URL:",url);
+    console.log(
+      "PRICE URL:",
+      url
+    );
+
 
     const response =
-      await fetch(url,{
-        headers:{
-          "apikey":SUPABASE_KEY,
-          "Authorization":"Bearer "+SUPABASE_KEY
+      await fetch(
+        url,
+        {
+          headers:{
+            "apikey":SUPABASE_KEY,
+            "Authorization":
+              "Bearer " + SUPABASE_KEY
+          }
         }
-      });
+      );
 
 
     if(!response.ok){
@@ -882,11 +998,13 @@ async function comparePrices(){
         await response.text();
 
       console.error(
-        "PRICE COMPARISON ERROR:",
+        "PRICE ERROR:",
         errorText
       );
 
-      throw new Error(errorText);
+      throw new Error(
+        errorText
+      );
 
     }
 
@@ -894,14 +1012,19 @@ async function comparePrices(){
     const prices =
       await response.json();
 
-    console.log("PRICES:",prices);
+
+    console.log(
+      "PRICE ROWS:",
+      prices
+    );
+
 
     if(
       !Array.isArray(prices) ||
       prices.length === 0
     ){
 
-      priceContainer.innerHTML =
+      container.innerHTML =
         '<div class="message">No prices available for this product yet.</div>';
 
       return;
@@ -910,8 +1033,11 @@ async function comparePrices(){
 
 
     /*
-      Match every price shop_id
-      with the shops table shop_id.
+      MATCH SHOP IDs
+
+      product_prices.shop_id
+                 ↓
+      shops.Shop_id
     */
 
     const comparison =
@@ -925,31 +1051,40 @@ async function comparePrices(){
 
 
           const shop =
-            allShops.find(function(shop){
+            allShops.find(
+              function(shop){
 
-              return String(
-                getShopId(shop) ?? ""
-              ).trim() === priceShopId;
+                const shopId =
+                  String(
+                    shop.Shop_id ?? ""
+                  ).trim();
 
-            });
+                return (
+                  shopId === priceShopId
+                );
 
-
-          const price =
-            Number(item.prices);
+              }
+            );
 
 
           /*
-            Handle Supabase boolean values
-            correctly.
+            YOUR COLUMN IS Price
+          */
+
+          const price =
+            Number(item.Price);
+
+
+          /*
+            Available must be true.
+            We also accept 1 and "true".
           */
 
           const available =
             item.available === true ||
             item.available === "true" ||
             item.available === 1 ||
-            item.available === "1" ||
-            item.available === null ||
-            item.available === undefined;
+            item.available === "1";
 
 
           if(
@@ -989,7 +1124,7 @@ async function comparePrices(){
 
     if(!comparison.length){
 
-      priceContainer.innerHTML =
+      container.innerHTML =
         '<div class="message">No available prices found.</div>';
 
       return;
@@ -998,14 +1133,16 @@ async function comparePrices(){
 
 
     /*
-      Cheapest price first.
+      LOWEST PRICE FIRST
     */
 
-    comparison.sort(function(a,b){
+    comparison.sort(
+      function(a,b){
 
-      return a.price - b.price;
+        return a.price - b.price;
 
-    });
+      }
+    );
 
 
     const cheapest =
@@ -1013,76 +1150,98 @@ async function comparePrices(){
 
 
     /*
-      Display shops and prices.
+      DISPLAY RESULTS
     */
 
-    priceContainer.innerHTML =
-      comparison.map(function(item){
+    container.innerHTML =
+      comparison
+        .map(function(item){
 
-        const isCheapest =
-          item.price === cheapest;
+          const isCheapest =
+            item.price === cheapest;
 
-        return `
 
-          <div class="price-item ${
-            isCheapest ? "cheapest" : ""
-          }">
+          return `
 
-            <div>
+            <div class="price-item ${
+              isCheapest
+                ? "cheapest"
+                : ""
+            }">
 
-              <div class="shop-name">
-                🏪 ${escapeHtml(item.shopName)}
+              <div>
+
+                <div class="shop-name">
+                  🏪 ${
+                    escapeHtml(
+                      item.shopName
+                    )
+                  }
+                </div>
+
+                ${
+                  item.location
+                    ? `
+                      <div style="
+                        font-size:13px;
+                        color:#666;
+                        margin-top:4px;
+                      ">
+                        📍 ${
+                          escapeHtml(
+                            item.location
+                          )
+                        }
+                      </div>
+                    `
+                    : ""
+                }
+
+                ${
+                  item.address
+                    ? `
+                      <div style="
+                        font-size:12px;
+                        color:#777;
+                        margin-top:3px;
+                      ">
+                        ${
+                          escapeHtml(
+                            item.address
+                          )
+                        }
+                      </div>
+                    `
+                    : ""
+                }
+
+                ${
+                  isCheapest
+                    ? `
+                      <span class="cheapest-label">
+                        🏆 Cheapest price
+                      </span>
+                    `
+                    : ""
+                }
+
               </div>
 
-              ${
-                item.location
-                  ? `
-                    <div style="
-                      font-size:13px;
-                      color:#666;
-                      margin-top:4px;
-                    ">
-                      📍 ${escapeHtml(item.location)}
-                    </div>
-                  `
-                  : ""
-              }
 
-              ${
-                item.address
-                  ? `
-                    <div style="
-                      font-size:12px;
-                      color:#777;
-                      margin-top:3px;
-                    ">
-                      ${escapeHtml(item.address)}
-                    </div>
-                  `
-                  : ""
-              }
+              <div class="shop-price">
 
-              ${
-                isCheapest
-                  ? `
-                    <span class="cheapest-label">
-                      🏆 Cheapest price
-                    </span>
-                  `
-                  : ""
-              }
+                P${
+                  item.price.toFixed(2)
+                }
+
+              </div>
 
             </div>
 
-            <div class="shop-price">
-              P${item.price.toFixed(2)}
-            </div>
+          `;
 
-          </div>
-
-        `;
-
-      }).join("");
+        })
+        .join("");
 
 
   }catch(error){
@@ -1092,7 +1251,7 @@ async function comparePrices(){
       error
     );
 
-    priceContainer.innerHTML =
+    container.innerHTML =
       '<div class="error">Unable to load price comparison. Please try again.</div>';
 
   }
@@ -1100,9 +1259,9 @@ async function comparePrices(){
 }
 
 
-/* ================================
+/* =========================
    BACK TO PRODUCTS
-================================ */
+========================= */
 
 function backToProducts(){
 
@@ -1121,9 +1280,9 @@ function backToProducts(){
 }
 
 
-/* ================================
+/* =========================
    BACK TO DETAILS
-================================ */
+========================= */
 
 function backToDetails(){
 
@@ -1138,9 +1297,9 @@ function backToDetails(){
 }
 
 
-/* ================================
-   START APP
-================================ */
+/* =========================
+   START
+========================= */
 
 async function startApp(){
 
@@ -1150,9 +1309,6 @@ async function startApp(){
   ]);
 
 }
-
-
-/* START */
 
 startApp();
 
