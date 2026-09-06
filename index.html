@@ -940,18 +940,17 @@ async function comparePrices(){
 
   }catch(error){
 
-    console.error(
-      "PRICE COMPARISON ERROR:",
-      error
-    );
+  console.error("PRICE COMPARISON ERROR:", error);
 
-    document.getElementById("comparisonContent").innerHTML =
-      `<div class="message">
-        Unable to show price comparison.<br>
-        Please try again.
-      </div>`;
+  document.getElementById("comparisonContent").innerHTML =
+    `<div class="message">
+      <h3>Price comparison error</h3>
+      <p style="margin-top:10px;color:red;">
+        ${escapeHtml(error.message)}
+      </p>
+    </div>`;
 
-  }
+}
 
 }
 
