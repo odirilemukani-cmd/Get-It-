@@ -1093,9 +1093,200 @@ COMPARE PRICES
 
 async function comparePrices(){
 
-if(!selectedProduct){
+if(!selectedProduct) return;
+
+document.getElementById("detailsScreen").classList.add("hidden");
+document.getElementById("compareScreen").classList.remove("hidden");
+
+const priceContainer = document.getElementById("priceContainer");
+
+const productName =
+selectedProduct.Name ??
+selectedProduct.name ??
+"Product";
+
+const productId = getProductId(selectedProduct);
+
+document.getElementById("compareSubtitle").textContent =
+productName + " — prices across shops";
+
+priceContainer.innerHTML =
+'<div class="message">Loading prices...</div>';
+
+try{
+
+/* LOAD SHOPS IF NEEDED */
+if(!allShops.length){
+await loadShops();
+}
+
+/* LOAD PRICES */
+const url =
+SUPABASE_URL +
+"/rest/v1/product_prices" +
+"?select=product_id,shop_id,prices,available" +
+"&product_id=eq." +
+encodeURIComponent(String(productId));
+
+const response = await fetch(url,{
+headers:{
+"apikey":SUPABASE_KEY,
+"Authorization":"Bearer "+SUPABASE_KEY
+}
+});
+
+if(!response.ok){
+
+const error = await response.text();
+
+console.error("PRICE ERROR:",error);
+
+throw new Error(error);
+}
+
+const prices = await response.json();
+
+console.log("PRICES:",prices);
+console.log("SHOPS:",allShops);
+
+/* NO PRICES */
+if(!Array.isArray(prices) || prices.length === 0){
+
+priceContainer.innerHTML =
+'<div class="message">No prices available for this product yet.</div>';
 
 return;
+}
+
+/* MATCH PRICES TO SHOPS */
+let comparison = prices.map(function(item){
+
+const priceShopId = String(
+item.shop_id ?? ""
+).trim();
+
+/* FIND SHOP BY SHOP_ID */
+const shop = allShops.find(function(s){
+
+return String(
+getShopId(s)
+).trim() === priceShopId;
+
+});
+
+/* GET PRICE */
+const price = Number(item.prices);
+
+/* CHECK AVAILABLE */
+const available =
+item.available === true ||
+item.available === "true" ||
+item.available === 1 ||
+item.available === "1" ||
+item.available === null ||
+item.available === undefined;
+
+if(!available || !Number.isFinite(price)){
+return null;
+}
+
+return{
+
+shopName: shop
+? getShopName(shop)
+: "Unknown shop",
+
+location: shop
+? getShopLocation(shop)
+: "",
+
+address: shop
+? getShopAddress(shop)
+: "",
+
+price: price
+
+};
+
+}).filter(Boolean);
+
+/* NO VALID PRICES */
+if(comparison.length === 0){
+
+priceContainer.innerHTML =
+'<div class="message">No available prices found.</div>';
+
+return;
+}
+
+/* SORT CHEAPEST FIRST */
+comparison.sort(function(a,b){
+return a.price - b.price;
+});
+
+const cheapest = comparison[0].price;
+
+/* DISPLAY */
+priceContainer.innerHTML = comparison.map(function(item){
+
+const isCheapest =
+item.price === cheapest;
+
+return `
+<div class="price-item ${isCheapest ? "cheapest" : ""}">
+
+<div>
+
+<div class="shop-name">
+🏪 ${escapeHtml(item.shopName)}
+</div>
+
+${
+item.location
+? `<div style="font-size:13px;color:#666;margin-top:4px;">
+📍 ${escapeHtml(item.location)}
+</div>`
+: ""
+}
+
+${
+item.address
+? `<div style="font-size:12px;color:#777;margin-top:3px;">
+${escapeHtml(item.address)}
+</div>`
+: ""
+}
+
+${
+isCheapest
+? `<span class="cheapest-label">
+🏆 Cheapest price
+</span>`
+: ""
+}
+
+</div>
+
+<div class="shop-price">
+P${item.price.toFixed(2)}
+</div>
+
+</div>
+`;
+
+}).join("");
+
+}
+catch(error){
+
+console.error("COMPARISON ERROR:",error);
+
+priceContainer.innerHTML =
+'<div class="message">' +
+'Unable to load price comparison. Please try again.' +
+'</div>';
+
+}
 
 }
 
