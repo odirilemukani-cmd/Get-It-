@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Get-It 🇧🇼 | Find. Compare. Get.</title>
-
-<style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Get-It 🇧🇼 | Find. Compare. Get.</title><style>
 *{
   box-sizing:border-box;
   margin:0;
@@ -247,132 +242,48 @@ footer{
     flex-direction:column;
   }
 }
-</style>
-</head>
-
-<body>
-
-<header>
+</style></head><body><header>
   <h1>Get-It 🇧🇼</h1>
   <p>Find. Compare. Get.</p>
-</header>
-
-<section class="hero">
-
-  <h2>Find the best prices in Botswana</h2>
-
-  <p>
+</header><section class="hero">  <h2>Find the best prices in Botswana</h2>  <p>
     Search products and compare prices across shops.
-  </p>
+  </p>  <div class="search-box"><input
+  type="text"
+  id="searchInput"
+  placeholder="Search for a product..."
+  oninput="searchProducts()"
+>
 
-  <div class="search-box">
+<button onclick="searchProducts()">
+  Search
+</button>
 
-    <input
-      type="text"
-      id="searchInput"
-      placeholder="Search for a product..."
-      oninput="searchProducts()"
-    >
-
-    <button onclick="searchProducts()">
-      Search
-    </button>
-
-  </div>
-
-</section>
-
-<div class="categories">
-
-  <div class="category" onclick="filterCategory('All')">
+  </div></section><div class="categories">  <div class="category" onclick="filterCategory('All')">
     🛍️<br>All
-  </div>
-
-  <div class="category" onclick="filterCategory('Groceries')">
+  </div>  <div class="category" onclick="filterCategory('Groceries')">
     🛒<br>Groceries
-  </div>
-
-  <div class="category" onclick="filterCategory('Electronics')">
+  </div>  <div class="category" onclick="filterCategory('Electronics')">
     📱<br>Electronics
-  </div>
-
-  <div class="category" onclick="filterCategory('Clothing')">
+  </div>  <div class="category" onclick="filterCategory('Clothing')">
     👕<br>Clothing
-  </div>
-
-  <div class="category" onclick="filterCategory('Household')">
+  </div>  <div class="category" onclick="filterCategory('Household')">
     🏠<br>Household
-  </div>
-
+  </div></div><main class="container"><section id="homeScreen" class="screen active">  <h2 style="margin-bottom:15px;">
+    Products
+  </h2>  <div id="productsContainer" class="products"><div class="message">
+  Loading products...
 </div>
 
-<main class="container">
+  </div></section><section id="detailsScreen" class="screen">  <div class="back" onclick="showHome()">
+    ← Back to products
+  </div>  <div id="detailsContent"></div></section><section id="comparisonScreen" class="screen">  <div class="back" onclick="showDetails()">
+    ← Back to product
+  </div>  <div id="comparisonContent"><div class="message">
+  Loading price comparison...
+</div>
 
-  <!-- HOME -->
-
-  <section id="homeScreen" class="screen active">
-
-    <h2 style="margin-bottom:15px;">
-      Products
-    </h2>
-
-    <div id="productsContainer" class="products">
-
-      <div class="message">
-        Loading products...
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- DETAILS -->
-
-  <section id="detailsScreen" class="screen">
-
-    <div class="back" onclick="showHome()">
-      ← Back to products
-    </div>
-
-    <div id="detailsContent"></div>
-
-  </section>
-
-
-  <!-- COMPARISON -->
-
-  <section id="comparisonScreen" class="screen">
-
-    <div class="back" onclick="showDetails()">
-      ← Back to product
-    </div>
-
-    <div id="comparisonContent">
-
-      <div class="message">
-        Loading price comparison...
-      </div>
-
-    </div>
-
-  </section>
-
-</main>
-
-<footer>
-
-  <p>© 2026 Get-It 🇧🇼</p>
-  <p>Find. Compare. Get.</p>
-
-</footer>
-
-
-<script>
-
-/* =====================================================
-   SUPABASE
-===================================================== */
+  </div></section></main><footer>  <p>© 2026 Get-It 🇧🇼</p>
+  <p>Find. Compare. Get.</p></footer><script>
 
 const SUPABASE_URL =
 "https://snjrlhkmixiamgqhfhug.supabase.co";
@@ -380,19 +291,13 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
 "sb_publishable_3jRUAQ88ntmpnA42QwTuew_TJ7NYgFw";
 
-
-/* =====================================================
-   APP DATA
-===================================================== */
-
 let allProducts = [];
-let allShops = [];
 let selectedProduct = null;
 
 
-/* =====================================================
-   SUPABASE REQUEST
-===================================================== */
+/* ================================
+   SUPABASE
+================================ */
 
 async function supabaseFetch(endpoint){
 
@@ -400,7 +305,6 @@ async function supabaseFetch(endpoint){
     SUPABASE_URL + "/rest/v1/" + endpoint,
     {
       method:"GET",
-
       headers:{
         "apikey":SUPABASE_KEY,
         "Authorization":"Bearer " + SUPABASE_KEY,
@@ -411,18 +315,38 @@ async function supabaseFetch(endpoint){
 
   if(!response.ok){
 
-    const errorText = await response.text();
+    const text = await response.text();
 
-    throw new Error(errorText);
+    throw new Error(
+      "Supabase " +
+      response.status +
+      ": " +
+      text
+    );
   }
 
   return await response.json();
 }
 
 
-/* =====================================================
+/* ================================
+   ESCAPE HTML
+================================ */
+
+function escapeHtml(value){
+
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+
+/* ================================
    PRODUCT HELPERS
-===================================================== */
+================================ */
 
 function getProductId(product){
 
@@ -461,39 +385,9 @@ function getProductCategory(product){
 }
 
 
-/* =====================================================
-   SHOP HELPERS
-   CONFIRMED DATABASE COLUMN:
-   shop_id
-===================================================== */
-
-function getShopId(shop){
-
-  return shop.shop_id;
-}
-
-
-function getShopName(shop){
-
-  return shop.name || "Unknown shop";
-}
-
-
-function getShopLocation(shop){
-
-  return shop.location || "";
-}
-
-
-function getShopAddress(shop){
-
-  return shop.Address || "";
-}
-
-
-/* =====================================================
+/* ================================
    LOAD PRODUCTS
-===================================================== */
+================================ */
 
 async function loadProducts(){
 
@@ -509,7 +403,7 @@ async function loadProducts(){
   }catch(error){
 
     console.error(
-      "PRODUCTS ERROR:",
+      "PRODUCT ERROR:",
       error
     );
 
@@ -528,41 +422,9 @@ async function loadProducts(){
 }
 
 
-/* =====================================================
-   LOAD SHOPS
-   CONFIRMED COLUMNS:
-   shop_id,name,location,Address
-===================================================== */
-
-async function loadShops(){
-
-  try{
-
-    allShops =
-      await supabaseFetch(
-        "shops?select=shop_id,name,location,Address"
-      );
-
-    console.log(
-      "SHOPS LOADED:",
-      allShops
-    );
-
-  }catch(error){
-
-    console.error(
-      "SHOPS ERROR:",
-      error
-    );
-
-    allShops = [];
-  }
-}
-
-
-/* =====================================================
+/* ================================
    DISPLAY PRODUCTS
-===================================================== */
+================================ */
 
 function displayProducts(products){
 
@@ -591,12 +453,6 @@ function displayProducts(products){
 
   products.forEach(product => {
 
-    const name =
-      getProductName(product);
-
-    const category =
-      getProductCategory(product);
-
     const card =
       document.createElement("div");
 
@@ -606,12 +462,16 @@ function displayProducts(products){
     card.innerHTML = `
 
       <h3>
-        ${escapeHtml(name)}
+        ${escapeHtml(
+          getProductName(product)
+        )}
       </h3>
 
       <p>
         Category:
-        ${escapeHtml(category)}
+        ${escapeHtml(
+          getProductCategory(product)
+        )}
       </p>
 
       <button class="btn">
@@ -632,24 +492,9 @@ function displayProducts(products){
 }
 
 
-/* =====================================================
-   ESCAPE HTML
-===================================================== */
-
-function escapeHtml(value){
-
-  return String(value ?? "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-}
-
-
-/* =====================================================
+/* ================================
    SEARCH
-===================================================== */
+================================ */
 
 function searchProducts(){
 
@@ -675,15 +520,16 @@ function searchProducts(){
         name.includes(search) ||
         category.includes(search)
       );
+
     });
 
   displayProducts(filtered);
 }
 
 
-/* =====================================================
+/* ================================
    CATEGORY
-===================================================== */
+================================ */
 
 function filterCategory(category){
 
@@ -713,19 +559,13 @@ function filterCategory(category){
 }
 
 
-/* =====================================================
+/* ================================
    OPEN PRODUCT
-===================================================== */
+================================ */
 
 function openProduct(product){
 
   selectedProduct = product;
-
-  const name =
-    getProductName(product);
-
-  const category =
-    getProductCategory(product);
 
   document.getElementById(
     "detailsContent"
@@ -734,14 +574,18 @@ function openProduct(product){
     <div class="details-card">
 
       <h2>
-        ${escapeHtml(name)}
+        ${escapeHtml(
+          getProductName(product)
+        )}
       </h2>
 
       <p>
 
         <strong>Category:</strong>
 
-        ${escapeHtml(category)}
+        ${escapeHtml(
+          getProductCategory(product)
+        )}
 
       </p>
 
@@ -761,9 +605,43 @@ function openProduct(product){
 }
 
 
-/* =====================================================
+/* ================================
+   GET SHOP
+================================ */
+
+async function getShopById(shopId){
+
+  if(!shopId){
+
+    return null;
+  }
+
+  const result =
+    await supabaseFetch(
+
+      "shops" +
+      "?select=shop_id,name,location" +
+      "&shop_id=eq." +
+      encodeURIComponent(shopId)
+
+    );
+
+  if(
+    result &&
+    result.length > 0
+  ){
+
+    return result[0];
+
+  }
+
+  return null;
+}
+
+
+/* ================================
    COMPARE PRICES
-===================================================== */
+================================ */
 
 async function comparePrices(){
 
@@ -776,10 +654,8 @@ async function comparePrices(){
     return;
   }
 
-
   const productId =
     getProductId(selectedProduct);
-
 
   if(
     productId === undefined ||
@@ -792,7 +668,9 @@ async function comparePrices(){
     ).innerHTML = `
 
       <div class="message error">
+
         Product ID not found.
+
       </div>
 
     `;
@@ -818,31 +696,19 @@ async function comparePrices(){
 
   try{
 
-    /* =================================================
-       GET PRICES
-
-       CONFIRMED COLUMNS:
-       product_id
-       shop_id
-       price
-       available
-    ================================================= */
+    /* GET ALL PRICES FOR PRODUCT */
 
     const prices =
       await supabaseFetch(
+
         "product_prices" +
         "?select=product_id,shop_id,price,available" +
         "&product_id=eq." +
         encodeURIComponent(
           String(productId)
         )
+
       );
-
-
-    console.log(
-      "PRICE ROWS:",
-      prices
-    );
 
 
     if(
@@ -855,7 +721,9 @@ async function comparePrices(){
       ).innerHTML = `
 
         <div class="message">
+
           No prices found for this product.
+
         </div>
 
       `;
@@ -864,54 +732,14 @@ async function comparePrices(){
     }
 
 
-    /* =================================================
-       MAKE SHOP LOOKUP
-
-       product_prices.shop_id
-                    ↓
-              shops.shop_id
-                    ↓
-                shops.name
-    ================================================= */
-
-    const shopMap = {};
-
-
-    allShops.forEach(shop => {
-
-      const shopId =
-        String(
-          shop.shop_id ?? ""
-        )
-        .trim()
-        .toLowerCase();
-
-
-      if(shopId){
-
-        shopMap[shopId] = shop;
-
-      }
-
-    });
-
-
-    console.log(
-      "SHOP MAP:",
-      shopMap
-    );
-
-
-    /* =================================================
-       BUILD RESULTS
-    ================================================= */
+    /* GET SHOP INFORMATION */
 
     const results = [];
 
 
-    prices.forEach(item => {
-
-      /* CHECK AVAILABILITY */
+    for(
+      const item of prices
+    ){
 
       const available =
         item.available;
@@ -926,11 +754,9 @@ async function comparePrices(){
 
       if(!isAvailable){
 
-        return;
+        continue;
       }
 
-
-      /* PRICE */
 
       const price =
         Number(item.price);
@@ -938,66 +764,60 @@ async function comparePrices(){
 
       if(!Number.isFinite(price)){
 
-        return;
+        continue;
       }
 
-
-      /* SHOP UUID */
 
       const shopId =
         String(
           item.shop_id ?? ""
-        )
-        .trim()
-        .toLowerCase();
+        ).trim();
 
 
-      /* MATCH SHOP */
+      if(!shopId){
 
-      const shop =
-        shopMap[shopId];
+        continue;
+      }
 
 
-      console.log(
-        "PRICE SHOP ID:",
-        shopId
-      );
+      let shop = null;
 
-      console.log(
-        "MATCHED SHOP:",
-        shop
-      );
+
+      try{
+
+        shop =
+          await getShopById(shopId);
+
+      }catch(shopError){
+
+        console.error(
+          "SHOP LOOKUP ERROR:",
+          shopError
+        );
+
+      }
 
 
       results.push({
 
-        price:price,
+        shopId:shopId,
 
         shopName:
-          shop
-            ? getShopName(shop)
-            : "Unknown shop",
+          shop && shop.name
+          ? shop.name
+          : "Unknown shop",
 
         location:
-          shop
-            ? getShopLocation(shop)
-            : "",
+          shop && shop.location
+          ? shop.location
+          : "",
 
-        address:
-          shop
-            ? getShopAddress(shop)
-            : "",
-
-        shopId:shopId
+        price:price
 
       });
 
-    });
+    }
 
-
-    /* =================================================
-       NO RESULTS
-    ================================================= */
 
     if(results.length === 0){
 
@@ -1006,7 +826,9 @@ async function comparePrices(){
       ).innerHTML = `
 
         <div class="message">
+
           No available prices found.
+
         </div>
 
       `;
@@ -1015,9 +837,7 @@ async function comparePrices(){
     }
 
 
-    /* =================================================
-       SORT CHEAPEST FIRST
-    ================================================= */
+    /* CHEAPEST FIRST */
 
     results.sort(
       (a,b) =>
@@ -1025,9 +845,7 @@ async function comparePrices(){
     );
 
 
-    /* =================================================
-       BUILD HTML
-    ================================================= */
+    /* BUILD RESULT */
 
     let html = `
 
@@ -1077,38 +895,29 @@ async function comparePrices(){
               ${
                 item.location
                 ?
-                `<p>
+                `
+                <p>
                   📍 ${escapeHtml(
                     item.location
                   )}
-                </p>`
-                :
-                ""
-              }
-
-              ${
-                item.address
-                ?
-                `<p>
-                  ${escapeHtml(
-                    item.address
-                  )}
-                </p>`
+                </p>
+                `
                 :
                 ""
               }
 
             </div>
 
-
             <div class="comparison-price">
 
               ${
                 index === 0
                 ?
-                `<span>
+                `
+                <span>
                   🏆 Cheapest price
-                </span>`
+                </span>
+                `
                 :
                 ""
               }
@@ -1140,7 +949,6 @@ async function comparePrices(){
       error
     );
 
-
     document.getElementById(
       "comparisonContent"
     ).innerHTML = `
@@ -1165,13 +973,14 @@ async function comparePrices(){
       </div>
 
     `;
+
   }
 }
 
 
-/* =====================================================
-   SCREEN NAVIGATION
-===================================================== */
+/* ================================
+   NAVIGATION
+================================ */
 
 function showScreen(screenId){
 
@@ -1179,7 +988,9 @@ function showScreen(screenId){
     .querySelectorAll(".screen")
     .forEach(screen => {
 
-      screen.classList.remove("active");
+      screen.classList.remove(
+        "active"
+      );
 
     });
 
@@ -1192,7 +1003,9 @@ function showScreen(screenId){
 
   if(screen){
 
-    screen.classList.add("active");
+    screen.classList.add(
+      "active"
+    );
 
   }
 
@@ -1201,45 +1014,41 @@ function showScreen(screenId){
     top:0,
     behavior:"smooth"
   });
+
 }
 
 
 function showHome(){
 
-  showScreen("homeScreen");
+  showScreen(
+    "homeScreen"
+  );
 
 }
 
 
 function showDetails(){
 
-  showScreen("detailsScreen");
+  showScreen(
+    "detailsScreen"
+  );
 
 }
 
 
-/* =====================================================
-   START APP
-===================================================== */
-
-async function startApp(){
-
-  await Promise.all([
-
-    loadProducts(),
-
-    loadShops()
-
-  ]);
-
-}
-
+/* ================================
+   START
+================================ */
 
 startApp();
 
-</script>
 
-</body>
+async function startApp(){
+
+  await loadProducts();
+
+}
+
+</script></body>
 </html>
 
-This is now based on the actual database structure you verified, including the confirmed "Choppies" UUID relationship.
