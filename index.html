@@ -175,7 +175,6 @@
     }
 
     @media (max-width: 600px) {
-
       .hero h1 {
         font-size: 32px;
       }
@@ -195,7 +194,6 @@
 <body>
 
 <header>
-
   <div class="logo">
     GET-IT <span>🇧🇼</span>
   </div>
@@ -203,15 +201,12 @@
   <div class="location">
     📍 Gaborone
   </div>
-
 </header>
 
 
 <section class="hero">
 
-  <h1>
-    Find it. Compare it. Get it.
-  </h1>
+  <h1>Find it. Compare it. Get it.</h1>
 
   <p>
     Find products in Gaborone, compare prices and check availability.
@@ -236,9 +231,7 @@
 
 <section class="section">
 
-  <h2>
-    Browse Categories
-  </h2>
+  <h2>Browse Categories</h2>
 
   <div class="categories">
 
@@ -293,7 +286,7 @@
 
 <section class="section">
 
-  <h2>
+  <h2 id="productsTitle">
     Popular Products
   </h2>
 
@@ -301,11 +294,9 @@
     class="products"
     id="products"
   >
-
     <div class="message">
       Loading products...
     </div>
-
   </div>
 
 </section>
@@ -313,9 +304,7 @@
 
 <footer>
 
-  <p>
-    GET-IT 🇧🇼
-  </p>
+  <p>GET-IT 🇧🇼</p>
 
   <p>
     Helping Botswana find products, compare prices and save time.
@@ -345,6 +334,20 @@ let selectedCategory = "";
 
 
 /* =========================
+   NORMALIZE TEXT
+========================= */
+
+function normalize(value) {
+
+  return String(value || "")
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, " ");
+
+}
+
+
+/* =========================
    LOAD PRODUCTS
 ========================= */
 
@@ -357,6 +360,7 @@ async function loadProducts() {
 
     const controller =
       new AbortController();
+
 
     const timeout =
       setTimeout(function() {
@@ -402,12 +406,6 @@ async function loadProducts() {
 
     if (!response.ok) {
 
-      console.error(
-        "Supabase error:",
-        response.status,
-        text
-      );
-
       container.innerHTML =
 
         `<div class="message error">
@@ -415,6 +413,12 @@ async function loadProducts() {
           <br><br>
           Status: ${response.status}
         </div>`;
+
+      console.error(
+        "Supabase error:",
+        response.status,
+        text
+      );
 
       return;
 
@@ -425,14 +429,8 @@ async function loadProducts() {
       JSON.parse(text);
 
 
-    console.log(
-      "Products loaded:",
-      allProducts
-    );
-
-
     if (
-      !allProducts ||
+      !Array.isArray(allProducts) ||
       allProducts.length === 0
     ) {
 
@@ -447,6 +445,12 @@ async function loadProducts() {
     }
 
 
+    console.log(
+      "Products loaded:",
+      allProducts
+    );
+
+
     renderProducts();
 
   }
@@ -455,7 +459,7 @@ async function loadProducts() {
   catch (error) {
 
     console.error(
-      "Connection error:",
+      "Database connection error:",
       error
     );
 
@@ -469,7 +473,7 @@ async function loadProducts() {
         `<div class="message error">
           <strong>Database connection timed out.</strong>
           <br><br>
-          Please check your Supabase connection.
+          Please try again.
         </div>`;
 
     }
@@ -479,7 +483,7 @@ async function loadProducts() {
       container.innerHTML =
 
         `<div class="message error">
-          <strong>Could not connect to the database.</strong>
+          <strong>Could not connect to database.</strong>
           <br><br>
           ${error.message}
         </div>`;
@@ -492,7 +496,7 @@ async function loadProducts() {
 
 
 /* =========================
-   DISPLAY PRODUCTS
+   RENDER PRODUCTS
 ========================= */
 
 function renderProducts() {
@@ -501,40 +505,60 @@ function renderProducts() {
     document.getElementById("products");
 
 
+  const title =
+    document.getElementById("productsTitle");
+
+
   let products =
-    allProducts;
+    [...allProducts];
 
 
-  /* Category filter */
+  /* CATEGORY FILTER */
 
   if (
     selectedCategory !== ""
   ) {
 
+    const wantedCategory =
+      normalize(selectedCategory);
+
+
     products =
       products.filter(function(product) {
 
+        const productCategory =
+          normalize(product.Category);
+
+
         return (
-          String(
-            product.Category || ""
-          ).toLowerCase()
-          ===
-          selectedCategory.toLowerCase()
+          productCategory ===
+          wantedCategory
         );
 
       });
 
+
+    title.textContent =
+      selectedCategory;
+
+  }
+
+  else {
+
+    title.textContent =
+      "Popular Products";
+
   }
 
 
-  /* Search filter */
+  /* SEARCH FILTER */
 
   const search =
-    document
-      .getElementById("searchInput")
-      .value
-      .trim()
-      .toLowerCase();
+    normalize(
+      document.getElementById(
+        "searchInput"
+      ).value
+    );
 
 
   if (search !== "") {
@@ -542,18 +566,25 @@ function renderProducts() {
     products =
       products.filter(function(product) {
 
-        return String(
-          product.Name || ""
-        )
-        .toLowerCase()
-        .includes(search);
+        const name =
+          normalize(product.Name);
+
+
+        const brand =
+          normalize(product.Brand);
+
+
+        return (
+          name.includes(search) ||
+          brand.includes(search)
+        );
 
       });
 
   }
 
 
-  /* Nothing found */
+  /* NO RESULTS */
 
   if (
     products.length === 0
@@ -562,7 +593,7 @@ function renderProducts() {
     container.innerHTML =
 
       `<div class="message">
-        No products found in this category.
+        No products found.
       </div>`;
 
     return;
@@ -570,10 +601,12 @@ function renderProducts() {
   }
 
 
+  /* CLEAR OLD PRODUCTS */
+
   container.innerHTML = "";
 
 
-  /* Create product cards */
+  /* DISPLAY PRODUCTS */
 
   products.forEach(function(product) {
 
@@ -636,12 +669,13 @@ function showCategory(
 ) {
 
   /*
-    If the same category is
-    clicked again, turn it off.
+    Clicking the same category
+    again removes the filter.
   */
 
   if (
-    selectedCategory === category
+    normalize(selectedCategory) ===
+    normalize(category)
   ) {
 
     selectedCategory = "";
@@ -656,10 +690,7 @@ function showCategory(
   }
 
 
-  /*
-    Remove active style
-    from every category.
-  */
+  /* Remove active state */
 
   document
     .querySelectorAll(".category")
@@ -672,9 +703,7 @@ function showCategory(
     });
 
 
-  /*
-    Highlight selected category.
-  */
+  /* Add active state */
 
   if (
     selectedCategory !== ""
@@ -687,9 +716,7 @@ function showCategory(
   }
 
 
-  /*
-    Display products again.
-  */
+  /* Show correct products */
 
   renderProducts();
 
