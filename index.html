@@ -142,13 +142,6 @@
       border-radius: 16px;
       padding: 20px;
       border: 1px solid #e5e7eb;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-
-    .product:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
     }
 
     .product h3 {
@@ -163,7 +156,7 @@
     .view-price {
       margin-top: 18px;
       width: 100%;
-      padding: 12px;
+      padding: 13px;
       border: none;
       border-radius: 10px;
       background: #1d4ed8;
@@ -196,14 +189,13 @@
       border-radius: 16px;
       padding: 25px;
       border: 1px solid #e5e7eb;
-      margin-bottom: 20px;
     }
 
     .comparison-card h2 {
       margin-bottom: 8px;
     }
 
-    .comparison-card .product-info {
+    .product-info {
       color: #596579;
       margin-bottom: 25px;
     }
@@ -269,7 +261,6 @@
     }
 
     @media (max-width: 600px) {
-
       .hero h1 {
         font-size: 32px;
       }
@@ -282,14 +273,6 @@
       .search-box button {
         padding: 14px;
       }
-
-      .shop-price {
-        padding: 14px;
-      }
-
-      .price {
-        font-size: 17px;
-      }
     }
   </style>
 </head>
@@ -297,7 +280,6 @@
 <body>
 
 <header>
-
   <div class="logo">
     GET-IT <span>🇧🇼</span>
   </div>
@@ -305,9 +287,7 @@
   <div class="location">
     📍 Gaborone
   </div>
-
 </header>
-
 
 <section class="hero">
 
@@ -332,7 +312,6 @@
   </div>
 
 </section>
-
 
 <section class="section">
 
@@ -384,9 +363,6 @@
 
 </section>
 
-
-<!-- PRODUCTS -->
-
 <section
   class="section"
   id="productsSection"
@@ -409,9 +385,6 @@
 
 </section>
 
-
-<!-- PRICE COMPARISON -->
-
 <section
   class="section comparison"
   id="comparisonSection"
@@ -424,12 +397,9 @@
     ← Back to Products
   </button>
 
-  <div
-    id="comparisonContent"
-  ></div>
+  <div id="comparisonContent"></div>
 
 </section>
-
 
 <footer>
 
@@ -447,7 +417,6 @@
 
 </footer>
 
-
 <script>
 
 const SUPABASE_URL =
@@ -458,12 +427,11 @@ const SUPABASE_KEY =
 
 
 let allProducts = [];
-
 let selectedCategory = "";
 
 
 /* =========================
-   NORMALIZE TEXT
+   NORMALIZE
 ========================= */
 
 function normalize(value) {
@@ -487,45 +455,18 @@ async function loadProducts() {
 
   try {
 
-    const controller =
-      new AbortController();
-
-    const timeout =
-      setTimeout(function() {
-
-        controller.abort();
-
-      }, 10000);
-
-
     const response =
       await fetch(
-
         SUPABASE_URL +
         "/rest/v1/products?select=*",
-
         {
           method: "GET",
-
           headers: {
-
-            "apikey":
-              SUPABASE_KEY,
-
-            "Authorization":
-              "Bearer " + SUPABASE_KEY
-
-          },
-
-          signal:
-            controller.signal
-
+            "apikey": SUPABASE_KEY,
+            "Authorization": "Bearer " + SUPABASE_KEY
+          }
         }
-
       );
-
-
-    clearTimeout(timeout);
 
 
     const text =
@@ -534,20 +475,16 @@ async function loadProducts() {
 
     if (!response.ok) {
 
-      container.innerHTML =
-
-        `<div class="message error">
-
+      container.innerHTML = `
+        <div class="message error">
           <strong>Database error</strong>
-
           <br><br>
-
           Status: ${response.status}
-
-        </div>`;
+        </div>
+      `;
 
       console.error(
-        "Supabase error:",
+        "Product error:",
         response.status,
         text
       );
@@ -561,79 +498,19 @@ async function loadProducts() {
       JSON.parse(text);
 
 
-    if (
-      !Array.isArray(allProducts) ||
-      allProducts.length === 0
-    ) {
-
-      container.innerHTML =
-
-        `<div class="message">
-
-          No products found.
-
-        </div>`;
-
-      return;
-
-    }
-
-
-    console.log(
-      "Products loaded:",
-      allProducts
-    );
-
-
     renderProducts();
 
   }
 
   catch (error) {
 
-    console.error(
-      "Database connection error:",
-      error
-    );
-
-
-    if (
-      error.name === "AbortError"
-    ) {
-
-      container.innerHTML =
-
-        `<div class="message error">
-
-          <strong>
-            Database connection timed out.
-          </strong>
-
-          <br><br>
-
-          Please try again.
-
-        </div>`;
-
-    }
-
-    else {
-
-      container.innerHTML =
-
-        `<div class="message error">
-
-          <strong>
-            Could not connect to database.
-          </strong>
-
-          <br><br>
-
-          ${error.message}
-
-        </div>`;
-
-    }
+    container.innerHTML = `
+      <div class="message error">
+        <strong>Could not connect to database.</strong>
+        <br><br>
+        ${error.message}
+      </div>
+    `;
 
   }
 
@@ -657,11 +534,7 @@ function renderProducts() {
     [...allProducts];
 
 
-  /* CATEGORY FILTER */
-
-  if (
-    selectedCategory !== ""
-  ) {
+  if (selectedCategory !== "") {
 
     const wantedCategory =
       normalize(selectedCategory);
@@ -670,14 +543,8 @@ function renderProducts() {
     products =
       products.filter(function(product) {
 
-        const productCategory =
-          normalize(product.Category);
-
-
-        return (
-          productCategory ===
-          wantedCategory
-        );
+        return normalize(product.Category) ===
+          wantedCategory;
 
       });
 
@@ -695,13 +562,9 @@ function renderProducts() {
   }
 
 
-  /* SEARCH FILTER */
-
   const search =
     normalize(
-      document.getElementById(
-        "searchInput"
-      ).value
+      document.getElementById("searchInput").value
     );
 
 
@@ -710,16 +573,9 @@ function renderProducts() {
     products =
       products.filter(function(product) {
 
-        const name =
-          normalize(product.Name);
-
-        const brand =
-          normalize(product.Brand);
-
-
         return (
-          name.includes(search) ||
-          brand.includes(search)
+          normalize(product.Name).includes(search) ||
+          normalize(product.Brand).includes(search)
         );
 
       });
@@ -727,31 +583,21 @@ function renderProducts() {
   }
 
 
-  /* NO RESULTS */
+  if (products.length === 0) {
 
-  if (
-    products.length === 0
-  ) {
-
-    container.innerHTML =
-
-      `<div class="message">
-
+    container.innerHTML = `
+      <div class="message">
         No products found.
-
-      </div>`;
+      </div>
+    `;
 
     return;
 
   }
 
 
-  /* CLEAR OLD PRODUCTS */
-
   container.innerHTML = "";
 
-
-  /* DISPLAY PRODUCTS */
 
   products.forEach(function(product) {
 
@@ -812,7 +658,7 @@ function renderProducts() {
 
 
 /* =========================
-   CATEGORY BUTTON
+   CATEGORY
 ========================= */
 
 function showCategory(
@@ -841,20 +687,14 @@ function showCategory(
     .querySelectorAll(".category")
     .forEach(function(item) {
 
-      item.classList.remove(
-        "active"
-      );
+      item.classList.remove("active");
 
     });
 
 
-  if (
-    selectedCategory !== ""
-  ) {
+  if (selectedCategory !== "") {
 
-    button.classList.add(
-      "active"
-    );
+    button.classList.add("active");
 
   }
 
@@ -884,7 +724,7 @@ document
 
 
 /* =========================
-   OPEN PRICE COMPARISON
+   OPEN COMPARISON
 ========================= */
 
 async function openComparison(productId) {
@@ -901,7 +741,6 @@ async function openComparison(productId) {
   if (!product) {
 
     alert("Product not found.");
-
     return;
 
   }
@@ -917,13 +756,13 @@ async function openComparison(productId) {
     .style.display = "block";
 
 
-  const comparisonContent =
+  const content =
     document.getElementById(
       "comparisonContent"
     );
 
 
-  comparisonContent.innerHTML = `
+  content.innerHTML = `
 
     <div class="comparison-card">
 
@@ -939,9 +778,7 @@ async function openComparison(productId) {
       </div>
 
       <div class="message">
-
         Loading prices...
-
       </div>
 
     </div>
@@ -951,7 +788,9 @@ async function openComparison(productId) {
 
   try {
 
-    const response =
+    /* Get prices */
+
+    const priceResponse =
       await fetch(
 
         SUPABASE_URL +
@@ -965,13 +804,8 @@ async function openComparison(productId) {
           method: "GET",
 
           headers: {
-
-            "apikey":
-              SUPABASE_KEY,
-
-            "Authorization":
-              "Bearer " + SUPABASE_KEY
-
+            "apikey": SUPABASE_KEY,
+            "Authorization": "Bearer " + SUPABASE_KEY
           }
 
         }
@@ -979,22 +813,22 @@ async function openComparison(productId) {
       );
 
 
-    const text =
-      await response.text();
+    const priceText =
+      await priceResponse.text();
 
 
-    if (!response.ok) {
+    if (!priceResponse.ok) {
 
       throw new Error(
         "Price database error: " +
-        response.status
+        priceResponse.status
       );
 
     }
 
 
     const prices =
-      JSON.parse(text);
+      JSON.parse(priceText);
 
 
     if (
@@ -1002,25 +836,21 @@ async function openComparison(productId) {
       prices.length === 0
     ) {
 
-      comparisonContent.innerHTML = `
+      content.innerHTML = `
 
         <div class="comparison-card">
 
           <h2>
-            ${product.Name || "Product"}
+            ${product.Name}
           </h2>
 
           <div class="product-info">
-
-            ${product.Brand || "Brand not listed"}
+            ${product.Brand || ""}
             ${product.Size ? " • " + product.Size : ""}
-
           </div>
 
           <div class="message">
-
-            No prices available for this product yet.
-
+            No prices available yet.
           </div>
 
         </div>
@@ -1033,7 +863,9 @@ async function openComparison(productId) {
 
 
     /*
-      Load shop information
+      IMPORTANT:
+      Your shops table uses Shop_id,
+      not id.
     */
 
     const shopIds =
@@ -1060,7 +892,7 @@ async function openComparison(productId) {
         SUPABASE_URL +
         "/rest/v1/shops" +
         "?select=*" +
-        "&id=in.(" +
+        "&Shop_id=in.(" +
         shopQuery +
         ")",
 
@@ -1068,13 +900,8 @@ async function openComparison(productId) {
           method: "GET",
 
           headers: {
-
-            "apikey":
-              SUPABASE_KEY,
-
-            "Authorization":
-              "Bearer " + SUPABASE_KEY
-
+            "apikey": SUPABASE_KEY,
+            "Authorization": "Bearer " + SUPABASE_KEY
           }
 
         }
@@ -1101,16 +928,16 @@ async function openComparison(productId) {
 
 
     /*
-      Combine shops and prices
+      Match prices to shops
     */
 
     const comparison =
       prices.map(function(priceItem) {
 
         const shop =
-          shops.find(function(item) {
+          shops.find(function(shopItem) {
 
-            return String(item.id) ===
+            return String(shopItem.Shop_id) ===
               String(priceItem.shop_id);
 
           });
@@ -1120,18 +947,11 @@ async function openComparison(productId) {
 
           shopName:
             shop
-              ? (
-                  shop.name ||
-                  shop.Name ||
-                  "Shop"
-                )
-              : "Shop",
+              ? shop.Name
+              : "Unknown shop",
 
           price:
-            Number(priceItem.price),
-
-          available:
-            priceItem.available
+            Number(priceItem.price)
 
         };
 
@@ -1139,7 +959,7 @@ async function openComparison(productId) {
 
 
     /*
-      Find cheapest price
+      Find cheapest
     */
 
     const cheapest =
@@ -1178,9 +998,7 @@ async function openComparison(productId) {
           <div>
 
             <div class="shop-name">
-
               🏪 ${item.shopName}
-
             </div>
 
             ${
@@ -1192,9 +1010,7 @@ async function openComparison(productId) {
           </div>
 
           <div class="price">
-
             P${item.price.toFixed(2)}
-
           </div>
 
         </div>
@@ -1204,12 +1020,12 @@ async function openComparison(productId) {
     });
 
 
-    comparisonContent.innerHTML = `
+    content.innerHTML = `
 
       <div class="comparison-card">
 
         <h2>
-          ${product.Name || "Product"}
+          ${product.Name}
         </h2>
 
         <div class="product-info">
@@ -1238,10 +1054,7 @@ async function openComparison(productId) {
           "
         >
 
-          💰 <strong>
-            Cheapest price:
-          </strong>
-
+          💰 <strong>Cheapest price:</strong>
           P${cheapest.toFixed(2)}
 
         </div>
@@ -1260,12 +1073,12 @@ async function openComparison(productId) {
     );
 
 
-    comparisonContent.innerHTML = `
+    content.innerHTML = `
 
       <div class="comparison-card">
 
         <h2>
-          ${product.Name || "Product"}
+          ${product.Name}
         </h2>
 
         <div class="message error">
@@ -1290,7 +1103,7 @@ async function openComparison(productId) {
 
 
 /* =========================
-   BACK TO PRODUCTS
+   BACK
 ========================= */
 
 function backToProducts() {
