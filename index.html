@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 <meta name="google-site-verification"
 content="rlliAywpbxUwN2l7xzJGWsbDwZk13me4HBk1WEP7xnw">
@@ -57,12 +57,8 @@ animation:floatFood 8s ease-in-out infinite;
 .food4{right:8%;bottom:8%;animation-delay:3s}
 
 @keyframes floatFood{
-0%,100%{
-transform:translateY(0) rotate(0deg);
-}
-50%{
-transform:translateY(-18px) rotate(7deg);
-}
+0%,100%{transform:translateY(0) rotate(0deg)}
+50%{transform:translateY(-18px) rotate(7deg)}
 }
 
 header{
@@ -125,11 +121,7 @@ padding:20px;
 }
 
 .hero{
-background:linear-gradient(
-135deg,
-#0b7a3b,
-#159653
-);
+background:linear-gradient(135deg,#0b7a3b,#159653);
 color:white;
 padding:25px;
 border-radius:18px;
@@ -221,12 +213,7 @@ display:flex;
 align-items:center;
 justify-content:center;
 font-size:68px;
-background:
-linear-gradient(
-135deg,
-#e9f8ef,
-#f8fbf9
-);
+background:linear-gradient(135deg,#e9f8ef,#f8fbf9);
 overflow:hidden;
 position:relative;
 }
@@ -463,7 +450,6 @@ text-align:center;
 }
 
 @media(max-width:600px){
-
 header{
 align-items:flex-start;
 }
@@ -494,7 +480,6 @@ height:115px;
 .food-orb{
 font-size:52px;
 }
-
 }
 </style>
 </head>
@@ -502,44 +487,33 @@ font-size:52px;
 <body>
 
 <div class="decor">
-<div id="food1" class="food-orb food1">🍛</div>
-<div id="food2" class="food-orb food2">🍕</div>
-<div id="food3" class="food-orb food3">🥗</div>
-<div id="food4" class="food-orb food4">🍔</div>
+<div class="food-orb food1">🍛</div>
+<div class="food-orb food2">🍕</div>
+<div class="food-orb food3">🥗</div>
+<div class="food-orb food4">🍔</div>
 </div>
 
 <header>
 
-<div class="logo" onclick="showHome()">
+<div class="logo" id="logoButton">
 Get-It 🇧🇼
 </div>
 
 <div class="header-actions">
 
-<button class="header-btn"
-onclick="showAccount()">
+<button class="header-btn" id="accountButton">
 👤 Account
 </button>
 
-<button class="header-btn"
-onclick="showShoppingList()">
-
+<button class="header-btn" id="listButton">
 🛒 My List
-
-<span id="listCount"
-class="list-badge">
-0
-</span>
-
+<span id="listCount" class="list-badge">0</span>
 </button>
 
 </div>
-
 </header>
 
-<main class="container"
-id="app">
-</main>
+<main class="container" id="app"></main>
 
 <footer>
 Get-It 🇧🇼 — Find. Compare. Get.
@@ -551,13 +525,13 @@ Get-It 🇧🇼 — Find. Compare. Get.
 SUPABASE
 ===================================================== */
 
-const SUPABASE_URL =
+const SUPABASE_URL=
 "https://snjrlhkmixiamgqhfhug.supabase.co";
 
-const SUPABASE_KEY =
+const SUPABASE_KEY=
 "sb_publishable_3jRUAQ88ntmpnA42QwTuew_TJ7NYgFw";
 
-const supabaseAuth =
+const supabaseAuth=
 window.supabase.createClient(
 SUPABASE_URL,
 SUPABASE_KEY
@@ -574,8 +548,34 @@ let currentCategory="All";
 let currentProduct=null;
 let shoppingList=[];
 
-const STORAGE_KEY=
-"getit_shopping_list";
+const STORAGE_KEY="getit_shopping_list";
+
+
+/* =====================================================
+HEADER BUTTONS
+===================================================== */
+
+document
+.getElementById("accountButton")
+.addEventListener("click",function(e){
+e.preventDefault();
+e.stopPropagation();
+showAccount();
+});
+
+document
+.getElementById("listButton")
+.addEventListener("click",function(e){
+e.preventDefault();
+e.stopPropagation();
+showShoppingList();
+});
+
+document
+.getElementById("logoButton")
+.addEventListener("click",function(){
+showHome();
+});
 
 
 /* =====================================================
@@ -598,9 +598,9 @@ function money(value){
 const n=Number(value);
 
 if(!Number.isFinite(n))
-return"P0.00";
+return "P0.00";
 
-return"P"+n.toFixed(2);
+return "P"+n.toFixed(2);
 
 }
 
@@ -699,7 +699,7 @@ shop.Location ??
 
 
 /* =====================================================
-SMART GROCERY DETECTION
+GROCERY DETECTION
 ===================================================== */
 
 function isGroceryProduct(product){
@@ -711,10 +711,6 @@ getProductCategory(product)
 
 const name=
 getProductName(product)
-.toLowerCase();
-
-const brand=
-getProductBrand(product)
 .toLowerCase();
 
 const groceryCategories=[
@@ -769,7 +765,6 @@ const foodWords=[
 "sugar",
 "salt",
 "oil",
-"cooking oil",
 "water",
 "juice",
 "drink",
@@ -805,24 +800,2857 @@ const foodWords=[
 "burger"
 ];
 
-if(
-foodWords.some(
+return foodWords.some(
 word=>name.includes(word)
-)
-){
-return true;
-}
-
-return false;
+);
 
 }
 
 
 /* =====================================================
-PRODUCT VISUAL
+PRODUCT EMOJI
 ===================================================== */
 
 function getProductEmoji(product){
 
+const name=
+getProductName(product)
+.toLowerCase();
+
 const category=
-getProductCategory
+getProductCategory(product)
+.toLowerCase();
+
+if(name.includes("milk")||category.includes("dairy")) return "🥛";
+if(name.includes("bread")) return "🍞";
+if(name.includes("rice")) return "🍚";
+if(name.includes("chicken")) return "🍗";
+if(name.includes("beef")) return "🥩";
+if(name.includes("fish")) return "🐟";
+if(name.includes("egg")) return "🥚";
+if(name.includes("apple")) return "🍎";
+if(name.includes("banana")) return "🍌";
+if(name.includes("orange")) return "🍊";
+if(name.includes("pizza")) return "🍕";
+if(name.includes("burger")) return "🍔";
+if(name.includes("cake")) return "🍰";
+if(name.includes("coffee")) return "☕";
+if(name.includes("tea")) return "🍵";
+if(name.includes("water")) return "💧";
+if(name.includes("juice")) return "🧃";
+if(name.includes("oil")) return "🫗";
+if(name.includes("flour")) return "🌾";
+if(name.includes("sugar")) return "🍬";
+if(name.includes("chips")) return "🍟";
+if(name.includes("biscuit")) return "🍪";
+
+if(
+category.includes("food")||
+category.includes("grocery")||
+category.includes("groceries")
+){
+return "🛒";
+}
+
+if(category.includes("electronics")) return "📱";
+if(category.includes("clothing")) return "👕";
+if(category.includes("household")) return "🏠";
+
+return "🛍️";
+
+}
+
+
+/* =====================================================
+SUPABASE FETCH
+===================================================== */
+
+async function supabaseFetch(path,options={}){
+
+const response=
+await fetch(
+`${SUPABASE_URL}/rest/v1/${path}`,
+{
+...options,
+headers:{
+"apikey":SUPABASE_KEY,
+"Authorization":`Bearer ${SUPABASE_KEY}`,
+"Content-Type":"application/json",
+...(options.headers||{})
+}
+}
+);
+
+if(!response.ok){
+
+const text=await response.text();
+
+throw new Error(
+text||`Supabase error ${response.status}`
+);
+
+}
+
+const text=await response.text();
+
+return text?JSON.parse(text):[];
+
+}
+
+
+/* =====================================================
+SHOPPING LIST STORAGE
+===================================================== */
+
+function saveShoppingList(){
+
+localStorage.setItem(
+STORAGE_KEY,
+JSON.stringify(shoppingList)
+);
+
+}
+
+function loadSavedShoppingList(){
+
+try{
+
+const saved=
+localStorage.getItem(STORAGE_KEY);
+
+if(!saved){
+shoppingList=[];
+return;
+}
+
+const parsed=JSON.parse(saved);
+
+if(Array.isArray(parsed)){
+
+shoppingList=
+parsed
+.filter(
+item=>
+item &&
+item.product &&
+Number(item.quantity)>0
+)
+.map(item=>({
+product:item.product,
+quantity:Math.max(
+1,
+Number(item.quantity)
+)
+}));
+
+}else{
+
+shoppingList=[];
+
+}
+
+}catch(error){
+
+console.error(error);
+shoppingList=[];
+
+}
+
+}
+
+function updateListCount(){
+
+const count=
+shoppingList.reduce(
+(sum,item)=>
+sum+Number(item.quantity||0),
+0
+);
+
+const badge=
+document.getElementById("listCount");
+
+if(badge)
+badge.textContent=count;
+
+}
+
+
+/* =====================================================
+AUTH
+===================================================== */
+
+async function getCurrentUser(){
+
+try{
+
+const {data,error}=
+await supabaseAuth.auth.getUser();
+
+if(error)
+return null;
+
+return data.user||null;
+
+}catch(error){
+
+return null;
+
+}
+
+}
+
+function showAuthMessage(message,success=false){
+
+const box=
+document.getElementById("authMessage");
+
+if(!box)
+return;
+
+box.innerHTML=`
+<div class="status"
+style="color:${success?"#0b7a3b":"#d32f2f"}">
+${escapeHtml(message)}
+</div>
+`;
+
+}
+
+async function signUp(){
+
+const email=
+document.getElementById("authEmail")
+.value.trim();
+
+const password=
+document.getElementById("authPassword")
+.value;
+
+if(!email||!password){
+
+showAuthMessage(
+"Please enter your email and password."
+);
+
+return;
+}
+
+if(password.length<6){
+
+showAuthMessage(
+"Password must be at least 6 characters."
+);
+
+return;
+}
+
+const {data,error}=
+await supabaseAuth.auth.signUp({
+email,
+password
+});
+
+if(error){
+
+showAuthMessage(error.message);
+return;
+
+}
+
+if(data.user){
+
+showAuthMessage(
+"Account created successfully. Check your email if confirmation is required.",
+true
+);
+
+}
+
+}
+
+async function signIn(){
+
+const email=
+document.getElementById("authEmail")
+.value.trim();
+
+const password=
+document.getElementById("authPassword")
+.value;
+
+if(!email||!password){
+
+showAuthMessage(
+"Please enter your email and password."
+);
+
+return;
+}
+
+const {data,error}=
+await supabaseAuth.auth.signInWithPassword({
+email,
+password
+});
+
+if(error){
+
+showAuthMessage(error.message);
+return;
+
+}
+
+if(data.user){
+
+showAccount();
+
+}
+
+}
+
+async function signOut(){
+
+const {error}=
+await supabaseAuth.auth.signOut();
+
+if(error){
+
+alert(error.message);
+return;
+
+}
+
+showAccount();
+
+}
+
+
+/* =====================================================
+CLOUD LIST
+===================================================== */
+
+async function saveCloudShoppingList(){
+
+const user=
+await getCurrentUser();
+
+if(!user)
+return;
+
+try{
+
+const existing=
+await supabaseFetch(
+`shopping_lists?select=*&user_id=eq.${encodeURIComponent(user.id)}&limit=1`
+);
+
+const payload={
+user_id:user.id,
+items:shoppingList,
+updated_at:new Date().toISOString()
+};
+
+if(
+Array.isArray(existing)&&
+existing.length
+){
+
+await supabaseFetch(
+`shopping_lists?id=eq.${encodeURIComponent(existing[0].id)}`,
+{
+method:"PATCH",
+headers:{
+"Prefer":"return=minimal"
+},
+body:JSON.stringify({
+items:shoppingList,
+updated_at:new Date().toISOString()
+})
+}
+);
+
+}else{
+
+await supabaseFetch(
+"shopping_lists",
+{
+method:"POST",
+headers:{
+"Prefer":"return=minimal"
+},
+body:JSON.stringify(payload)
+}
+);
+
+}
+
+}catch(error){
+
+console.error(
+"CLOUD SAVE ERROR:",
+error
+);
+
+}
+
+}
+
+async function syncCloudShoppingList(){
+
+const user=
+await getCurrentUser();
+
+if(!user)
+return;
+
+try{
+
+const cloud=
+await supabaseFetch(
+`shopping_lists?select=*&user_id=eq.${encodeURIComponent(user.id)}&limit=1`
+);
+
+if(
+Array.isArray(cloud)&&
+cloud.length&&
+Array.isArray(cloud[0].items)
+){
+
+if(cloud[0].items.length){
+
+shoppingList=cloud[0].items
+.filter(
+item=>
+item &&
+item.product &&
+Number(item.quantity)>0
+)
+.map(item=>({
+product:item.product,
+quantity:Number(item.quantity)
+}));
+
+saveShoppingList();
+
+}
+
+}else if(shoppingList.length){
+
+await saveCloudShoppingList();
+
+}
+
+updateListCount();
+
+}catch(error){
+
+console.error(
+"CLOUD SYNC ERROR:",
+error
+);
+
+}
+
+}
+
+
+/* =====================================================
+LOAD PRODUCTS
+===================================================== */
+
+async function loadProducts(){
+
+try{
+
+const data=
+await supabaseFetch(
+"products?select=*"
+);
+
+allProducts=
+Array.isArray(data)?data:[];
+
+console.log(
+"PRODUCTS:",
+allProducts
+);
+
+}catch(error){
+
+console.error(
+"PRODUCT ERROR:",
+error
+);
+
+allProducts=[];
+
+}
+
+}
+
+
+/* =====================================================
+LOAD SHOPS
+===================================================== */
+
+async function loadShops(){
+
+try{
+
+const data=
+await supabaseFetch(
+"shops?select=*"
+);
+
+allShops=
+Array.isArray(data)?data:[];
+
+console.log(
+"SHOPS:",
+allShops
+);
+
+}catch(error){
+
+console.error(
+"SHOP ERROR:",
+error
+);
+
+allShops=[];
+
+}
+
+}
+
+
+/* =====================================================
+HOME
+===================================================== */
+
+function showHome(){
+
+document.getElementById("app").innerHTML=`
+
+<div class="hero">
+
+<h1>
+Find it. Compare it. Get it.
+</h1>
+
+<p>
+Compare prices from shops in Botswana
+and find the best deals before you buy.
+</p>
+
+<div class="hero-food">
+🛒
+</div>
+
+</div>
+
+<input
+id="searchInput"
+class="search-box"
+placeholder="🔎 Search products, brands or sizes..."
+>
+
+<div id="categories"
+class="categories">
+</div>
+
+<div class="home-tools">
+
+<div class="tool-card"
+id="dealsTool">
+
+<h2>🔥 Best Deals</h2>
+
+<p style="margin-top:8px;color:#777;">
+Find products with the biggest price differences.
+</p>
+
+</div>
+
+<div class="tool-card"
+id="shopsTool">
+
+<h2>📍 Nearby Shops</h2>
+
+<p style="margin-top:8px;color:#777;">
+Find shops close to your location.
+</p>
+
+</div>
+
+<div class="tool-card"
+id="listTool">
+
+<h2>🛒 My Shopping List</h2>
+
+<p style="margin-top:8px;color:#777;">
+Build your list and find the cheapest basket.
+</p>
+
+</div>
+
+</div>
+
+<section class="section">
+
+<div class="section-title">
+<h2>🔥 Best Deals</h2>
+
+<button
+class="primary-btn"
+id="viewDealsButton">
+View All
+</button>
+
+</div>
+
+<div
+id="dealsPreview"
+class="deals-grid">
+</div>
+
+</section>
+
+<section class="section">
+
+<div class="section-title">
+<h2>📍 Shops</h2>
+
+<button
+class="primary-btn"
+id="nearbyButton">
+Find Nearby
+</button>
+
+</div>
+
+<div
+id="shopsPreview"
+class="shop-grid">
+</div>
+
+</section>
+
+<section class="section">
+
+<h2 style="margin-bottom:12px;">
+Products
+</h2>
+
+<div
+id="productsContainer"
+class="products-grid">
+</div>
+
+</section>
+`;
+
+document
+.getElementById("searchInput")
+.addEventListener(
+"input",
+filterProducts
+);
+
+document
+.getElementById("dealsTool")
+.addEventListener(
+"click",
+showDeals
+);
+
+document
+.getElementById("shopsTool")
+.addEventListener(
+"click",
+showNearbyShops
+);
+
+document
+.getElementById("listTool")
+.addEventListener(
+"click",
+showShoppingList
+);
+
+document
+.getElementById("viewDealsButton")
+.addEventListener(
+"click",
+showDeals
+);
+
+document
+.getElementById("nearbyButton")
+.addEventListener(
+"click",
+showNearbyShops
+);
+
+renderCategories();
+filterProducts();
+loadDealsPreview();
+loadShopsPreview();
+
+}
+
+
+function renderCategories(){
+
+const categories=[
+"All",
+"Groceries",
+"Electronics",
+"Clothing",
+"Household"
+];
+
+document.getElementById(
+"categories"
+).innerHTML=
+categories.map(category=>`
+
+<button
+class="category-btn ${
+currentCategory===category?"active":""
+}"
+data-category="${escapeHtml(category)}">
+
+${escapeHtml(category)}
+
+</button>
+
+`).join("");
+
+document
+.querySelectorAll(".category-btn")
+.forEach(button=>{
+
+button.addEventListener(
+"click",
+function(){
+
+currentCategory=
+this.dataset.category;
+
+renderCategories();
+filterProducts();
+
+}
+);
+
+});
+
+}
+
+
+function filterProducts(){
+
+const search=
+(
+document.getElementById(
+"searchInput"
+)?.value||""
+)
+.toLowerCase()
+.trim();
+
+let filtered=
+allProducts.filter(product=>{
+
+const text=(
+getProductName(product)+" "+
+getProductBrand(product)+" "+
+getProductSize(product)+" "+
+getProductCategory(product)
+).toLowerCase();
+
+const matchesSearch=
+!search||text.includes(search);
+
+let matchesCategory=true;
+
+if(currentCategory==="Groceries"){
+
+matchesCategory=
+isGroceryProduct(product);
+
+}else if(currentCategory!=="All"){
+
+matchesCategory=
+getProductCategory(product)
+.toLowerCase()
+.includes(
+currentCategory.toLowerCase()
+);
+
+}
+
+return matchesSearch&&matchesCategory;
+
+});
+
+displayProducts(filtered);
+
+}
+
+
+function displayProducts(products){
+
+const container=
+document.getElementById(
+"productsContainer"
+);
+
+if(!container)
+return;
+
+if(!products.length){
+
+container.innerHTML=`
+<div class="message">
+<h3>No products found</h3>
+<p style="margin-top:10px;color:#777;">
+Try another search or category.
+</p>
+</div>
+`;
+
+return;
+}
+
+container.innerHTML=
+products.map(product=>{
+
+const index=
+allProducts.indexOf(product);
+
+return`
+
+<div class="card">
+
+<div class="product-visual">
+<span class="product-emoji">
+${getProductEmoji(product)}
+</span>
+</div>
+
+<h3>
+${escapeHtml(
+getProductName(product)
+)}
+</h3>
+
+<div class="brand">
+${escapeHtml(
+getProductBrand(product)
+)}
+</div>
+
+${
+getProductSize(product)
+?`
+<div style="margin-top:5px;color:#777;">
+${escapeHtml(
+getProductSize(product)
+)}
+</div>
+`
+:""
+}
+
+<button
+class="view-product"
+data-index="${index}">
+View Prices
+</button>
+
+<button
+class="add-product"
+data-index="${index}">
+🛒 Add to List
+</button>
+
+</div>
+`;
+
+}).join("");
+
+document
+.querySelectorAll(".view-product")
+.forEach(button=>{
+
+button.addEventListener(
+"click",
+function(){
+
+const product=
+allProducts[
+Number(this.dataset.index)
+];
+
+showProduct(product);
+
+}
+);
+
+});
+
+document
+.querySelectorAll(".add-product")
+.forEach(button=>{
+
+button.addEventListener(
+"click",
+function(){
+
+const product=
+allProducts[
+Number(this.dataset.index)
+];
+
+addToShoppingList(product);
+
+}
+);
+
+});
+
+}
+
+
+/* =====================================================
+PRODUCT
+===================================================== */
+
+function showProduct(product){
+
+currentProduct=product;
+
+const index=
+allProducts.indexOf(product);
+
+document.getElementById("app").innerHTML=`
+
+<button
+class="back-btn"
+id="productBack">
+← Back
+</button>
+
+<div class="card">
+
+<div class="product-visual">
+<span class="product-emoji">
+${getProductEmoji(product)}
+</span>
+</div>
+
+<h1>
+${escapeHtml(
+getProductName(product)
+)}
+</h1>
+
+<p class="brand"
+style="margin-top:7px;">
+${escapeHtml(
+getProductBrand(product)
+)}
+</p>
+
+${
+getProductSize(product)
+?`
+<p style="margin-top:7px;">
+Size: ${escapeHtml(
+getProductSize(product)
+)}
+</p>
+`
+:""
+}
+
+<div style="margin-top:20px;">
+
+<button
+class="primary-btn"
+id="compareButton">
+💰 Compare Prices
+</button>
+
+<button
+class="secondary-btn"
+id="addDetailsButton">
+🛒 Add to List
+</button>
+
+</div>
+
+</div>
+`;
+
+document
+.getElementById("productBack")
+.addEventListener(
+"click",
+showHome
+);
+
+document
+.getElementById("compareButton")
+.addEventListener(
+"click",
+()=>showComparison(
+getProductId(product)
+)
+);
+
+document
+.getElementById("addDetailsButton")
+.addEventListener(
+"click",
+()=>addToShoppingList(product)
+);
+
+}
+
+
+/* =====================================================
+ADD TO LIST
+===================================================== */
+
+async function addToShoppingList(product){
+
+if(!product)
+return;
+
+const id=
+getProductId(product);
+
+const existing=
+shoppingList.find(
+item=>
+String(
+getProductId(item.product)
+)===String(id)
+);
+
+if(existing){
+
+existing.quantity+=1;
+
+}else{
+
+shoppingList.push({
+product:product,
+quantity:1
+});
+
+}
+
+saveShoppingList();
+updateListCount();
+
+await saveCloudShoppingList();
+
+alert(
+`${getProductName(product)} added to your shopping list.`
+);
+
+}
+
+
+/* =====================================================
+PRICE COMPARISON
+===================================================== */
+
+async function showComparison(productId){
+
+document.getElementById("app").innerHTML=`
+
+<button
+class="back-btn"
+id="comparisonBack">
+← Back
+</button>
+
+<div class="message">
+
+<h2>💰 Price Comparison</h2>
+
+<p style="margin-top:10px;">
+Loading prices...
+</p>
+
+</div>
+`;
+
+document
+.getElementById("comparisonBack")
+.addEventListener(
+"click",
+showHome
+);
+
+try{
+
+const prices=
+await supabaseFetch(
+`product_prices?select=product_id,shop_id,price&product_id=eq.${encodeURIComponent(productId)}`
+);
+
+const validPrices=
+Array.isArray(prices)
+?prices
+.filter(
+row=>Number.isFinite(
+Number(row.price)
+)
+)
+.sort(
+(a,b)=>
+Number(a.price)-
+Number(b.price)
+)
+:[];
+
+if(!validPrices.length){
+
+document.getElementById("app").innerHTML=`
+
+<button
+class="back-btn"
+id="noPriceBack">
+← Back
+</button>
+
+<div class="message">
+
+<h2>No prices available</h2>
+
+<p style="margin-top:10px;">
+There are currently no prices for this product.
+</p>
+
+</div>
+`;
+
+document
+.getElementById("noPriceBack")
+.addEventListener(
+"click",
+showHome
+);
+
+return;
+}
+
+const product=
+allProducts.find(
+p=>
+String(
+getProductId(p)
+)===String(productId)
+);
+
+let html=`
+
+<button
+class="back-btn"
+id="comparisonBack2">
+← Back
+</button>
+
+<h2>💰 Price Comparison</h2>
+
+<p style="margin:7px 0 15px;color:#777;">
+${escapeHtml(
+product
+?getProductName(product)
+:"Product"
+)}
+— prices across shops
+</p>
+`;
+
+validPrices.forEach(
+(row,index)=>{
+
+const shop=
+allShops.find(
+s=>
+String(
+getShopId(s)
+)===String(row.shop_id)
+);
+
+const shopName=
+shop
+?getShopName(shop)
+:"Unknown shop";
+
+const location=
+shop
+?getShopLocation(shop)
+:"";
+
+html+=`
+
+<div class="
+comparison-row
+${index===0?"cheapest":""}
+">
+
+<div>
+
+<strong>
+${index===0?"🏆 ":""}
+${escapeHtml(shopName)}
+</strong>
+
+${
+location
+?`
+<div style="color:#777;margin-top:4px;">
+📍 ${escapeHtml(location)}
+</div>
+`
+:""
+}
+
+</div>
+
+<strong style="font-size:20px;">
+${money(row.price)}
+</strong>
+
+</div>
+`;
+
+}
+);
+
+document.getElementById("app").innerHTML=html;
+
+document
+.getElementById("comparisonBack2")
+.addEventListener(
+"click",
+()=>product
+?showProduct(product)
+:showHome()
+);
+
+}catch(error){
+
+console.error(
+"PRICE COMPARISON ERROR:",
+error
+);
+
+document.getElementById("app").innerHTML=`
+
+<button
+class="back-btn"
+id="errorBack">
+← Back
+</button>
+
+<div class="message error">
+
+<h3>Price comparison error</h3>
+
+<p style="margin-top:10px;">
+${escapeHtml(error.message)}
+</p>
+
+</div>
+`;
+
+document
+.getElementById("errorBack")
+.addEventListener(
+"click",
+showHome
+);
+
+}
+
+}
+
+
+/* =====================================================
+BEST DEALS
+===================================================== */
+
+async function getBestDeals(){
+
+const deals=[];
+
+for(const product of allProducts){
+
+const id=
+getProductId(product);
+
+try{
+
+const prices=
+await supabaseFetch(
+`product_prices?select=product_id,shop_id,price&product_id=eq.${encodeURIComponent(id)}`
+);
+
+const valid=
+prices
+.filter(
+p=>Number.isFinite(
+Number(p.price)
+)
+)
+.sort(
+(a,b)=>
+Number(a.price)-
+Number(b.price)
+);
+
+if(valid.length>=2){
+
+const cheapest=
+Number(valid[0].price);
+
+const highest=
+Number(
+valid[valid.length-1].price
+);
+
+deals.push({
+product,
+cheapest,
+highest,
+saving:highest-cheapest,
+shopId:valid[0].shop_id
+});
+
+}
+
+}catch(error){
+
+console.error(
+"DEAL ERROR:",
+error
+);
+
+}
+
+}
+
+return deals.sort(
+(a,b)=>
+b.saving-a.saving
+);
+
+}
+
+
+function renderDeal(deal,index){
+
+return`
+
+<div class="deal-card">
+
+<div class="product-visual">
+<span class="product-emoji">
+${getProductEmoji(deal.product)}
+</span>
+</div>
+
+<h3>
+${escapeHtml(
+getProductName(deal.product)
+)}
+</h3>
+
+<div class="brand">
+${escapeHtml(
+getProductBrand(deal.product)
+)}
+</div>
+
+<div class="price">
+${money(deal.cheapest)}
+</div>
+
+<div class="deal-save">
+Save ${money(deal.saving)}
+</div>
+
+<button
+class="deal-view"
+data-index="${index}">
+View Prices
+</button>
+
+</div>
+`;
+
+}
+
+
+async function loadDealsPreview(){
+
+const container=
+document.getElementById(
+"dealsPreview"
+);
+
+if(!container)
+return;
+
+container.innerHTML=`
+<div class="message">
+Loading deals...
+</div>
+`;
+
+const deals=
+await getBestDeals();
+
+if(!deals.length){
+
+container.innerHTML=`
+<div class="message">
+No deals available yet.
+</div>
+`;
+
+return;
+}
+
+const preview=
+deals.slice(0,4);
+
+container.innerHTML=
+preview
+.map(
+(deal,index)=>
+renderDeal(deal,index)
+)
+.join("");
+
+document
+.querySelectorAll(".deal-view")
+.forEach(button=>{
+
+button.addEventListener(
+"click",
+function(){
+
+const deal=
+preview[
+Number(this.dataset.index)
+];
+
+showProduct(deal.product);
+
+}
+);
+
+});
+
+}
+
+
+async function showDeals(){
+
+document.getElementById("app").innerHTML=`
+
+<button
+class="back-btn"
+id="dealsBack">
+← Back
+</button>
+
+<h2>🔥 Best Deals</h2>
+
+<p style="margin:7px 0 15px;color:#777;">
+Products with the biggest price differences.
+</p>
+
+<div
+id="allDeals"
+class="deals-grid">
+
+<div class="message">
+Loading deals...
+</div>
+
+</div>
+`;
+
+document
+.getElementById("dealsBack")
+.addEventListener(
+"click",
+showHome
+);
+
+const deals=
+await getBestDeals();
+
+const container=
+document.getElementById("allDeals");
+
+if(!container)
+return;
+
+if(!deals.length){
+
+container.innerHTML=`
+<div class="message">
+No deals available.
+</div>
+`;
+
+return;
+}
+
+const visible=
+deals.slice(0,12);
+
+container.innerHTML=
+visible
+.map(
+(deal,index)=>
+renderDeal(deal,index)
+)
+.join("");
+
+document
+.querySelectorAll(".deal-view")
+.forEach(button=>{
+
+button.addEventListener(
+"click",
+function(){
+
+showProduct(
+visible[
+Number(this.dataset.index)
+].product
+);
+
+}
+);
+
+});
+
+}
+
+
+/* =====================================================
+SHOPS
+===================================================== */
+
+function loadShopsPreview(){
+
+const container=
+document.getElementById(
+"shopsPreview"
+);
+
+if(!container)
+return;
+
+if(!allShops.length){
+
+container.innerHTML=`
+<div class="message">
+No shops available.
+</div>
+`;
+
+return;
+}
+
+container.innerHTML=
+allShops
+.slice(0,4)
+.map(shop=>`
+
+<div class="shop-card">
+
+<h3>
+${escapeHtml(
+getShopName(shop)
+)}
+</h3>
+
+<p style="color:#777;">
+${
+getShopLocation(shop)
+?"📍 "+
+escapeHtml(
+getShopLocation(shop)
+)
+:"Location not provided"
+}
+</p>
+
+</div>
+
+`)
+.join("");
+
+}
+
+
+function extractCoordinates(shop){
+
+const latitude=
+shop.latitude ??
+shop.Latitude ??
+shop.lat ??
+shop.Lat;
+
+const longitude=
+shop.longitude ??
+shop.Longitude ??
+shop.lng ??
+shop.Lng ??
+shop.lon ??
+shop.Lon;
+
+if(
+latitude===undefined||
+longitude===undefined
+)
+return null;
+
+const lat=Number(latitude);
+const lng=Number(longitude);
+
+if(
+!Number.isFinite(lat)||
+!Number.isFinite(lng)
+)
+return null;
+
+return{lat,lng};
+
+}
+
+
+function distanceKm(
+lat1,
+lon1,
+lat2,
+lon2
+){
+
+const R=6371;
+
+const dLat=
+(lat2-lat1)*Math.PI/180;
+
+const dLon=
+(lon2-lon1)*Math.PI/180;
+
+const a=
+Math.sin(dLat/2)**2+
+Math.cos(lat1*Math.PI/180)*
+Math.cos(lat2*Math.PI/180)*
+Math.sin(dLon/2)**2;
+
+return R*2*Math.atan2(
+Math.sqrt(a),
+Math.sqrt(1-a)
+);
+
+}
+
+
+function showNearbyShops(){
+
+document.getElementById("app").innerHTML=`
+
+<button
+class="back-btn"
+id="shopsBack">
+← Back
+</button>
+
+<h2>📍 Nearby Shops</h2>
+
+<p style="margin:8px 0 15px;color:#777;">
+Finding shops near you...
+</p>
+
+<div
+id="nearbyResults"
+class="shop-grid">
+
+<div class="message">
+Requesting your location...
+</div>
+
+</div>
+`;
+
+document
+.getElementById("shopsBack")
+.addEventListener(
+"click",
+showHome
+);
+
+if(!navigator.geolocation){
+
+document.getElementById(
+"nearbyResults"
+).innerHTML=`
+<div class="message">
+Geolocation is not supported.
+</div>
+`;
+
+return;
+}
+
+navigator.geolocation.getCurrentPosition(
+
+position=>{
+
+const userLat=
+position.coords.latitude;
+
+const userLng=
+position.coords.longitude;
+
+const shops=
+allShops
+.map(shop=>{
+
+const coords=
+extractCoordinates(shop);
+
+if(!coords)
+return null;
+
+return{
+shop,
+distance:distanceKm(
+userLat,
+userLng,
+coords.lat,
+coords.lng
+),
+coords
+};
+
+})
+.filter(Boolean)
+.sort(
+(a,b)=>
+a.distance-b.distance
+);
+
+const container=
+document.getElementById(
+"nearbyResults"
+);
+
+if(!shops.length){
+
+container.innerHTML=`
+<div class="message">
+
+<h3>
+Shop locations unavailable
+</h3>
+
+<p style="margin-top:10px;">
+Your shops need latitude and longitude
+values before distances can be calculated.
+</p>
+
+</div>
+`;
+
+return;
+}
+
+container.innerHTML=
+shops
+.slice(0,12)
+.map(item=>`
+
+<div class="shop-card">
+
+<h3>
+${escapeHtml(
+getShopName(item.shop)
+)}
+</h3>
+
+<p style="margin:7px 0;color:#777;">
+${
+getShopLocation(item.shop)
+?"📍 "+
+escapeHtml(
+getShopLocation(item.shop)
+)
+:""
+}
+</p>
+
+<strong>
+${item.distance.toFixed(1)} km away
+</strong>
+
+<br>
+
+<button
+class="direction-button"
+data-lat="${item.coords.lat}"
+data-lng="${item.coords.lng}">
+🗺️ Directions
+</button>
+
+</div>
+
+`)
+.join("");
+
+document
+.querySelectorAll(".direction-button")
+.forEach(button=>{
+
+button.addEventListener(
+"click",
+function(){
+
+const lat=
+this.dataset.lat;
+
+const lng=
+this.dataset.lng;
+
+window.open(
+`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`,
+"_blank"
+);
+
+}
+);
+
+});
+
+},
+
+()=>{
+document.getElementById(
+"nearbyResults"
+).innerHTML=`
+
+<div class="message">
+
+<h3>Location unavailable</h3>
+
+<p style="margin-top:10px;">
+Please allow location access and try again.
+</p>
+
+</div>
+`;
+}
+
+);
+
+}
+
+
+/* =====================================================
+SHOPPING LIST
+===================================================== */
+
+async function showShoppingList(){
+
+const user=
+await getCurrentUser();
+
+document.getElementById("app").innerHTML=`
+
+<button
+class="back-btn"
+id="listBack">
+← Back
+</button>
+
+<div class="section-title">
+
+<h2>🛒 My Shopping List</h2>
+
+${
+shoppingList.length
+?`
+<button
+class="danger-btn"
+id="clearListButton">
+Clear List
+</button>
+`
+:""
+}
+
+</div>
+
+${
+shoppingList.length
+?`
+<div class="saved-note">
+
+💾 Your shopping list is saved on this device.
+
+<br>
+
+${
+user
+?"☁️ It is also saved to your account."
+:"Sign in to save it across devices."
+}
+
+</div>
+`
+:""
+}
+
+<div id="shoppingListContainer">
+
+${
+shoppingList.length
+?shoppingList
+.map(
+(item,index)=>
+renderShoppingItem(item,index)
+)
+.join("")
+:`
+<div class="message">
+
+<h3>Your list is empty</h3>
+
+<p style="margin-top:10px;">
+Add products from the product catalogue.
+</p>
+
+</div>
+`
+}
+
+</div>
+
+${
+shoppingList.length
+?`
+<button
+class="primary-btn"
+id="basketButton"
+style="margin-top:15px;">
+🏆 Find Cheapest Basket
+</button>
+`
+:""
+}
+
+`;
+
+document
+.getElementById("listBack")
+.addEventListener(
+"click",
+showHome
+);
+
+if(
+document.getElementById(
+"clearListButton"
+)
+){
+
+document
+.getElementById(
+"clearListButton"
+)
+.addEventListener(
+"click",
+clearShoppingList
+);
+
+}
+
+if(
+document.getElementById(
+"basketButton"
+)
+){
+
+document
+.getElementById(
+"basketButton"
+)
+.addEventListener(
+"click",
+findCheapestBasket
+);
+
+}
+
+document
+.querySelectorAll(".minus-button")
+.forEach(button=>{
+
+button.addEventListener(
+"click",
+function(){
+
+changeQuantity(
+Number(this.dataset.index),
+-1
+);
+
+}
+);
+
+});
+
+document
+.querySelectorAll(".plus-button")
+.forEach(button=>{
+
+button.addEventListener(
+"click",
+function(){
+
+changeQuantity(
+Number(this.dataset.index),
+1
+);
+
+}
+);
+
+});
+
+document
+.querySelectorAll(".remove-button")
+.forEach(button=>{
+
+button.addEventListener(
+"click",
+function(){
+
+removeFromList(
+Number(this.dataset.index)
+);
+
+}
+);
+
+});
+
+}
+
+
+function renderShoppingItem(
+item,
+index
+){
+
+const product=item.product;
+
+return`
+
+<div class="list-item">
+
+<div>
+
+<h3>
+${escapeHtml(
+getProductName(product)
+)}
+</h3>
+
+<div class="brand">
+${escapeHtml(
+getProductBrand(product)
+)}
+</div>
+
+${
+getProductSize(product)
+?`
+<div style="color:#777;margin-top:4px;">
+${escapeHtml(
+getProductSize(product)
+)}
+</div>
+`
+:""
+}
+
+</div>
+
+<div class="qty-controls">
+
+<button
+class="minus-button"
+data-index="${index}">
+−
+</button>
+
+<strong>
+${item.quantity}
+</strong>
+
+<button
+class="plus-button"
+data-index="${index}">
++
+</button>
+
+<button
+class="remove-btn remove-button"
+data-index="${index}">
+×
+</button>
+
+</div>
+
+</div>
+`;
+
+}
+
+
+async function changeQuantity(
+index,
+amount
+){
+
+if(!shoppingList[index])
+return;
+
+shoppingList[index].quantity+=amount;
+
+if(
+shoppingList[index].quantity<=0
+){
+
+shoppingList.splice(
+index,
+1
+);
+
+}
+
+saveShoppingList();
+updateListCount();
+
+await saveCloudShoppingList();
+
+showShoppingList();
+
+}
+
+
+async function removeFromList(index){
+
+if(!shoppingList[index])
+return;
+
+shoppingList.splice(
+index,
+1
+);
+
+saveShoppingList();
+updateListCount();
+
+await saveCloudShoppingList();
+
+showShoppingList();
+
+}
+
+
+async function clearShoppingList(){
+
+if(
+!confirm(
+"Clear your entire shopping list?"
+)
+)
+return;
+
+shoppingList=[];
+
+saveShoppingList();
+updateListCount();
+
+await saveCloudShoppingList();
+
+showShoppingList();
+
+}
+
+
+/* =====================================================
+CHEAPEST BASKET
+===================================================== */
+
+async function findCheapestBasket(){
+
+if(!shoppingList.length)
+return;
+
+document.getElementById("app").innerHTML=`
+
+<button
+class="back-btn"
+id="basketBack">
+← Back
+</button>
+
+<div class="message">
+
+<h2>🏆 Finding Cheapest Basket</h2>
+
+<p style="margin-top:10px;">
+Checking prices across shops...
+</p>
+
+</div>
+`;
+
+document
+.getElementById("basketBack")
+.addEventListener(
+"click",
+showShoppingList
+);
+
+const results=[];
+
+for(const item of shoppingList){
+
+const product=item.product;
+
+const productId=
+getProductId(product);
+
+try{
+
+const prices=
+await supabaseFetch(
+`product_prices?select=product_id,shop_id,price&product_id=eq.${encodeURIComponent(productId)}`
+);
+
+const valid=
+prices
+.filter(
+p=>Number.isFinite(
+Number(p.price)
+)
+)
+.map(p=>({
+...p,
+price:Number(p.price)
+}))
+.sort(
+(a,b)=>a.price-b.price
+);
+
+results.push({
+product,
+quantity:Number(item.quantity),
+prices:valid
+});
+
+}catch(error){
+
+console.error(
+"BASKET PRICE ERROR:",
+error
+);
+
+}
+
+}
+
+renderBasket(results);
+
+}
+
+
+function renderBasket(results){
+
+let maximumSavingsTotal=0;
+
+const cheapestProducts=[];
+
+results.forEach(result=>{
+
+if(!result.prices.length)
+return;
+
+const cheapest=
+result.prices[0];
+
+const cost=
+cheapest.price*
+result.quantity;
+
+maximumSavingsTotal+=cost;
+
+const shop=
+allShops.find(
+s=>
+String(
+getShopId(s)
+)===String(
+cheapest.shop_id
+)
+);
+
+cheapestProducts.push({
+product:result.product,
+quantity:result.quantity,
+price:cheapest.price,
+total:cost,
+shop
+});
+
+});
+
+const shopTotals={};
+
+results.forEach(result=>{
+
+result.prices.forEach(priceRow=>{
+
+const shopId=
+String(priceRow.shop_id);
+
+if(!shopTotals[shopId]){
+
+shopTotals[shopId]={
+shopId,
+total:0,
+count:0
+};
+
+}
+
+shopTotals[shopId].total+=
+priceRow.price*
+result.quantity;
+
+shopTotals[shopId].count+=1;
+
+});
+
+});
+
+const completeShopOptions=
+Object.values(shopTotals)
+.filter(
+shop=>
+shop.count===results.length
+)
+.sort(
+(a,b)=>a.total-b.total
+);
+
+const oneShopTotal=
+completeShopOptions.length
+?completeShopOptions[0].total
+:null;
+
+const savings=
+oneShopTotal!==null
+?oneShopTotal-maximumSavingsTotal
+:0;
+
+document.getElementById("app").innerHTML=`
+
+<button
+class="back-btn"
+id="basketBack2">
+← Back
+</button>
+
+<h2>🏆 Cheapest Basket</h2>
+
+<div class="card"
+style="margin-top:15px;">
+
+<h3>Maximum Savings</h3>
+
+<div class="basket-total">
+${money(maximumSavingsTotal)}
+</div>
+
+<p style="color:#777;">
+Buying each product from its cheapest shop.
+</p>
+
+</div>
+
+<section class="section">
+
+<h3 style="margin-bottom:12px;">
+Cheapest Products
+</h3>
+
+${
+cheapestProducts.length
+?cheapestProducts
+.map(item=>`
+
+<div class="comparison-row">
+
+<div>
+
+<strong>
+${escapeHtml(
+getProductName(item.product)
+)}
+</strong>
+
+<div style="color:#777;margin-top:5px;">
+
+${item.quantity}
+×
+
+${escapeHtml(
+item.shop
+?getShopName(item.shop)
+:"Unknown shop"
+)}
+
+</div>
+
+</div>
+
+<strong>
+${money(item.total)}
+</strong>
+
+</div>
+
+`)
+.join("")
+:`
+<div class="message">
+Some products have no prices.
+</div>
+`
+}
+
+</section>
+
+<section class="section">
+
+<h3 style="margin-bottom:12px;">
+🏪 One-Shop Option
+</h3>
+
+${
+completeShopOptions.length
+?completeShopOptions
+.map(
+(option,index)=>{
+
+const shop=
+allShops.find(
+s=>
+String(
+getShopId(s)
+)===String(option.shopId)
+);
+
+return`
+
+<div class="
+comparison-row
+${index===0?"cheapest":""}
+">
+
+<div>
+
+<strong>
+${index===0?"🏆 ":""}
+${escapeHtml(
+shop
+?getShopName(shop)
+:"Unknown shop"
+)}
+</strong>
+
+</div>
+
+<strong>
+${money(option.total)}
+</strong>
+
+</div>
+
+`;
+
+}
+)
+.join("")
+:`
+<div class="message">
+
+<p>
+No single shop currently has every
+item in your list.
+</p>
+
+</div>
+`
+}
+
+</section>
+
+${
+savings>0.009
+?`
+<div class="saved-note"
+style="margin-top:20px;">
+
+💰 You could save approximately
+<strong>
+${money(savings)}
+</strong>
+by buying from multiple shops.
+
+</div>
+`
+:""
+}
+
+`;
+
+document
+.getElementById("basketBack2")
+.addEventListener(
+"click",
+showShoppingList
+);
+
+}
+
+
+/* =====================================================
+ACCOUNT
+===================================================== */
+
+async function showAccount(){
+
+const app=
+document.getElementById("app");
+
+app.innerHTML=`
+
+<div class="message">
+Loading account...
+</div>
+`;
+
+const user=
+await getCurrentUser();
+
+if(user){
+
+app.innerHTML=`
+
+<button
+class="back-btn"
+id="accountBack">
+← Back
+</button>
+
+<div class="account-card">
+
+<h2>👤 My Account</h2>
+
+<p style="margin-top:12px;">
+Signed in as:
+</p>
+
+<strong>
+${escapeHtml(user.email)}
+</strong>
+
+<div class="status">
+
+☁️ Your shopping list is automatically
+saved to your account.
+
+</div>
+
+<div class="auth-buttons"
+style="margin-top:15px;">
+
+<button
+class="primary-btn"
+id="accountListButton">
+🛒 My Shopping List
+</button>
+
+<button
+class="danger-btn"
+id="logoutButton">
+Logout
+</button>
+
+</div>
+
+</div>
+`;
+
+document
+.getElementById("accountBack")
+.addEventListener(
+"click",
+showHome
+);
+
+document
+.getElementById("accountListButton")
+.addEventListener(
+"click",
+showShoppingList
+);
+
+document
+.getElementById("logoutButton")
+.addEventListener(
+"click",
+signOut
+);
+
+return;
+}
+
+app.innerHTML=`
+
+<button
+class="back-btn"
+id="loginBack">
+← Back
+</button>
+
+<div class="auth-box">
+
+<h2>👤 Get-It Account</h2>
+
+<p style="color:#777;margin-bottom:10px;">
+Sign in to save your shopping list across devices.
+</p>
+
+<input
+id="authEmail"
+class="auth-input"
+type="email"
+placeholder="Email address"
+>
+
+<input
+id="authPassword"
+class="auth-input"
+type="password"
+placeholder="Password"
+>
+
+<div class="auth-buttons">
+
+<button
+class="primary-btn"
+id="loginButton">
+Login
+</button>
+
+<button
+class="secondary-btn"
+id="signupButton">
+Create Account
+</button>
+
+</div>
+
+<div id="authMessage"></div>
+
+${
+shoppingList.length
+?`
+<div class="saved-note"
+style="margin-top:15px;">
+
+🛒 You currently have
+<strong>
+${shoppingList.reduce(
+(sum,item)=>
+sum+Number(item.quantity||0),
+0
+)}
+</strong>
+item(s) in your shopping list.
+
+<br><br>
+
+After signing in, your list can be synced
+to your account.
+
+</div>
+`
+:""
+}
+
+</div>
+`;
+
+document
+.getElementById("loginBack")
+.addEventListener(
+"click",
+showHome
+);
+
+document
+.getElementById("loginButton")
+.addEventListener(
+"click",
+signIn
+);
+
+document
+.getElementById("signupButton")
+.addEventListener(
+"click",
+signUp
+);
+
+
+/* Allow Enter key to login */
+
+document
+.getElementById("authPassword")
+.addEventListener(
+"keydown",
+function(event){
+
+if(event.key==="Enter"){
+signIn();
+}
+
+}
+);
+
+}
+
+
+/* =====================================================
+AUTH LISTENER
+===================================================== */
+
+supabaseAuth.auth.onAuthStateChange(
+(event,session)=>{
+
+console.log(
+"AUTH EVENT:",
+event
+);
+
+if(
+event==="SIGNED_IN"&&
+session
+){
+
+setTimeout(
+async()=>{
+await syncCloudShoppingList();
+updateListCount();
+},
+0
+);
+
+}
+
+if(event==="SIGNED_OUT"){
+
+updateListCount();
+
+}
+
+}
+);
+
+
+/* =====================================================
+START
+===================================================== */
+
+async function startApp(){
+
+loadSavedShoppingList();
+updateListCount();
+
+document.getElementById("app").innerHTML=`
+
+<div class="message">
+
+<h2>
+Get-It 🇧🇼
+</h2>
+
+<p style="margin-top:10px;">
+Loading products and shops...
+</p>
+
+</div>
+`;
+
+await Promise.all([
+loadProducts(),
+loadShops()
+]);
+
+showHome();
+
+const user=
+await getCurrentUser();
+
+if(user){
+
+await syncCloudShoppingList();
+updateListCount();
+
+}
+
+}
+
+startApp();
+
+</script>
+
+</body>
+</html>
