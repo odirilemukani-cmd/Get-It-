@@ -10,7 +10,6 @@ content="rlliAywpbxUwN2l7xzJGWsbDwZk13me4HBk1WEP7xnw">
 <title>Get-It 🇧🇼 | Find. Compare. Get.</title>
 
 <style>
-
 *{
   box-sizing:border-box;
   margin:0;
@@ -190,6 +189,7 @@ main{
   display:flex;
   justify-content:space-between;
   align-items:center;
+  gap:15px;
   padding:15px 0;
   border-bottom:1px solid #eee;
 }
@@ -197,6 +197,7 @@ main{
 .price{
   font-size:20px;
   font-weight:bold;
+  white-space:nowrap;
 }
 
 .cheapest{
@@ -277,10 +278,6 @@ main{
   background:#f0fdf4;
 }
 
-.hidden{
-  display:none;
-}
-
 @media(max-width:600px){
 
   .header-inner{
@@ -299,16 +296,13 @@ main{
   main{
     padding:15px;
   }
-
 }
-
 </style>
 </head>
 
 <body>
 
 <header>
-
   <div class="header-inner">
 
     <div class="logo">
@@ -321,71 +315,55 @@ main{
       🛒 My List
       <span
         class="badge"
-        id="listCount">
-        0
-      </span>
+        id="listCount">0</span>
     </button>
 
   </div>
-
 </header>
 
 <main>
 
 <!-- HOME -->
-
-<section
-  id="homeScreen"
-  class="screen active">
+<section id="homeScreen" class="screen active">
 
   <div class="search-box">
-
     <input
       type="text"
       id="searchInput"
       placeholder="Search products, brands or sizes...">
-
   </div>
 
-  <div
-    class="categories"
-    id="categories">
+  <div class="categories">
 
-    <button
-      class="category-btn active"
+    <button class="category-btn active"
       data-category="All">
       All
     </button>
 
-    <button
-      class="category-btn"
+    <button class="category-btn"
       data-category="Groceries">
       Groceries
     </button>
 
-    <button
-      class="category-btn"
+    <button class="category-btn"
       data-category="Electronics">
       Electronics
     </button>
 
-    <button
-      class="category-btn"
+    <button class="category-btn"
       data-category="Clothing">
       Clothing
     </button>
 
-    <button
-      class="category-btn"
+    <button class="category-btn"
       data-category="Household">
       Household
     </button>
 
   </div>
 
-  <div
-    id="productsContainer"
-    class="products-grid">
+  <div id="productsContainer"
+       class="products-grid">
 
     <div class="message">
       Loading products...
@@ -396,53 +374,34 @@ main{
 </section>
 
 
-<!-- PRODUCT DETAILS -->
+<!-- DETAILS -->
+<section id="detailsScreen" class="screen">
 
-<section
-  id="detailsScreen"
-  class="screen">
-
-  <button
-    class="back-btn"
-    id="detailsBack">
+  <button class="back-btn" id="detailsBack">
     ← Back
   </button>
 
-  <div
-    id="detailsContent">
-  </div>
+  <div id="detailsContent"></div>
 
 </section>
 
 
-<!-- PRICE COMPARISON -->
+<!-- COMPARISON -->
+<section id="comparisonScreen" class="screen">
 
-<section
-  id="comparisonScreen"
-  class="screen">
-
-  <button
-    class="back-btn"
-    id="comparisonBack">
+  <button class="back-btn" id="comparisonBack">
     ← Back
   </button>
 
-  <div
-    id="comparisonContent">
-  </div>
+  <div id="comparisonContent"></div>
 
 </section>
 
 
 <!-- SHOPPING LIST -->
+<section id="shoppingListScreen" class="screen">
 
-<section
-  id="shoppingListScreen"
-  class="screen">
-
-  <button
-    class="back-btn"
-    id="shoppingBack">
+  <button class="back-btn" id="shoppingBack">
     ← Continue Shopping
   </button>
 
@@ -450,34 +409,23 @@ main{
 
   <br>
 
-  <button
-    class="clear-btn"
-    id="clearList">
+  <button class="clear-btn" id="clearList">
     Clear List
   </button>
 
-  <div
-    id="shoppingListContent">
-  </div>
+  <div id="shoppingListContent"></div>
 
 </section>
 
 
-<!-- BASKET RESULTS -->
+<!-- BASKET -->
+<section id="basketScreen" class="screen">
 
-<section
-  id="basketScreen"
-  class="screen">
-
-  <button
-    class="back-btn"
-    id="basketBack">
+  <button class="back-btn" id="basketBack">
     ← Shopping List
   </button>
 
-  <div
-    id="basketContent">
-  </div>
+  <div id="basketContent"></div>
 
 </section>
 
@@ -496,9 +444,7 @@ const SUPABASE_KEY =
 let allProducts = [];
 let allShops = [];
 let selectedProduct = null;
-
 let shoppingList = [];
-
 let currentCategory = "All";
 
 
@@ -508,19 +454,18 @@ let currentCategory = "All";
 
 async function supabaseFetch(endpoint){
 
-  const response =
-    await fetch(
-      SUPABASE_URL +
-      "/rest/v1/" +
-      endpoint,
-      {
-        headers:{
-          "apikey":SUPABASE_KEY,
-          "Authorization":
-          "Bearer " + SUPABASE_KEY
-        }
+  const response = await fetch(
+    SUPABASE_URL +
+    "/rest/v1/" +
+    endpoint,
+    {
+      headers:{
+        "apikey":SUPABASE_KEY,
+        "Authorization":
+        "Bearer " + SUPABASE_KEY
       }
-    );
+    }
+  );
 
   if(!response.ok){
 
@@ -542,9 +487,10 @@ async function supabaseFetch(endpoint){
 
 function escapeHtml(value){
 
-  if(value === null ||
-     value === undefined){
-
+  if(
+    value === null ||
+    value === undefined
+  ){
     return "";
   }
 
@@ -731,7 +677,6 @@ async function loadProducts(){
         </p>
 
       </div>
-
     `;
   }
 }
@@ -845,25 +790,20 @@ function displayProducts(products){
         ${escapeHtml(category)}
       </p>
 
-      <button
-        class="btn compareBtn">
+      <button class="btn compareBtn">
         💰 Compare Prices
       </button>
 
-      <button
-        class="btn secondary-btn addBtn">
+      <button class="btn secondary-btn addBtn">
         🛒 Add to List
       </button>
-
     `;
 
 
     card.addEventListener(
       "click",
       function(){
-
         openProduct(product);
-
       }
     );
 
@@ -890,9 +830,7 @@ function displayProducts(products){
 
           event.stopPropagation();
 
-          addToShoppingList(
-            product
-          );
+          addToShoppingList(product);
 
         }
       );
@@ -901,7 +839,6 @@ function displayProducts(products){
     container.appendChild(card);
 
   });
-
 }
 
 
@@ -962,9 +899,7 @@ document
       function(){
 
         document
-          .querySelectorAll(
-            ".category-btn"
-          )
+          .querySelectorAll(".category-btn")
           .forEach(btn =>
             btn.classList.remove("active")
           );
@@ -1061,7 +996,6 @@ function openProduct(product){
       </button>
 
     </div>
-
   `;
 
 
@@ -1071,9 +1005,7 @@ function openProduct(product){
       "click",
       function(){
 
-        addToShoppingList(
-          product
-        );
+        addToShoppingList(product);
 
       }
     );
@@ -1085,9 +1017,7 @@ function openProduct(product){
       "click",
       function(){
 
-        comparePrices(
-          product
-        );
+        comparePrices(product);
 
       }
     );
@@ -1096,12 +1026,11 @@ function openProduct(product){
   showScreen(
     "detailsScreen"
   );
-
 }
 
 
 /* =========================
-   COMPARE PRICES
+   PRICE COMPARISON
 ========================= */
 
 async function comparePrices(product){
@@ -1111,6 +1040,7 @@ async function comparePrices(product){
 
   const productId =
     getProductId(product);
+
 
   if(
     productId === undefined ||
@@ -1125,7 +1055,6 @@ async function comparePrices(product){
       <div class="message error">
         Product ID could not be found.
       </div>
-
     `;
 
     showScreen(
@@ -1143,8 +1072,8 @@ async function comparePrices(product){
     <div class="message">
       Loading prices...
     </div>
-
   `;
+
 
   showScreen(
     "comparisonScreen"
@@ -1162,7 +1091,6 @@ async function comparePrices(product){
         encodeURIComponent(
           String(productId)
         )
-
       );
 
 
@@ -1211,7 +1139,6 @@ async function comparePrices(product){
           </p>
 
         </div>
-
       `;
 
       return;
@@ -1245,7 +1172,6 @@ async function comparePrices(product){
         }
 
       </div>
-
     `;
 
 
@@ -1314,9 +1240,7 @@ async function comparePrices(product){
             </div>
 
           </div>
-
         `;
-
       }
     );
 
@@ -1348,11 +1272,8 @@ async function comparePrices(product){
         </p>
 
       </div>
-
     `;
-
   }
-
 }
 
 
@@ -1371,10 +1292,6 @@ function addToShoppingList(product){
     productId === null ||
     productId === ""
   ){
-
-    alert(
-      "This product does not have a valid ID."
-    );
 
     return;
   }
@@ -1408,11 +1325,6 @@ function addToShoppingList(product){
 
   updateListCount();
 
-  alert(
-    getProductName(product) +
-    " added to your shopping list."
-  );
-
 }
 
 
@@ -1433,12 +1345,11 @@ function updateListCount(){
   document.getElementById(
     "listCount"
   ).textContent = count;
-
 }
 
 
 /* =========================
-   DISPLAY SHOPPING LIST
+   SHOPPING LIST
 ========================= */
 
 function displayShoppingList(){
@@ -1467,7 +1378,6 @@ function displayShoppingList(){
         </p>
 
       </div>
-
     `;
 
     return;
@@ -1538,11 +1448,9 @@ function displayShoppingList(){
 
         </div>
 
-        <button
-          class="remove-btn">
+        <button class="remove-btn">
           Remove
         </button>
-
       `;
 
 
@@ -1553,11 +1461,10 @@ function displayShoppingList(){
           function(){
 
             if(item.quantity > 1){
-
               item.quantity--;
-
             }
 
+            updateListCount();
             displayShoppingList();
 
           }
@@ -1572,6 +1479,7 @@ function displayShoppingList(){
 
             item.quantity++;
 
+            updateListCount();
             displayShoppingList();
 
           }
@@ -1590,7 +1498,6 @@ function displayShoppingList(){
             );
 
             updateListCount();
-
             displayShoppingList();
 
           }
@@ -1622,12 +1529,11 @@ function displayShoppingList(){
   container.appendChild(
     cheapestButton
   );
-
 }
 
 
 /* =========================
-   FIND CHEAPEST BASKET
+   CHEAPEST BASKET
 ========================= */
 
 async function findCheapestBasket(){
@@ -1635,7 +1541,6 @@ async function findCheapestBasket(){
   if(
     shoppingList.length === 0
   ){
-
     return;
   }
 
@@ -1655,7 +1560,6 @@ async function findCheapestBasket(){
       </p>
 
     </div>
-
   `;
 
 
@@ -1668,11 +1572,6 @@ async function findCheapestBasket(){
 
     const priceData = [];
 
-
-    /*
-      Get prices for every selected
-      product.
-    */
 
     for(
       const item of shoppingList
@@ -1690,9 +1589,7 @@ async function findCheapestBasket(){
         productId === null ||
         productId === ""
       ){
-
         continue;
-
       }
 
 
@@ -1705,7 +1602,6 @@ async function findCheapestBasket(){
           encodeURIComponent(
             String(productId)
           )
-
         );
 
 
@@ -1758,11 +1654,8 @@ async function findCheapestBasket(){
         </p>
 
       </div>
-
     `;
-
   }
-
 }
 
 
@@ -1778,12 +1671,6 @@ function calculateBasket(data){
 
   let missingProducts = [];
 
-
-  /*
-    OPTION 1:
-    Cheapest available price
-    for each selected product.
-  */
 
   data.forEach(item => {
 
@@ -1846,12 +1733,6 @@ function calculateBasket(data){
   });
 
 
-  /*
-    OPTION 2:
-    Find the cheapest shop where
-    the entire basket is available.
-  */
-
   const shopTotals = {};
 
 
@@ -1859,6 +1740,14 @@ function calculateBasket(data){
 
     const shopId =
       getShopId(shop);
+
+    if(
+      shopId === undefined ||
+      shopId === null
+    ){
+      return;
+    }
+
 
     shopTotals[
       String(shopId)
@@ -1898,7 +1787,6 @@ function calculateBasket(data){
         ].complete = false;
 
         return;
-
       }
 
 
@@ -1963,14 +1851,8 @@ function calculateBasket(data){
       </h2>
 
     </div>
-
   `;
 
-
-  /*
-    Show cheapest item-by-item
-    selections.
-  */
 
   html += `
 
@@ -1979,7 +1861,6 @@ function calculateBasket(data){
       <h2>
         🛍️ Cheapest Products
       </h2>
-
   `;
 
 
@@ -2040,7 +1921,6 @@ function calculateBasket(data){
           </strong>
 
         </div>
-
       `;
 
     }
@@ -2062,18 +1942,12 @@ function calculateBasket(data){
         price available yet.
 
       </p>
-
     `;
-
   }
 
 
   html += `</div>`;
 
-
-  /*
-    One-shop option.
-  */
 
   html += `
 
@@ -2087,7 +1961,6 @@ function calculateBasket(data){
         Cheapest total if you buy
         everything from one shop.
       </p>
-
   `;
 
 
@@ -2103,7 +1976,6 @@ function calculateBasket(data){
         every item in your basket.
 
       </div>
-
     `;
 
   }else{
@@ -2137,6 +2009,7 @@ function calculateBasket(data){
             <div style="
               display:flex;
               justify-content:space-between;
+              gap:15px;
               margin-top:8px;
             ">
 
@@ -2177,7 +2050,6 @@ function calculateBasket(data){
             }
 
           </div>
-
         `;
 
       }
@@ -2205,11 +2077,8 @@ function calculateBasket(data){
           shops.
 
         </p>
-
       `;
-
     }
-
   }
 
 
@@ -2219,12 +2088,11 @@ function calculateBasket(data){
   document.getElementById(
     "basketContent"
   ).innerHTML = html;
-
 }
 
 
 /* =========================
-   BUTTONS
+   NAVIGATION
 ========================= */
 
 document
@@ -2256,9 +2124,7 @@ document
       if(
         shoppingList.length === 0
       ){
-
         return;
-
       }
 
 
@@ -2357,18 +2223,12 @@ document
 
 
 /* =========================
-   START APP
+   START
 ========================= */
 
 async function startApp(){
 
   updateListCount();
-
-  /*
-    Load both independently.
-    Products will still appear even
-    if shops fail.
-  */
 
   loadProducts();
 
