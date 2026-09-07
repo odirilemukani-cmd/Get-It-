@@ -384,6 +384,16 @@ main{
   margin-top:8px;
 }
 
+.saved-note{
+  background:#ecfdf5;
+  color:#166534;
+  padding:10px 12px;
+  border-radius:9px;
+  margin-bottom:15px;
+  font-size:14px;
+  font-weight:bold;
+}
+
 @media(max-width:600px){
 
   .header-inner{
@@ -612,6 +622,8 @@ main{
 
   <br>
 
+  <div id="savedListMessage"></div>
+
   <button class="clear-btn" id="clearList">
     Clear List
   </button>
@@ -642,6 +654,10 @@ const SUPABASE_URL =
 
 const SUPABASE_KEY =
 "sb_publishable_3jRUAQ88ntmpnA42QwTuew_TJ7NYgFw";
+
+
+const STORAGE_KEY =
+"getit_shopping_list";
 
 
 let allProducts = [];
@@ -683,6 +699,89 @@ async function supabaseFetch(endpoint){
   }
 
   return response.json();
+}
+
+
+/* =========================
+   LOCAL STORAGE
+========================= */
+
+function saveShoppingList(){
+
+  try{
+
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(
+        shoppingList
+      )
+    );
+
+  }catch(error){
+
+    console.error(
+      "SAVE LIST ERROR:",
+      error
+    );
+
+  }
+}
+
+
+function loadSavedShoppingList(){
+
+  try{
+
+    const saved =
+      localStorage.getItem(
+        STORAGE_KEY
+      );
+
+    if(!saved){
+      shoppingList = [];
+      return;
+    }
+
+
+    const parsed =
+      JSON.parse(saved);
+
+
+    if(
+      Array.isArray(parsed)
+    ){
+
+      shoppingList =
+        parsed.filter(
+          item =>
+            item &&
+            item.product &&
+            Number(item.quantity) > 0
+        ).map(item => ({
+          product:item.product,
+          quantity:
+            Math.max(
+              1,
+              Number(item.quantity)
+            )
+        }));
+
+    }else{
+
+      shoppingList = [];
+
+    }
+
+  }catch(error){
+
+    console.error(
+      "LOAD SAVED LIST ERROR:",
+      error
+    );
+
+    shoppingList = [];
+
+  }
 }
 
 
@@ -1617,6 +1716,8 @@ function addToShoppingList(product){
   }
 
 
+  saveShoppingList();
+
   updateListCount();
 
 }
@@ -1653,10 +1754,19 @@ function displayShoppingList(){
       "shoppingListContent"
     );
 
+  const savedMessage =
+    document.getElementById(
+      "savedListMessage"
+    );
+
 
   if(
     shoppingList.length === 0
   ){
+
+    if(savedMessage){
+      savedMessage.innerHTML = "";
+    }
 
     container.innerHTML = `
 
@@ -1675,6 +1785,19 @@ function displayShoppingList(){
     `;
 
     return;
+  }
+
+
+  if(savedMessage){
+
+    savedMessage.innerHTML = `
+
+      <div class="saved-note">
+        💾 Your shopping list is saved on this device.
+      </div>
+
+    `;
+
   }
 
 
@@ -1758,6 +1881,7 @@ function displayShoppingList(){
               item.quantity--;
             }
 
+            saveShoppingList();
             updateListCount();
             displayShoppingList();
 
@@ -1773,6 +1897,7 @@ function displayShoppingList(){
 
             item.quantity++;
 
+            saveShoppingList();
             updateListCount();
             displayShoppingList();
 
@@ -1791,6 +1916,7 @@ function displayShoppingList(){
               1
             );
 
+            saveShoppingList();
             updateListCount();
             displayShoppingList();
 
@@ -3188,6 +3314,8 @@ document
 
         shoppingList = [];
 
+        saveShoppingList();
+
         updateListCount();
 
         displayShoppingList();
@@ -3355,6 +3483,8 @@ document
 ========================= */
 
 async function startApp(){
+
+  loadSavedShoppingList();
 
   updateListCount();
 
