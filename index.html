@@ -1,21 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
-
-<meta name="google-site-verification"
-      content="rlliAywpbxUwN2l7xzJGWsbDwZk13me4HBk1WEP7xnw">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="google-site-verification" content="rlliAywpbxUwN2l7xzJGWsbDwZk13me4HBk1WEP7xnw">
 <title>Get-It 🇧🇼 | Find. Compare. Get.</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-
 *{
   box-sizing:border-box;
   margin:0;
@@ -23,13 +16,98 @@
   font-family:Arial,sans-serif;
 }
 
-body{
-  background:#f5f7fa;
-  color:#222;
+:root{
+  --green:#0b7a3b;
+  --green2:#12a653;
+  --dark:#123;
+  --glass:rgba(255,255,255,.88);
 }
 
+body{
+  background:
+    radial-gradient(circle at 10% 10%,rgba(11,122,59,.12),transparent 28%),
+    radial-gradient(circle at 90% 30%,rgba(255,180,50,.13),transparent 30%),
+    linear-gradient(135deg,#f7faf8,#eef5f1 50%,#f8f9fb);
+  color:#222;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* =========================
+   FLOATING 3D FOOD BACKGROUND
+========================= */
+
+.food-background{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  overflow:hidden;
+  z-index:0;
+}
+
+.food-orb{
+  position:absolute;
+  width:150px;
+  height:150px;
+  border-radius:50%;
+  background:rgba(255,255,255,.35);
+  backdrop-filter:blur(3px);
+  box-shadow:
+    0 25px 60px rgba(0,0,0,.10),
+    inset 0 2px 10px rgba(255,255,255,.8);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:75px;
+  opacity:.28;
+  filter:saturate(1.15);
+  animation:floatFood 9s ease-in-out infinite;
+}
+
+.food-orb:nth-child(1){
+  left:-40px;
+  top:130px;
+}
+
+.food-orb:nth-child(2){
+  right:-35px;
+  top:280px;
+  width:180px;
+  height:180px;
+  animation-delay:2s;
+}
+
+.food-orb:nth-child(3){
+  left:8%;
+  bottom:30px;
+  width:120px;
+  height:120px;
+  animation-delay:4s;
+}
+
+.food-orb:nth-child(4){
+  right:12%;
+  bottom:-20px;
+  width:140px;
+  height:140px;
+  animation-delay:6s;
+}
+
+@keyframes floatFood{
+  0%,100%{
+    transform:translateY(0) rotate(-4deg) scale(1);
+  }
+  50%{
+    transform:translateY(-22px) rotate(5deg) scale(1.04);
+  }
+}
+
+/* =========================
+   HEADER
+========================= */
+
 header{
-  background:#0b7a3b;
+  background:rgba(11,122,59,.94);
   color:white;
   padding:15px 20px;
   display:flex;
@@ -39,6 +117,8 @@ header{
   position:sticky;
   top:0;
   z-index:100;
+  box-shadow:0 8px 25px rgba(0,0,0,.12);
+  backdrop-filter:blur(14px);
 }
 
 .logo{
@@ -57,13 +137,19 @@ header{
 button{
   border:none;
   cursor:pointer;
+  transition:.2s ease;
+}
+
+button:hover{
+  transform:translateY(-2px);
+  box-shadow:0 7px 18px rgba(0,0,0,.13);
 }
 
 .header-btn{
   background:white;
-  color:#0b7a3b;
+  color:var(--green);
   padding:9px 12px;
-  border-radius:8px;
+  border-radius:10px;
   font-weight:bold;
 }
 
@@ -76,57 +162,109 @@ button{
   margin-left:4px;
 }
 
+/* =========================
+   MAIN
+========================= */
+
 .container{
   max-width:1150px;
   margin:auto;
-  padding:20px;
+  padding:25px 20px;
+  position:relative;
+  z-index:2;
 }
 
 .search-box{
   width:100%;
-  padding:15px;
-  border:1px solid #ddd;
-  border-radius:10px;
+  padding:16px 18px;
+  border:1px solid rgba(255,255,255,.8);
+  border-radius:16px;
   font-size:16px;
   margin-bottom:15px;
+  background:rgba(255,255,255,.9);
+  box-shadow:0 8px 25px rgba(0,0,0,.07);
+  outline:none;
 }
+
+.search-box:focus{
+  border-color:var(--green2);
+  box-shadow:0 0 0 4px rgba(11,122,59,.10);
+}
+
+/* =========================
+   CATEGORIES
+========================= */
 
 .categories{
   display:flex;
-  gap:8px;
+  gap:9px;
   overflow-x:auto;
-  padding-bottom:10px;
+  padding:5px 2px 12px;
+  scrollbar-width:none;
+}
+
+.categories::-webkit-scrollbar{
+  display:none;
 }
 
 .category-btn{
-  background:white;
-  border:1px solid #ddd;
-  padding:9px 14px;
-  border-radius:20px;
+  background:rgba(255,255,255,.88);
+  border:1px solid rgba(0,0,0,.07);
+  padding:10px 16px;
+  border-radius:25px;
   white-space:nowrap;
+  box-shadow:0 5px 15px rgba(0,0,0,.05);
 }
 
 .category-btn.active{
-  background:#0b7a3b;
+  background:linear-gradient(135deg,var(--green),var(--green2));
   color:white;
+  box-shadow:0 8px 20px rgba(11,122,59,.25);
+}
+
+/* =========================
+   GLASS CARDS
+========================= */
+
+.card,
+.deal-card,
+.shop-card,
+.tool-card,
+.message,
+.auth-box,
+.account-card,
+.comparison-row{
+  background:var(--glass);
+  backdrop-filter:blur(15px);
+  -webkit-backdrop-filter:blur(15px);
+  border:1px solid rgba(255,255,255,.75);
+  box-shadow:
+    0 10px 30px rgba(0,0,0,.07),
+    inset 0 1px 0 rgba(255,255,255,.8);
 }
 
 .products-grid,
 .deals-grid,
 .shop-grid{
   display:grid;
-  grid-template-columns:
-    repeat(auto-fit,minmax(230px,1fr));
-  gap:15px;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:17px;
 }
 
 .card,
 .deal-card,
 .shop-card{
-  background:white;
-  border-radius:12px;
-  padding:17px;
-  box-shadow:0 3px 12px rgba(0,0,0,.07);
+  border-radius:18px;
+  padding:18px;
+  transition:.25s ease;
+}
+
+.card:hover,
+.deal-card:hover,
+.shop-card:hover,
+.tool-card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 18px 38px rgba(0,0,0,.11);
 }
 
 .card h3,
@@ -143,22 +281,26 @@ button{
 .price{
   font-size:21px;
   font-weight:bold;
-  color:#0b7a3b;
+  color:var(--green);
   margin:10px 0;
 }
 
 .card button,
 .deal-card button,
 .shop-card button{
-  background:#0b7a3b;
+  background:linear-gradient(135deg,var(--green),var(--green2));
   color:white;
   padding:10px 13px;
-  border-radius:8px;
+  border-radius:10px;
   margin-top:6px;
 }
 
+/* =========================
+   TOOLS
+========================= */
+
 .section{
-  margin-top:25px;
+  margin-top:28px;
 }
 
 .section-title{
@@ -169,25 +311,61 @@ button{
 }
 
 .tool-card{
-  background:white;
-  padding:20px;
-  border-radius:12px;
-  box-shadow:0 3px 12px rgba(0,0,0,.07);
+  padding:22px;
+  border-radius:18px;
   cursor:pointer;
 }
 
 .home-tools{
   display:grid;
-  grid-template-columns:
-    repeat(auto-fit,minmax(220px,1fr));
-  gap:15px;
-  margin:15px 0;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:17px;
+  margin:18px 0;
 }
 
+/* =========================
+   BUTTONS
+========================= */
+
+.back-btn{
+  background:#444;
+  color:white;
+  padding:10px 15px;
+  border-radius:10px;
+  margin-bottom:15px;
+}
+
+.primary-btn{
+  background:linear-gradient(135deg,var(--green),var(--green2));
+  color:white;
+  padding:12px 16px;
+  border-radius:10px;
+  font-weight:bold;
+}
+
+.secondary-btn{
+  background:#555;
+  color:white;
+  padding:12px 16px;
+  border-radius:10px;
+  font-weight:bold;
+}
+
+.danger-btn{
+  background:#e53935;
+  color:white;
+  padding:12px 16px;
+  border-radius:10px;
+  font-weight:bold;
+}
+
+/* =========================
+   OTHER COMPONENTS
+========================= */
+
 .message{
-  background:white;
   padding:25px;
-  border-radius:12px;
+  border-radius:16px;
   text-align:center;
 }
 
@@ -195,19 +373,10 @@ button{
   border-left:5px solid #e53935;
 }
 
-.back-btn{
-  background:#555;
-  color:white;
-  padding:10px 15px;
-  border-radius:8px;
-  margin-bottom:15px;
-}
-
 .comparison-row{
-  background:white;
   padding:17px;
   margin-bottom:10px;
-  border-radius:10px;
+  border-radius:14px;
   display:flex;
   justify-content:space-between;
   align-items:center;
@@ -215,31 +384,32 @@ button{
 }
 
 .cheapest{
-  border:2px solid #0b7a3b;
+  border:2px solid var(--green);
 }
 
 .deal-save{
-  color:#0b7a3b;
+  color:var(--green);
   font-weight:bold;
 }
 
 .saved-note{
-  background:#e9f8ef;
-  color:#0b7a3b;
+  background:rgba(233,248,239,.92);
+  color:var(--green);
   padding:12px;
-  border-radius:8px;
+  border-radius:10px;
   margin:10px 0;
 }
 
 .list-item{
-  background:white;
+  background:var(--glass);
   padding:15px;
-  border-radius:10px;
+  border-radius:14px;
   margin-bottom:10px;
   display:flex;
   justify-content:space-between;
   align-items:center;
   gap:12px;
+  box-shadow:0 8px 20px rgba(0,0,0,.06);
 }
 
 .qty-controls{
@@ -251,47 +421,21 @@ button{
 .qty-controls button{
   width:32px;
   height:32px;
-  border-radius:7px;
-  background:#0b7a3b;
+  border-radius:8px;
+  background:var(--green);
   color:white;
   font-size:18px;
 }
 
 .remove-btn{
-  background:#e53935 !important;
-}
-
-.primary-btn{
-  background:#0b7a3b;
-  color:white;
-  padding:12px 16px;
-  border-radius:8px;
-  font-weight:bold;
-}
-
-.secondary-btn{
-  background:#555;
-  color:white;
-  padding:12px 16px;
-  border-radius:8px;
-  font-weight:bold;
-}
-
-.danger-btn{
-  background:#e53935;
-  color:white;
-  padding:12px 16px;
-  border-radius:8px;
-  font-weight:bold;
+  background:#e53935!important;
 }
 
 .auth-box{
   max-width:450px;
   margin:30px auto;
-  background:white;
   padding:25px;
-  border-radius:14px;
-  box-shadow:0 4px 15px rgba(0,0,0,.08);
+  border-radius:18px;
 }
 
 .auth-box h2{
@@ -303,7 +447,7 @@ button{
   padding:13px;
   margin:7px 0;
   border:1px solid #ddd;
-  border-radius:8px;
+  border-radius:10px;
 }
 
 .auth-buttons{
@@ -314,9 +458,8 @@ button{
 }
 
 .account-card{
-  background:white;
   padding:20px;
-  border-radius:12px;
+  border-radius:18px;
   margin-bottom:15px;
 }
 
@@ -330,14 +473,16 @@ button{
 .basket-total{
   font-size:24px;
   font-weight:bold;
-  color:#0b7a3b;
+  color:var(--green);
   margin:10px 0;
 }
 
 footer{
+  position:relative;
+  z-index:2;
   margin-top:40px;
-  padding:25px;
-  background:#222;
+  padding:28px;
+  background:#18221d;
   color:white;
   text-align:center;
 }
@@ -352,24 +497,46 @@ footer{
     font-size:19px;
   }
 
+  .header-actions{
+    justify-content:flex-end;
+  }
+
+  .header-btn{
+    padding:8px 9px;
+    font-size:12px;
+  }
+
   .comparison-row,
   .list-item{
     flex-direction:column;
     align-items:flex-start;
   }
 
+  .food-orb{
+    opacity:.18;
+  }
 }
-
 </style>
-
 </head>
 
 <body>
 
+<!-- =========================
+     3D FOOD BACKGROUND
+========================= -->
+
+<div class="food-background" id="foodBackground">
+
+  <div class="food-orb">🍛</div>
+  <div class="food-orb">🍝</div>
+  <div class="food-orb">🥗</div>
+  <div class="food-orb">🍔</div>
+
+</div>
+
 <header>
 
-  <div class="logo"
-       onclick="showHome()">
+  <div class="logo" onclick="showHome()">
     Get-It 🇧🇼
   </div>
 
@@ -382,29 +549,20 @@ footer{
 
     <button class="header-btn"
             onclick="showShoppingList()">
-
       🛒 My List
-
       <span id="listCount"
             class="list-badge">0</span>
-
     </button>
 
   </div>
 
 </header>
 
-
-<main class="container"
-      id="app">
-
-</main>
-
+<main class="container" id="app"></main>
 
 <footer>
   Get-It 🇧🇼 — Find. Compare. Get.
 </footer>
-
 
 <script>
 
@@ -417,7 +575,6 @@ const SUPABASE_URL =
 
 const SUPABASE_KEY =
 "sb_publishable_3jRUAQ88ntmpnA42QwTuew_TJ7NYgFw";
-
 
 const supabaseAuth =
 window.supabase.createClient(
@@ -440,6 +597,65 @@ let shoppingList = [];
 
 const STORAGE_KEY =
 "getit_shopping_list";
+
+
+/* =====================================================
+   3D FOOD TAB CHANGER
+===================================================== */
+
+const foodThemes = {
+
+  All:[
+    "🍛","🍝","🍔","🥗"
+  ],
+
+  Groceries:[
+    "🍚","🥛","🍞","🍎"
+  ],
+
+  Electronics:[
+    "💻","📱","🎧","⌚"
+  ],
+
+  Clothing:[
+    "👕","👟","🧥","👜"
+  ],
+
+  Household:[
+    "🧹","🧺","🧼","🛋️"
+  ]
+
+};
+
+
+function updateFoodBackground(){
+
+  const container =
+    document.getElementById(
+      "foodBackground"
+    );
+
+  if(!container)
+    return;
+
+  const foods =
+    foodThemes[currentCategory] ||
+    foodThemes.All;
+
+  container.innerHTML =
+    foods.map(
+      (food,index) => `
+        <div
+          class="food-orb"
+          style="
+            animation-delay:${index * 1.4}s;
+          ">
+          ${food}
+        </div>
+      `
+    ).join("");
+
+}
 
 
 /* =====================================================
@@ -572,10 +788,163 @@ function getShopLocation(shop){
 
 
 /* =====================================================
-   SUPABASE REST FETCH
+   SMART GROCERY DETECTION
 ===================================================== */
 
-async function supabaseFetch(path,options={}){
+function isGroceryProduct(product){
+
+  const category =
+    getProductCategory(product)
+      .toLowerCase()
+      .trim();
+
+  const name =
+    getProductName(product)
+      .toLowerCase()
+      .trim();
+
+  const brand =
+    getProductBrand(product)
+      .toLowerCase()
+      .trim();
+
+  const text =
+    `${category} ${name} ${brand}`;
+
+
+  const nonFoodWords = [
+    "phone",
+    "laptop",
+    "computer",
+    "television",
+    "tv",
+    "charger",
+    "headphone",
+    "earphone",
+    "speaker",
+    "keyboard",
+    "mouse",
+    "shirt",
+    "shoe",
+    "dress",
+    "jacket",
+    "trouser",
+    "jeans",
+    "soap",
+    "detergent",
+    "bleach",
+    "broom",
+    "mop",
+    "furniture",
+    "chair",
+    "table",
+    "medicine",
+    "tablet",
+    "capsule",
+    "pharmacy"
+  ];
+
+
+  if(
+    nonFoodWords.some(
+      word => text.includes(word)
+    )
+  ){
+    return false;
+  }
+
+
+  const foodWords = [
+
+    "food",
+    "grocery",
+    "groceries",
+    "rice",
+    "meal",
+    "flour",
+    "bread",
+    "milk",
+    "cheese",
+    "butter",
+    "yoghurt",
+    "yogurt",
+    "egg",
+    "eggs",
+    "meat",
+    "beef",
+    "chicken",
+    "pork",
+    "lamb",
+    "fish",
+    "tuna",
+    "sausage",
+    "bacon",
+    "pasta",
+    "spaghetti",
+    "noodle",
+    "cereal",
+    "cornflakes",
+    "oats",
+    "sugar",
+    "salt",
+    "pepper",
+    "oil",
+    "cooking oil",
+    "juice",
+    "water",
+    "drink",
+    "soda",
+    "juice",
+    "coffee",
+    "tea",
+    "chocolate",
+    "sweet",
+    "candy",
+    "biscuit",
+    "cookie",
+    "snack",
+    "crisps",
+    "chips",
+    "fruit",
+    "apple",
+    "banana",
+    "orange",
+    "vegetable",
+    "tomato",
+    "onion",
+    "potato",
+    "beans",
+    "peas",
+    "sauce",
+    "ketchup",
+    "mayonnaise",
+    "peanut",
+    "jam",
+    "honey",
+    "canned",
+    "tin",
+    "edible",
+    "beverage"
+  ];
+
+
+  return foodWords.some(
+    word =>
+      category.includes(word) ||
+      name.includes(word)
+  );
+
+}
+
+
+/* =====================================================
+   SUPABASE FETCH
+===================================================== */
+
+async function supabaseFetch(
+  path,
+  options={}
+){
 
   const response =
     await fetch(
@@ -585,6 +954,7 @@ async function supabaseFetch(path,options={}){
 
         headers:{
           "apikey":SUPABASE_KEY,
+
           "Authorization":
             `Bearer ${SUPABASE_KEY}`,
 
@@ -621,7 +991,7 @@ async function supabaseFetch(path,options={}){
 
 
 /* =====================================================
-   LOCAL SHOPPING LIST
+   LOCAL LIST
 ===================================================== */
 
 function saveShoppingList(){
@@ -698,7 +1068,7 @@ function loadSavedShoppingList(){
   }catch(error){
 
     console.error(
-      "LOAD SAVED LIST ERROR:",
+      "LOAD LIST ERROR:",
       error
     );
 
@@ -910,7 +1280,7 @@ function showAuthMessage(
 
 
 /* =====================================================
-   CLOUD SHOPPING LIST
+   CLOUD LIST
 ===================================================== */
 
 async function getCloudList(){
@@ -1054,15 +1424,7 @@ async function syncCloudShoppingList(){
         );
 
 
-      if(
-        cloudItems.length > 0
-      ){
-
-        /*
-          Merge local and cloud lists.
-          If the same product exists,
-          quantities are combined.
-        */
+      if(cloudItems.length > 0){
 
         const merged = [];
 
@@ -1117,7 +1479,6 @@ async function syncCloudShoppingList(){
         shoppingList =
           merged;
 
-
       }else if(
         shoppingList.length > 0
       ){
@@ -1152,12 +1513,10 @@ async function syncCloudShoppingList(){
 
 
 /* =====================================================
-   ADD TO SHOPPING LIST
+   SHOPPING LIST
 ===================================================== */
 
-async function addToShoppingList(
-  product
-){
+async function addToShoppingList(product){
 
   const id =
     getProductId(product);
@@ -1228,7 +1587,7 @@ function updateListCount(){
 
 
 /* =====================================================
-   LOAD PRODUCTS
+   PRODUCTS
 ===================================================== */
 
 async function loadProducts(){
@@ -1239,12 +1598,6 @@ async function loadProducts(){
       await supabaseFetch(
         "products?select=*"
       );
-
-
-    console.log(
-      "PRODUCTS LOADED:",
-      data
-    );
 
 
     allProducts =
@@ -1289,10 +1642,6 @@ async function loadProducts(){
 }
 
 
-/* =====================================================
-   LOAD SHOPS
-===================================================== */
-
 async function loadShops(){
 
   try{
@@ -1301,13 +1650,6 @@ async function loadShops(){
       await supabaseFetch(
         "shops?select=*"
       );
-
-
-    console.log(
-      "SHOPS LOADED:",
-      allShops
-    );
-
 
   }catch(error){
 
@@ -1451,24 +1793,35 @@ function showHome(){
 
   loadShopsPreview();
 
+  updateFoodBackground();
+
 }
 
 
 function renderCategories(){
 
-  const categories =
-    [
-      "All",
-      "Groceries",
-      "Electronics",
-      "Clothing",
-      "Household"
-    ];
+  const categories = [
+
+    "All",
+    "Groceries",
+    "Electronics",
+    "Clothing",
+    "Household"
+
+  ];
 
 
-  document.getElementById(
-    "categories"
-  ).innerHTML =
+  const container =
+    document.getElementById(
+      "categories"
+    );
+
+
+  if(!container)
+    return;
+
+
+  container.innerHTML =
 
     categories
       .map(category => `
@@ -1491,12 +1844,16 @@ function renderCategories(){
 }
 
 
-function selectCategory(
-  category
-){
+/* =====================================================
+   CATEGORY FILTER
+===================================================== */
+
+function selectCategory(category){
 
   currentCategory =
     category;
+
+  updateFoodBackground();
 
   renderCategories();
 
@@ -1539,12 +1896,26 @@ function filterProducts(){
           text.includes(search);
 
 
-        const matchesCategory =
-          currentCategory === "All" ||
-          getProductCategory(product)
-            .toLowerCase()
-            ===
-            currentCategory.toLowerCase();
+        let matchesCategory = true;
+
+
+        if(currentCategory === "Groceries"){
+
+          matchesCategory =
+            isGroceryProduct(product);
+
+        }else if(
+          currentCategory !== "All"
+        ){
+
+          matchesCategory =
+            getProductCategory(product)
+              .toLowerCase()
+              .trim()
+              ===
+              currentCategory.toLowerCase();
+
+        }
 
 
         return (
@@ -1563,9 +1934,11 @@ function filterProducts(){
 }
 
 
-function displayProducts(
-  products
-){
+/* =====================================================
+   DISPLAY PRODUCTS
+===================================================== */
+
+function displayProducts(products){
 
   const container =
     document.getElementById(
@@ -1586,6 +1959,10 @@ function displayProducts(
         <h3>
           No products found
         </h3>
+
+        <p style="margin-top:8px;color:#777;">
+          Try another category or search.
+        </p>
 
       </div>
 
@@ -1630,13 +2007,17 @@ function displayProducts(
 
           <button
             onclick='showProduct(${JSON.stringify(product).replace(/'/g,"&#39;")})'>
-            View Prices
+
+            💰 View Prices
+
           </button>
 
 
           <button
             onclick='addToShoppingList(${JSON.stringify(product).replace(/'/g,"&#39;")})'>
+
             🛒 Add to List
+
           </button>
 
         </div>
@@ -1648,7 +2029,7 @@ function displayProducts(
 
 
 /* =====================================================
-   PRODUCT DETAILS / COMPARISON
+   PRODUCT DETAILS
 ===================================================== */
 
 function showProduct(product){
@@ -1730,9 +2111,11 @@ function showProduct(product){
 }
 
 
-async function showComparison(
-  productId
-){
+/* =====================================================
+   PRICE COMPARISON
+===================================================== */
+
+async function showComparison(productId){
 
   document.getElementById(
     "app"
@@ -2006,8 +2389,7 @@ async function getBestDeals(){
 
         const highest =
           Number(
-            valid[valid.length - 1]
-              .price
+            valid[valid.length - 1].price
           );
 
 
@@ -2261,6 +2643,10 @@ function loadShopsPreview(){
 
 }
 
+
+/* =====================================================
+   NEARBY SHOPS
+===================================================== */
 
 function extractCoordinates(shop){
 
@@ -2555,7 +2941,7 @@ function showNearbyShops(){
 
 
 /* =====================================================
-   SHOPPING LIST
+   SHOPPING LIST PAGE
 ===================================================== */
 
 async function showShoppingList(){
@@ -2769,9 +3155,7 @@ async function changeQuantity(
 }
 
 
-async function removeFromList(
-  index
-){
+async function removeFromList(index){
 
   shoppingList.splice(
     index,
@@ -2923,9 +3307,7 @@ async function findCheapestBasket(){
 }
 
 
-function renderBasket(
-  results
-){
+function renderBasket(results){
 
   let maximumSavingsTotal = 0;
 
@@ -3264,7 +3646,7 @@ function renderBasket(
 
 
 /* =====================================================
-   ACCOUNT PAGE
+   ACCOUNT
 ===================================================== */
 
 async function showAccount(){
@@ -3407,30 +3789,6 @@ async function showAccount(){
 
       <div id="authMessage"></div>
 
-
-      ${
-        shoppingList.length
-        ? `
-          <div class="saved-note"
-               style="margin-top:15px;">
-
-            🛒 You currently have
-            <strong>
-              ${shoppingList.length}
-            </strong>
-            product(s) in your local
-            shopping list.
-
-            <br><br>
-
-            After signing in, your list
-            will be synced to your account.
-
-          </div>
-        `
-        : ""
-      }
-
     </div>
 
   `;
@@ -3439,19 +3797,13 @@ async function showAccount(){
 
 
 /* =====================================================
-   AUTH STATE LISTENER
+   AUTH LISTENER
 ===================================================== */
 
 supabaseAuth
   .auth
   .onAuthStateChange(
     async (event,session) => {
-
-      console.log(
-        "AUTH EVENT:",
-        event
-      );
-
 
       if(
         event === "SIGNED_IN" &&
@@ -3478,7 +3830,7 @@ supabaseAuth
 
 
 /* =====================================================
-   START APP
+   START
 ===================================================== */
 
 async function startApp(){
@@ -3486,6 +3838,8 @@ async function startApp(){
   loadSavedShoppingList();
 
   updateListCount();
+
+  updateFoodBackground();
 
 
   await Promise.all([
