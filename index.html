@@ -10,6 +10,7 @@ content="rlliAywpbxUwN2l7xzJGWsbDwZk13me4HBk1WEP7xnw">
 <title>Get-It 🇧🇼 | Find. Compare. Get.</title>
 
 <style>
+
 *{
   box-sizing:border-box;
   margin:0;
@@ -23,137 +24,137 @@ body{
 }
 
 header{
-  background:#006633;
+  background:#111827;
   color:white;
-  padding:18px 15px;
-  text-align:center;
+  padding:18px;
+  position:sticky;
+  top:0;
+  z-index:100;
 }
 
-header h1{
-  font-size:28px;
+.header-inner{
+  max-width:1100px;
+  margin:auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
 }
 
-header p{
-  margin-top:5px;
-  opacity:.9;
+.logo{
+  font-size:24px;
+  font-weight:bold;
 }
 
-.hero{
-  background:white;
-  padding:25px 15px;
-  text-align:center;
+.logo span{
+  color:#facc15;
 }
 
-.hero h2{
-  color:#006633;
-  margin-bottom:8px;
+button{
+  cursor:pointer;
+  border:none;
+}
+
+.list-button{
+  background:#facc15;
+  color:#111827;
+  padding:11px 15px;
+  border-radius:10px;
+  font-weight:bold;
+}
+
+.badge{
+  background:#dc2626;
+  color:white;
+  padding:3px 7px;
+  border-radius:20px;
+  margin-left:5px;
+}
+
+main{
+  max-width:1100px;
+  margin:auto;
+  padding:20px;
 }
 
 .search-box{
-  max-width:600px;
-  margin:18px auto 0;
   display:flex;
-  gap:8px;
+  gap:10px;
+  margin-bottom:18px;
 }
 
 .search-box input{
   flex:1;
-  padding:13px;
-  border:1px solid #ccc;
-  border-radius:8px;
+  padding:14px;
+  border:1px solid #d1d5db;
+  border-radius:10px;
   font-size:16px;
-}
-
-.search-box button{
-  padding:13px 18px;
-  border:0;
-  border-radius:8px;
-  background:#006633;
-  color:white;
-  font-weight:bold;
-  cursor:pointer;
 }
 
 .categories{
   display:flex;
-  gap:10px;
+  gap:8px;
   overflow-x:auto;
-  padding:15px;
+  padding-bottom:10px;
+  margin-bottom:20px;
+}
+
+.category-btn{
   background:white;
+  border:1px solid #d1d5db;
+  padding:9px 15px;
+  border-radius:20px;
+  white-space:nowrap;
 }
 
-.category{
-  min-width:110px;
-  padding:12px 8px;
-  border:1px solid #ddd;
-  border-radius:10px;
-  background:#fafafa;
-  text-align:center;
-  cursor:pointer;
+.category-btn.active{
+  background:#111827;
+  color:white;
 }
 
-.category:hover{
-  background:#e9f5ee;
-}
-
-.container{
-  max-width:1000px;
-  margin:auto;
-  padding:20px 15px;
-}
-
-.products{
+.products-grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:15px;
+  grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
+  gap:16px;
 }
 
 .product-card{
   background:white;
-  border-radius:12px;
   padding:18px;
-  box-shadow:0 2px 8px rgba(0,0,0,.08);
-  cursor:pointer;
-  transition:.2s;
-}
-
-.product-card:hover{
-  transform:translateY(-2px);
+  border-radius:14px;
+  box-shadow:0 3px 12px rgba(0,0,0,.08);
 }
 
 .product-card h3{
-  color:#006633;
-  margin-bottom:8px;
+  margin-bottom:10px;
 }
 
 .product-card p{
-  color:#666;
-  margin-bottom:5px;
+  margin:6px 0;
+  color:#555;
 }
 
 .btn{
-  display:block;
   width:100%;
-  padding:13px;
-  border:0;
-  border-radius:8px;
-  background:#006633;
+  padding:11px;
+  border-radius:9px;
+  margin-top:10px;
+  background:#111827;
   color:white;
   font-weight:bold;
-  margin-top:12px;
-  cursor:pointer;
-}
-
-.btn:hover{
-  background:#004d26;
 }
 
 .secondary-btn{
-  background:#555;
+  background:#facc15;
+  color:#111827;
 }
 
-.secondary-btn:hover{
-  background:#333;
+.back-btn{
+  background:#111827;
+  color:white;
+  padding:10px 15px;
+  border-radius:9px;
+  margin-bottom:15px;
 }
 
 .screen{
@@ -164,341 +165,227 @@ header p{
   display:block;
 }
 
-.back{
-  margin-bottom:15px;
-  cursor:pointer;
-  color:#006633;
-  font-weight:bold;
+.message{
+  background:white;
+  padding:25px;
+  border-radius:12px;
+  text-align:center;
 }
 
-.details-card{
+.error{
+  color:#b91c1c;
+}
+
+.detail-card,
+.comparison-card,
+.basket-card{
   background:white;
   padding:20px;
-  border-radius:12px;
-  box-shadow:0 2px 8px rgba(0,0,0,.08);
+  border-radius:14px;
+  margin-bottom:15px;
+  box-shadow:0 3px 12px rgba(0,0,0,.07);
 }
 
-.details-card h2{
-  color:#006633;
-  margin-bottom:10px;
-}
-
-.comparison-card{
-  background:white;
-  margin:12px 0;
-  padding:18px;
-  border-radius:12px;
+.price-row{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  gap:15px;
-  box-shadow:0 2px 8px rgba(0,0,0,.08);
+  padding:15px 0;
+  border-bottom:1px solid #eee;
 }
 
-.comparison-card h3{
-  color:#006633;
-  margin-bottom:6px;
-}
-
-.comparison-card p{
-  color:#666;
-  font-size:14px;
-  margin-top:3px;
-}
-
-.comparison-price{
-  text-align:right;
-  min-width:110px;
-}
-
-.comparison-price strong{
-  display:block;
-  font-size:22px;
-  color:#222;
-  margin-top:4px;
-}
-
-.comparison-price span{
-  display:block;
-  color:#006633;
-  font-size:13px;
+.price{
+  font-size:20px;
   font-weight:bold;
 }
 
 .cheapest{
-  border:2px solid #006633;
+  border:2px solid #16a34a;
+  background:#f0fdf4;
 }
 
-.message{
-  text-align:center;
-  padding:30px;
-  color:#666;
-}
-
-.error{
-  color:#c00;
-}
-
-/* SHOPPING LIST */
-
-.list-button{
-  max-width:1000px;
-  margin:0 auto;
-  padding:0 15px 15px;
-  background:white;
-}
-
-.list-button button{
-  width:100%;
-  padding:14px;
-  border:0;
-  border-radius:9px;
-  background:#222;
-  color:white;
+.cheapest-label{
+  color:#15803d;
   font-weight:bold;
-  cursor:pointer;
+  font-size:13px;
 }
 
-.badge{
-  display:inline-block;
-  min-width:22px;
-  padding:3px 7px;
-  margin-left:5px;
-  border-radius:20px;
-  background:#fff;
-  color:#006633;
-}
-
-.list-item{
-  background:white;
-  padding:16px;
-  margin:10px 0;
-  border-radius:12px;
-  box-shadow:0 2px 8px rgba(0,0,0,.08);
-}
-
-.list-item h3{
-  color:#006633;
-  margin-bottom:6px;
-}
-
-.list-item p{
-  color:#666;
-  font-size:14px;
-  margin:4px 0;
-}
-
-.quantity-row{
+.quantity-control{
   display:flex;
   align-items:center;
   gap:10px;
   margin-top:12px;
 }
 
-.quantity-row button{
-  width:36px;
-  height:36px;
-  border:0;
-  border-radius:7px;
-  background:#006633;
+.quantity-control button{
+  width:35px;
+  height:35px;
+  border-radius:8px;
+  background:#111827;
   color:white;
-  font-size:20px;
-  cursor:pointer;
+  font-size:18px;
 }
 
-.quantity-number{
+.quantity{
   font-weight:bold;
   min-width:25px;
   text-align:center;
 }
 
 .remove-btn{
-  margin-left:auto;
-  background:#c62828 !important;
-  font-size:14px !important;
-  width:auto !important;
+  background:#dc2626;
+  color:white;
   padding:8px 12px;
-}
-
-.basket-summary{
-  background:white;
-  padding:20px;
-  border-radius:12px;
-  margin-top:15px;
-  box-shadow:0 2px 8px rgba(0,0,0,.08);
-}
-
-.basket-summary h2{
-  color:#006633;
-  margin-bottom:12px;
-}
-
-.total-box{
-  background:#e9f5ee;
-  padding:18px;
-  border-radius:10px;
-  margin-top:12px;
-}
-
-.total-box strong{
-  font-size:27px;
-  color:#006633;
-}
-
-.recommendation{
-  background:white;
-  padding:20px;
-  margin:15px 0;
-  border-radius:12px;
-  box-shadow:0 2px 8px rgba(0,0,0,.08);
-}
-
-.recommendation h3{
-  color:#006633;
-  margin-bottom:12px;
-}
-
-.basket-product{
-  padding:12px 0;
-  border-bottom:1px solid #eee;
-}
-
-.basket-product:last-child{
-  border-bottom:0;
-}
-
-.basket-product strong{
-  display:block;
-  margin-bottom:4px;
-}
-
-.save{
-  color:#006633;
-  font-weight:bold;
+  border-radius:8px;
   margin-top:10px;
 }
 
-.shop-total{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  padding:14px;
-  border-bottom:1px solid #eee;
-}
-
-.shop-total:last-child{
-  border-bottom:0;
-}
-
-.rank{
-  font-weight:bold;
-  color:#006633;
-}
-
-footer{
-  background:#006633;
+.clear-btn{
+  background:#dc2626;
   color:white;
-  text-align:center;
+  padding:11px 15px;
+  border-radius:9px;
+  margin-bottom:15px;
+}
+
+.basket-total{
+  background:#111827;
+  color:white;
   padding:20px;
-  margin-top:30px;
+  border-radius:14px;
+  margin:15px 0;
+}
+
+.basket-total h2{
+  color:#facc15;
+}
+
+.saving{
+  color:#15803d;
+  font-weight:bold;
+}
+
+.shop-option{
+  padding:15px;
+  border:1px solid #ddd;
+  border-radius:10px;
+  margin-top:10px;
+}
+
+.best-shop{
+  border:2px solid #16a34a;
+  background:#f0fdf4;
+}
+
+.hidden{
+  display:none;
 }
 
 @media(max-width:600px){
 
-  .comparison-card{
-    flex-direction:column;
+  .header-inner{
     align-items:flex-start;
   }
 
-  .comparison-price{
-    text-align:left;
+  .logo{
+    font-size:20px;
   }
 
-  .search-box{
-    flex-direction:column;
+  .list-button{
+    padding:9px;
+    font-size:13px;
   }
 
-  .shop-total{
-    flex-direction:column;
+  main{
+    padding:15px;
   }
+
 }
+
 </style>
 </head>
 
 <body>
 
 <header>
-  <h1>Get-It 🇧🇼</h1>
-  <p>Find. Compare. Get.</p>
+
+  <div class="header-inner">
+
+    <div class="logo">
+      Get-It <span>🇧🇼</span>
+    </div>
+
+    <button
+      class="list-button"
+      id="shoppingListButton">
+      🛒 My List
+      <span
+        class="badge"
+        id="listCount">
+        0
+      </span>
+    </button>
+
+  </div>
+
 </header>
 
-<section class="hero">
+<main>
 
-  <h2>Find the best prices in Botswana</h2>
+<!-- HOME -->
 
-  <p>
-    Search products and compare prices across shops.
-  </p>
+<section
+  id="homeScreen"
+  class="screen active">
 
   <div class="search-box">
 
     <input
       type="text"
       id="searchInput"
-      placeholder="Search for a product..."
-      oninput="searchProducts()"
-    >
+      placeholder="Search products, brands or sizes...">
 
-    <button onclick="searchProducts()">
-      Search
+  </div>
+
+  <div
+    class="categories"
+    id="categories">
+
+    <button
+      class="category-btn active"
+      data-category="All">
+      All
+    </button>
+
+    <button
+      class="category-btn"
+      data-category="Groceries">
+      Groceries
+    </button>
+
+    <button
+      class="category-btn"
+      data-category="Electronics">
+      Electronics
+    </button>
+
+    <button
+      class="category-btn"
+      data-category="Clothing">
+      Clothing
+    </button>
+
+    <button
+      class="category-btn"
+      data-category="Household">
+      Household
     </button>
 
   </div>
 
-</section>
-
-<div class="categories">
-
-  <div class="category" onclick="filterCategory('All')">
-    🛍️<br>All
-  </div>
-
-  <div class="category" onclick="filterCategory('Groceries')">
-    🛒<br>Groceries
-  </div>
-
-  <div class="category" onclick="filterCategory('Electronics')">
-    📱<br>Electronics
-  </div>
-
-  <div class="category" onclick="filterCategory('Clothing')">
-    👕<br>Clothing
-  </div>
-
-  <div class="category" onclick="filterCategory('Household')">
-    🏠<br>Household
-  </div>
-
-</div>
-
-<div class="list-button">
-  <button onclick="openShoppingList()">
-    🛒 My Shopping List
-    <span class="badge" id="listCount">0</span>
-  </button>
-</div>
-
-<main class="container">
-
-<!-- HOME -->
-
-<section id="homeScreen" class="screen active">
-
-  <h2 style="margin-bottom:15px;">
-    Products
-  </h2>
-
-  <div id="productsContainer" class="products">
+  <div
+    id="productsContainer"
+    class="products-grid">
 
     <div class="message">
       Loading products...
@@ -509,33 +396,39 @@ footer{
 </section>
 
 
-<!-- DETAILS -->
+<!-- PRODUCT DETAILS -->
 
-<section id="detailsScreen" class="screen">
+<section
+  id="detailsScreen"
+  class="screen">
 
-  <div class="back" onclick="showHome()">
-    ← Back to products
+  <button
+    class="back-btn"
+    id="detailsBack">
+    ← Back
+  </button>
+
+  <div
+    id="detailsContent">
   </div>
-
-  <div id="detailsContent"></div>
 
 </section>
 
 
-<!-- COMPARISON -->
+<!-- PRICE COMPARISON -->
 
-<section id="comparisonScreen" class="screen">
+<section
+  id="comparisonScreen"
+  class="screen">
 
-  <div class="back" onclick="showDetails()">
-    ← Back to product
-  </div>
+  <button
+    class="back-btn"
+    id="comparisonBack">
+    ← Back
+  </button>
 
-  <div id="comparisonContent">
-
-    <div class="message">
-      Loading price comparison...
-    </div>
-
+  <div
+    id="comparisonContent">
   </div>
 
 </section>
@@ -543,52 +436,55 @@ footer{
 
 <!-- SHOPPING LIST -->
 
-<section id="shoppingListScreen" class="screen">
+<section
+  id="shoppingListScreen"
+  class="screen">
 
-  <div class="back" onclick="showHome()">
-    ← Back to products
+  <button
+    class="back-btn"
+    id="shoppingBack">
+    ← Continue Shopping
+  </button>
+
+  <h2>🛒 My Shopping List</h2>
+
+  <br>
+
+  <button
+    class="clear-btn"
+    id="clearList">
+    Clear List
+  </button>
+
+  <div
+    id="shoppingListContent">
   </div>
-
-  <h2 style="color:#006633;margin-bottom:8px;">
-    🛒 My Shopping List
-  </h2>
-
-  <p style="color:#666;margin-bottom:15px;">
-    Add products and find the cheapest way to shop.
-  </p>
-
-  <div id="shoppingListContent"></div>
 
 </section>
 
 
 <!-- BASKET RESULTS -->
 
-<section id="basketScreen" class="screen">
+<section
+  id="basketScreen"
+  class="screen">
 
-  <div class="back" onclick="openShoppingList()">
-    ← Back to shopping list
+  <button
+    class="back-btn"
+    id="basketBack">
+    ← Shopping List
+  </button>
+
+  <div
+    id="basketContent">
   </div>
-
-  <div id="basketContent"></div>
 
 </section>
 
 </main>
 
-<footer>
-
-  <p>© 2026 Get-It 🇧🇼</p>
-  <p>Find. Compare. Get.</p>
-
-</footer>
-
 
 <script>
-
-/* =========================================
-   SUPABASE
-========================================= */
 
 const SUPABASE_URL =
 "https://snjrlhkmixiamgqhfhug.supabase.co";
@@ -597,20 +493,18 @@ const SUPABASE_KEY =
 "sb_publishable_3jRUAQ88ntmpnA42QwTuew_TJ7NYgFw";
 
 
-/* =========================================
-   GLOBAL DATA
-========================================= */
-
 let allProducts = [];
 let allShops = [];
 let selectedProduct = null;
 
 let shoppingList = [];
 
+let currentCategory = "All";
 
-/* =========================================
-   SUPABASE FETCH
-========================================= */
+
+/* =========================
+   SUPABASE
+========================= */
 
 async function supabaseFetch(endpoint){
 
@@ -620,13 +514,10 @@ async function supabaseFetch(endpoint){
       "/rest/v1/" +
       endpoint,
       {
-        method:"GET",
         headers:{
           "apikey":SUPABASE_KEY,
           "Authorization":
-            "Bearer " + SUPABASE_KEY,
-          "Content-Type":
-            "application/json"
+          "Bearer " + SUPABASE_KEY
         }
       }
     );
@@ -637,25 +528,27 @@ async function supabaseFetch(endpoint){
       await response.text();
 
     throw new Error(
-      "Supabase " +
-      response.status +
-      ": " +
-      text
+      text || "Supabase request failed"
     );
-
   }
 
-  return await response.json();
+  return response.json();
 }
 
 
-/* =========================================
-   ESCAPE HTML
-========================================= */
+/* =========================
+   HELPERS
+========================= */
 
 function escapeHtml(value){
 
-  return String(value ?? "")
+  if(value === null ||
+     value === undefined){
+
+    return "";
+  }
+
+  return String(value)
     .replace(/&/g,"&amp;")
     .replace(/</g,"&lt;")
     .replace(/>/g,"&gt;")
@@ -664,29 +557,6 @@ function escapeHtml(value){
 }
 
 
-/* =========================================
-   NORMALIZE ID
-========================================= */
-
-function normalizeId(value){
-
-  if(
-    value === null ||
-    value === undefined
-  ){
-    return "";
-  }
-
-  return String(value)
-    .trim()
-    .toLowerCase();
-}
-
-
-/* =========================================
-   PRODUCT HELPERS
-========================================= */
-
 function getProductId(product){
 
   return (
@@ -694,7 +564,8 @@ function getProductId(product){
     product.Product_id ??
     product.id ??
     product.Id ??
-    product.ID
+    product.ID ??
+    product["I'd"]
   );
 }
 
@@ -745,10 +616,6 @@ function getProductCategory(product){
 }
 
 
-/* =========================================
-   SHOP HELPERS
-========================================= */
-
 function getShopId(shop){
 
   return (
@@ -783,42 +650,64 @@ function getShopLocation(shop){
 }
 
 
-/* =========================================
-   FIND SHOP
-========================================= */
-
 function findShop(shopId){
-
-  const wantedId =
-    normalizeId(shopId);
-
-  if(!wantedId){
-    return null;
-  }
 
   return allShops.find(
     shop =>
-      normalizeId(
-        getShopId(shop)
-      ) === wantedId
-  ) || null;
+      String(getShopId(shop)) ===
+      String(shopId)
+  );
 }
 
 
-/* =========================================
+function showScreen(id){
+
+  document
+    .querySelectorAll(".screen")
+    .forEach(screen =>
+      screen.classList.remove("active")
+    );
+
+  const screen =
+    document.getElementById(id);
+
+  if(screen){
+    screen.classList.add("active");
+  }
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+}
+
+
+/* =========================
    LOAD PRODUCTS
-========================================= */
+========================= */
 
 async function loadProducts(){
 
   try{
 
-    allProducts =
+    const data =
       await supabaseFetch(
         "products?select=*"
       );
 
-    displayProducts(allProducts);
+    console.log(
+      "PRODUCTS LOADED:",
+      data
+    );
+
+    allProducts =
+      Array.isArray(data)
+      ? data
+      : [];
+
+    displayProducts(
+      allProducts
+    );
 
   }catch(error){
 
@@ -832,9 +721,15 @@ async function loadProducts(){
     ).innerHTML = `
 
       <div class="message error">
-        Unable to load products.
-        <br><br>
-        ${escapeHtml(error.message)}
+
+        <h3>
+          Unable to load products
+        </h3>
+
+        <p style="margin-top:10px;">
+          ${escapeHtml(error.message)}
+        </p>
+
       </div>
 
     `;
@@ -842,9 +737,9 @@ async function loadProducts(){
 }
 
 
-/* =========================================
+/* =========================
    LOAD SHOPS
-========================================= */
+========================= */
 
 async function loadShops(){
 
@@ -872,9 +767,9 @@ async function loadShops(){
 }
 
 
-/* =========================================
+/* =========================
    DISPLAY PRODUCTS
-========================================= */
+========================= */
 
 function displayProducts(products){
 
@@ -883,8 +778,12 @@ function displayProducts(products){
       "productsContainer"
     );
 
+  if(!container){
+    return;
+  }
+
   if(
-    !products ||
+    !Array.isArray(products) ||
     products.length === 0
   ){
 
@@ -907,18 +806,22 @@ function displayProducts(products){
     card.className =
       "product-card";
 
+    const name =
+      getProductName(product);
+
     const brand =
       getProductBrand(product);
 
     const size =
       getProductSize(product);
 
+    const category =
+      getProductCategory(product);
+
     card.innerHTML = `
 
       <h3>
-        ${escapeHtml(
-          getProductName(product)
-        )}
+        ${escapeHtml(name)}
       </h3>
 
       <p>
@@ -928,239 +831,291 @@ function displayProducts(products){
 
       ${
         size
-        ?
-        `
+        ? `
           <p>
             📦 Size:
             ${escapeHtml(size)}
           </p>
         `
-        :
-        ""
+        : ""
       }
 
       <p>
         Category:
-        ${escapeHtml(
-          getProductCategory(product)
-        )}
+        ${escapeHtml(category)}
       </p>
 
-      <button class="btn"
-        onclick="event.stopPropagation();openProduct(arguments[0])">
-        Compare Prices
+      <button
+        class="btn compareBtn">
+        💰 Compare Prices
       </button>
 
-      <button class="btn secondary-btn"
-        onclick="event.stopPropagation();addToShoppingList(arguments[0])">
+      <button
+        class="btn secondary-btn addBtn">
         🛒 Add to List
       </button>
 
     `;
 
-    /*
-      Buttons use the product through
-      the card's closure.
-    */
 
-    const buttons =
-      card.querySelectorAll("button");
-
-    buttons[0].onclick =
-      function(event){
-        event.stopPropagation();
-        openProduct(product);
-      };
-
-    buttons[1].onclick =
-      function(event){
-        event.stopPropagation();
-        addToShoppingList(product);
-      };
-
-    card.onclick =
+    card.addEventListener(
+      "click",
       function(){
+
         openProduct(product);
-      };
+
+      }
+    );
+
+
+    card
+      .querySelector(".compareBtn")
+      .addEventListener(
+        "click",
+        function(event){
+
+          event.stopPropagation();
+
+          openProduct(product);
+
+        }
+      );
+
+
+    card
+      .querySelector(".addBtn")
+      .addEventListener(
+        "click",
+        function(event){
+
+          event.stopPropagation();
+
+          addToShoppingList(
+            product
+          );
+
+        }
+      );
+
 
     container.appendChild(card);
 
   });
+
 }
 
 
-/* =========================================
+/* =========================
    SEARCH
-========================================= */
+========================= */
 
-function searchProducts(){
+document
+  .getElementById("searchInput")
+  .addEventListener(
+    "input",
+    function(){
 
-  const search =
-    document
-      .getElementById("searchInput")
-      .value
-      .trim()
-      .toLowerCase();
-
-  const filtered =
-    allProducts.filter(product => {
-
-      const name =
-        getProductName(product)
-          .toLowerCase();
-
-      const brand =
-        getProductBrand(product)
-          .toLowerCase();
-
-      const category =
-        getProductCategory(product)
-          .toLowerCase();
-
-      const size =
-        getProductSize(product)
-          .toLowerCase();
-
-      return (
-        name.includes(search) ||
-        brand.includes(search) ||
-        category.includes(search) ||
-        size.includes(search)
-      );
-
-    });
-
-  displayProducts(filtered);
-}
-
-
-/* =========================================
-   CATEGORY
-========================================= */
-
-function filterCategory(category){
-
-  if(category === "All"){
-
-    displayProducts(allProducts);
-    return;
-
-  }
-
-  const filtered =
-    allProducts.filter(product => {
-
-      return (
-        getProductCategory(product)
+      const search =
+        this.value
           .toLowerCase()
-          .trim()
-        ===
-        category
-          .toLowerCase()
-          .trim()
-      );
+          .trim();
 
-    });
+      const filtered =
+        allProducts.filter(product => {
 
-  displayProducts(filtered);
-}
+          const name =
+            getProductName(product)
+              .toLowerCase();
+
+          const brand =
+            getProductBrand(product)
+              .toLowerCase();
+
+          const size =
+            getProductSize(product)
+              .toLowerCase();
+
+          return (
+            name.includes(search) ||
+            brand.includes(search) ||
+            size.includes(search)
+          );
+
+        });
+
+      displayProducts(filtered);
+
+    }
+  );
 
 
-/* =========================================
+/* =========================
+   CATEGORIES
+========================= */
+
+document
+  .querySelectorAll(".category-btn")
+  .forEach(button => {
+
+    button.addEventListener(
+      "click",
+      function(){
+
+        document
+          .querySelectorAll(
+            ".category-btn"
+          )
+          .forEach(btn =>
+            btn.classList.remove("active")
+          );
+
+        this.classList.add("active");
+
+        currentCategory =
+          this.dataset.category;
+
+        if(
+          currentCategory === "All"
+        ){
+
+          displayProducts(
+            allProducts
+          );
+
+          return;
+        }
+
+        const filtered =
+          allProducts.filter(product => {
+
+            return (
+              getProductCategory(product)
+                .toLowerCase() ===
+              currentCategory.toLowerCase()
+            );
+
+          });
+
+        displayProducts(filtered);
+
+      }
+    );
+
+  });
+
+
+/* =========================
    OPEN PRODUCT
-========================================= */
+========================= */
 
 function openProduct(product){
 
   selectedProduct =
     product;
 
+  const name =
+    getProductName(product);
+
+  const brand =
+    getProductBrand(product);
+
+  const size =
+    getProductSize(product);
+
   document.getElementById(
     "detailsContent"
   ).innerHTML = `
 
-    <div class="details-card">
+    <div class="detail-card">
 
       <h2>
-        ${escapeHtml(
-          getProductName(product)
-        )}
+        ${escapeHtml(name)}
       </h2>
 
-      <p>
-        <strong>Brand:</strong>
-        ${escapeHtml(
-          getProductBrand(product)
-        )}
+      <p style="margin-top:10px;">
+        🏷️ Brand:
+        ${escapeHtml(brand)}
       </p>
 
       ${
-        getProductSize(product)
-        ?
-        `
-          <p style="margin-top:6px;">
-            <strong>Size:</strong>
-            ${escapeHtml(
-              getProductSize(product)
-            )}
+        size
+        ? `
+          <p style="margin-top:8px;">
+            📦 Size:
+            ${escapeHtml(size)}
           </p>
         `
-        :
-        ""
+        : ""
       }
-
-      <p style="margin-top:6px;">
-        <strong>Category:</strong>
-        ${escapeHtml(
-          getProductCategory(product)
-        )}
-      </p>
-
-      <button
-        class="btn"
-        onclick="comparePrices()">
-
-        💰 Compare Prices
-
-      </button>
 
       <button
         class="btn secondary-btn"
-        onclick="addToShoppingList(selectedProduct)">
-
+        id="detailAdd">
         🛒 Add to Shopping List
+      </button>
 
+      <button
+        class="btn"
+        id="detailCompare">
+        💰 Compare Prices
       </button>
 
     </div>
+
   `;
 
-  showScreen("detailsScreen");
+
+  document
+    .getElementById("detailAdd")
+    .addEventListener(
+      "click",
+      function(){
+
+        addToShoppingList(
+          product
+        );
+
+      }
+    );
+
+
+  document
+    .getElementById("detailCompare")
+    .addEventListener(
+      "click",
+      function(){
+
+        comparePrices(
+          product
+        );
+
+      }
+    );
+
+
+  showScreen(
+    "detailsScreen"
+  );
+
 }
 
 
-/* =========================================
+/* =========================
    COMPARE PRICES
-========================================= */
+========================= */
 
-async function comparePrices(){
+async function comparePrices(product){
 
-  if(!selectedProduct){
-
-    alert(
-      "Please select a product first."
-    );
-
-    return;
-  }
+  selectedProduct =
+    product;
 
   const productId =
-    getProductId(selectedProduct);
+    getProductId(product);
 
   if(
     productId === undefined ||
     productId === null ||
-    String(productId).trim() === ""
+    productId === ""
   ){
 
     document.getElementById(
@@ -1168,15 +1123,18 @@ async function comparePrices(){
     ).innerHTML = `
 
       <div class="message error">
-        Product ID not found.
+        Product ID could not be found.
       </div>
 
     `;
 
-    showScreen("comparisonScreen");
+    showScreen(
+      "comparisonScreen"
+    );
 
     return;
   }
+
 
   document.getElementById(
     "comparisonContent"
@@ -1188,7 +1146,10 @@ async function comparePrices(){
 
   `;
 
-  showScreen("comparisonScreen");
+  showScreen(
+    "comparisonScreen"
+  );
+
 
   try{
 
@@ -1204,210 +1165,166 @@ async function comparePrices(){
 
       );
 
-    if(
-      !prices ||
-      prices.length === 0
-    ){
 
-      document.getElementById(
-        "comparisonContent"
-      ).innerHTML = `
+    const validPrices =
+      Array.isArray(prices)
+      ? prices.filter(
+          row =>
+            row.price !== null &&
+            row.price !== undefined &&
+            !isNaN(Number(row.price))
+        )
+      : [];
 
-        <div class="message">
 
-          <h3>No prices found</h3>
-
-          <p style="margin-top:10px;">
-            There are currently no price
-            records for this product.
-          </p>
-
-        </div>
-
-      `;
-
-      return;
-    }
-
-    const results = [];
-
-    prices.forEach(item => {
-
-      const price =
-        Number(item.price);
-
-      if(!Number.isFinite(price)){
-        return;
-      }
-
-      const shopId =
-        normalizeId(item.shop_id);
-
-      if(!shopId){
-        return;
-      }
-
-      const shop =
-        findShop(shopId);
-
-      results.push({
-
-        shopId:shopId,
-
-        shopName:
-          shop
-          ? getShopName(shop)
-          : "Unknown shop",
-
-        location:
-          shop
-          ? getShopLocation(shop)
-          : "",
-
-        price:price
-
-      });
-
-    });
-
-    if(results.length === 0){
-
-      document.getElementById(
-        "comparisonContent"
-      ).innerHTML = `
-
-        <div class="message">
-
-          <h3>No valid prices found</h3>
-
-          <p style="margin-top:10px;">
-            The price records could not
-            be matched correctly.
-          </p>
-
-        </div>
-
-      `;
-
-      return;
-    }
-
-    results.sort(
+    validPrices.sort(
       (a,b) =>
-        a.price - b.price
+        Number(a.price) -
+        Number(b.price)
     );
+
+
+    const name =
+      getProductName(product);
+
+    const brand =
+      getProductBrand(product);
+
+    const size =
+      getProductSize(product);
+
+
+    if(validPrices.length === 0){
+
+      document.getElementById(
+        "comparisonContent"
+      ).innerHTML = `
+
+        <div class="message">
+
+          <h2>
+            ${escapeHtml(name)}
+          </h2>
+
+          <p style="margin-top:10px;">
+            No prices available yet.
+          </p>
+
+        </div>
+
+      `;
+
+      return;
+    }
+
 
     let html = `
 
-      <h2>
-        💰 Price Comparison
-      </h2>
+      <div class="comparison-card">
 
-      <p style="
-        margin:8px 0 5px;
-        color:#666;
-      ">
+        <h2>
+          💰 Price Comparison
+        </h2>
 
-        ${escapeHtml(
-          getProductName(
-            selectedProduct
-          )
-        )}
+        <p style="margin-top:8px;">
+          ${escapeHtml(name)}
+        </p>
 
-      </p>
-
-      <p style="
-        color:#006633;
-        font-weight:bold;
-        margin-bottom:20px;
-      ">
-
-        🏷️ ${escapeHtml(
-          getProductBrand(
-            selectedProduct
-          )
-        )}
+        <p style="margin-top:5px;">
+          🏷️ ${escapeHtml(brand)}
+        </p>
 
         ${
-          getProductSize(selectedProduct)
-          ?
-          " • " +
-          escapeHtml(
-            getProductSize(selectedProduct)
-          )
-          :
-          ""
+          size
+          ? `
+            <p style="margin-top:5px;">
+              📦 ${escapeHtml(size)}
+            </p>
+          `
+          : ""
         }
 
-      </p>
+      </div>
 
     `;
 
-    results.forEach((item,index) => {
 
-      html += `
+    validPrices.forEach(
+      (item,index) => {
 
-        <div
-          class="comparison-card ${
-            index === 0
-            ? "cheapest"
-            : ""
-          }"
-        >
+        const shop =
+          findShop(item.shop_id);
 
-          <div>
+        const shopName =
+          shop
+          ? getShopName(shop)
+          : "Unknown shop";
 
-            <h3>
-              ${escapeHtml(
-                item.shopName
-              )}
-            </h3>
+        const location =
+          shop
+          ? getShopLocation(shop)
+          : "";
 
-            ${
-              item.location
-              ?
-              `
-                <p>
-                  📍 ${escapeHtml(
-                    item.location
-                  )}
-                </p>
-              `
-              :
-              ""
-            }
 
-          </div>
+        html += `
 
-          <div class="comparison-price">
+          <div class="
+            comparison-card
+            ${index === 0 ? "cheapest" : ""}
+          ">
 
             ${
               index === 0
-              ?
-              `
-                <span>
+              ? `
+                <div class="cheapest-label">
                   🏆 Cheapest price
-                </span>
+                </div>
               `
-              :
-              ""
+              : ""
             }
 
-            <strong>
-              P${item.price.toFixed(2)}
-            </strong>
+            <div class="price-row">
+
+              <div>
+
+                <strong>
+                  ${escapeHtml(shopName)}
+                </strong>
+
+                ${
+                  location
+                  ? `
+                    <div style="
+                      color:#666;
+                      margin-top:5px;
+                      font-size:14px;
+                    ">
+                      📍 ${escapeHtml(location)}
+                    </div>
+                  `
+                  : ""
+                }
+
+              </div>
+
+              <div class="price">
+                P${Number(item.price).toFixed(2)}
+              </div>
+
+            </div>
 
           </div>
 
-        </div>
+        `;
 
-      `;
+      }
+    );
 
-    });
 
     document.getElementById(
       "comparisonContent"
     ).innerHTML = html;
+
 
   }catch(error){
 
@@ -1420,44 +1337,39 @@ async function comparePrices(){
       "comparisonContent"
     ).innerHTML = `
 
-      <div class="message">
+      <div class="message error">
 
         <h3>
           Price comparison error
         </h3>
 
-        <p style="
-          margin-top:10px;
-          color:red;
-          word-break:break-word;
-        ">
-
-          ${escapeHtml(
-            error.message
-          )}
-
+        <p style="margin-top:10px;">
+          ${escapeHtml(error.message)}
         </p>
 
       </div>
 
     `;
+
   }
+
 }
 
 
-/* =========================================
-   SHOPPING LIST
-========================================= */
+/* =========================
+   ADD TO SHOPPING LIST
+========================= */
 
 function addToShoppingList(product){
 
   const productId =
     getProductId(product);
 
+
   if(
     productId === undefined ||
     productId === null ||
-    String(productId).trim() === ""
+    productId === ""
   ){
 
     alert(
@@ -1467,15 +1379,16 @@ function addToShoppingList(product){
     return;
   }
 
+
   const existing =
     shoppingList.find(
       item =>
-        normalizeId(
+        String(
           getProductId(item.product)
-        )
-        ===
-        normalizeId(productId)
+        ) ===
+        String(productId)
     );
+
 
   if(existing){
 
@@ -1492,58 +1405,49 @@ function addToShoppingList(product){
 
   }
 
+
   updateListCount();
 
   alert(
     getProductName(product) +
     " added to your shopping list."
   );
+
 }
 
 
-/* =========================================
-   UPDATE LIST COUNT
-========================================= */
+/* =========================
+   LIST COUNT
+========================= */
 
 function updateListCount(){
 
-  const total =
+  const count =
     shoppingList.reduce(
-      (sum,item) =>
-        sum + item.quantity,
+      (total,item) =>
+        total + item.quantity,
       0
     );
 
+
   document.getElementById(
     "listCount"
-  ).textContent = total;
+  ).textContent = count;
+
 }
 
 
-/* =========================================
-   OPEN SHOPPING LIST
-========================================= */
+/* =========================
+   DISPLAY SHOPPING LIST
+========================= */
 
-function openShoppingList(){
-
-  renderShoppingList();
-
-  showScreen(
-    "shoppingListScreen"
-  );
-}
-
-
-/* =========================================
-   RENDER SHOPPING LIST
-========================================= */
-
-function renderShoppingList(){
+function displayShoppingList(){
 
   const container =
     document.getElementById(
       "shoppingListContent"
     );
+
 
   if(
     shoppingList.length === 0
@@ -1554,21 +1458,13 @@ function renderShoppingList(){
       <div class="message">
 
         <h3>
-          Your shopping list is empty.
+          Your shopping list is empty
         </h3>
 
         <p style="margin-top:10px;">
-          Search for products and tap
-          "Add to List".
+          Add products to start building
+          your cheapest basket.
         </p>
-
-        <button
-          class="btn"
-          onclick="showHome()">
-
-          🔎 Find Products
-
-        </button>
 
       </div>
 
@@ -1577,7 +1473,9 @@ function renderShoppingList(){
     return;
   }
 
-  let html = "";
+
+  container.innerHTML = "";
+
 
   shoppingList.forEach(
     (item,index) => {
@@ -1585,862 +1483,256 @@ function renderShoppingList(){
       const product =
         item.product;
 
-      html += `
+      const card =
+        document.createElement("div");
 
-        <div class="list-item">
+      card.className =
+        "basket-card";
 
-          <h3>
-            ${escapeHtml(
-              getProductName(product)
-            )}
-          </h3>
 
-          <p>
-            🏷️ Brand:
-            ${escapeHtml(
-              getProductBrand(product)
-            )}
-          </p>
+      const name =
+        getProductName(product);
 
-          ${
-            getProductSize(product)
-            ?
-            `
-              <p>
-                📦 Size:
-                ${escapeHtml(
-                  getProductSize(product)
-                )}
-              </p>
-            `
-            :
-            ""
-          }
+      const brand =
+        getProductBrand(product);
 
-          <div class="quantity-row">
+      const size =
+        getProductSize(product);
 
-            <button
-              onclick="changeQuantity(${index},-1)">
-              −
-            </button>
 
-            <span class="quantity-number">
-              ${item.quantity}
-            </span>
+      card.innerHTML = `
 
-            <button
-              onclick="changeQuantity(${index},1)">
-              +
-            </button>
+        <h3>
+          ${escapeHtml(name)}
+        </h3>
 
-            <button
-              class="remove-btn"
-              onclick="removeFromList(${index})">
+        <p style="margin-top:7px;">
+          🏷️ Brand:
+          ${escapeHtml(brand)}
+        </p>
 
-              Remove
+        ${
+          size
+          ? `
+            <p style="margin-top:5px;">
+              📦 Size:
+              ${escapeHtml(size)}
+            </p>
+          `
+          : ""
+        }
 
-            </button>
+        <div class="quantity-control">
 
-          </div>
+          <button class="minus">
+            −
+          </button>
+
+          <span class="quantity">
+            ${item.quantity}
+          </span>
+
+          <button class="plus">
+            +
+          </button>
 
         </div>
 
+        <button
+          class="remove-btn">
+          Remove
+        </button>
+
       `;
+
+
+      card
+        .querySelector(".minus")
+        .addEventListener(
+          "click",
+          function(){
+
+            if(item.quantity > 1){
+
+              item.quantity--;
+
+            }
+
+            displayShoppingList();
+
+          }
+        );
+
+
+      card
+        .querySelector(".plus")
+        .addEventListener(
+          "click",
+          function(){
+
+            item.quantity++;
+
+            displayShoppingList();
+
+          }
+        );
+
+
+      card
+        .querySelector(".remove-btn")
+        .addEventListener(
+          "click",
+          function(){
+
+            shoppingList.splice(
+              index,
+              1
+            );
+
+            updateListCount();
+
+            displayShoppingList();
+
+          }
+        );
+
+
+      container.appendChild(card);
 
     }
   );
 
-  html += `
 
-    <button
-      class="btn"
-      onclick="compareBasket()">
+  const cheapestButton =
+    document.createElement("button");
 
-      🏆 Find Cheapest Basket
+  cheapestButton.className =
+    "btn secondary-btn";
 
-    </button>
+  cheapestButton.textContent =
+    "🏆 Find Cheapest Basket";
 
-    <button
-      class="btn secondary-btn"
-      onclick="clearShoppingList()">
 
-      🗑️ Clear List
+  cheapestButton.addEventListener(
+    "click",
+    findCheapestBasket
+  );
 
-    </button>
 
-  `;
+  container.appendChild(
+    cheapestButton
+  );
 
-  container.innerHTML = html;
 }
 
 
-/* =========================================
-   CHANGE QUANTITY
-========================================= */
+/* =========================
+   FIND CHEAPEST BASKET
+========================= */
 
-function changeQuantity(index,change){
-
-  if(!shoppingList[index]){
-    return;
-  }
-
-  shoppingList[index].quantity += change;
-
-  if(
-    shoppingList[index].quantity <= 0
-  ){
-
-    shoppingList.splice(index,1);
-
-  }
-
-  updateListCount();
-
-  renderShoppingList();
-}
-
-
-/* =========================================
-   REMOVE
-========================================= */
-
-function removeFromList(index){
-
-  if(!shoppingList[index]){
-    return;
-  }
-
-  shoppingList.splice(index,1);
-
-  updateListCount();
-
-  renderShoppingList();
-}
-
-
-/* =========================================
-   CLEAR
-========================================= */
-
-function clearShoppingList(){
-
-  if(shoppingList.length === 0){
-    return;
-  }
-
-  if(
-    confirm(
-      "Clear your entire shopping list?"
-    )
-  ){
-
-    shoppingList = [];
-
-    updateListCount();
-
-    renderShoppingList();
-
-  }
-}
-
-
-/* =========================================
-   GET PRODUCT PRICES
-========================================= */
-
-async function getProductPrices(product){
-
-  const productId =
-    getProductId(product);
-
-  if(
-    productId === undefined ||
-    productId === null
-  ){
-    return [];
-  }
-
-  const prices =
-    await supabaseFetch(
-
-      "product_prices" +
-      "?select=product_id,shop_id,price" +
-      "&product_id=eq." +
-      encodeURIComponent(
-        String(productId)
-      )
-
-    );
-
-  const results = [];
-
-  prices.forEach(item => {
-
-    const price =
-      Number(item.price);
-
-    if(!Number.isFinite(price)){
-      return;
-    }
-
-    const shopId =
-      normalizeId(item.shop_id);
-
-    if(!shopId){
-      return;
-    }
-
-    const shop =
-      findShop(shopId);
-
-    results.push({
-
-      product:product,
-
-      productId:
-        normalizeId(productId),
-
-      shopId:shopId,
-
-      shopName:
-        shop
-        ? getShopName(shop)
-        : "Unknown shop",
-
-      location:
-        shop
-        ? getShopLocation(shop)
-        : "",
-
-      price:price
-
-    });
-
-  });
-
-  return results;
-}
-
-
-/* =========================================
-   COMPARE BASKET
-========================================= */
-
-async function compareBasket(){
+async function findCheapestBasket(){
 
   if(
     shoppingList.length === 0
   ){
 
-    alert(
-      "Add products to your shopping list first."
-    );
-
     return;
   }
+
 
   document.getElementById(
     "basketContent"
   ).innerHTML = `
 
     <div class="message">
-      🔎 Comparing brands, prices and shops...
+
+      <h3>
+        🔎 Comparing your basket...
+      </h3>
+
+      <p style="margin-top:10px;">
+        Checking prices across shops.
+      </p>
+
     </div>
 
   `;
 
-  showScreen("basketScreen");
+
+  showScreen(
+    "basketScreen"
+  );
+
 
   try{
 
-    const basketData = [];
+    const priceData = [];
+
+
+    /*
+      Get prices for every selected
+      product.
+    */
 
     for(
       const item of shoppingList
     ){
 
+      const product =
+        item.product;
+
+      const productId =
+        getProductId(product);
+
+
+      if(
+        productId === undefined ||
+        productId === null ||
+        productId === ""
+      ){
+
+        continue;
+
+      }
+
+
       const prices =
-        await getProductPrices(
-          item.product
+        await supabaseFetch(
+
+          "product_prices" +
+          "?select=product_id,shop_id,price" +
+          "&product_id=eq." +
+          encodeURIComponent(
+            String(productId)
+          )
+
         );
 
-      basketData.push({
 
-        product:item.product,
+      priceData.push({
+
+        product:product,
 
         quantity:item.quantity,
 
-        prices:prices
+        prices:
+          Array.isArray(prices)
+          ? prices.filter(
+              row =>
+                row.price !== null &&
+                row.price !== undefined &&
+                !isNaN(Number(row.price))
+            )
+          : []
 
       });
 
     }
 
-    /* =====================================
-       CHECK MISSING PRICES
-    ===================================== */
 
-    const missing =
-      basketData.filter(
-        item =>
-          item.prices.length === 0
-      );
-
-    if(missing.length > 0){
-
-      let missingHtml = "";
-
-      missing.forEach(item => {
-
-        missingHtml += `
-          <p style="margin-top:8px;">
-            • ${escapeHtml(
-              getProductName(item.product)
-            )}
-          </p>
-        `;
-
-      });
-
-      document.getElementById(
-        "basketContent"
-      ).innerHTML = `
-
-        <div class="message">
-
-          <h3>
-            Some products have no prices
-          </h3>
-
-          <p style="margin-top:10px;">
-            We couldn't find prices for:
-          </p>
-
-          ${missingHtml}
-
-          <button
-            class="btn"
-            onclick="openShoppingList()">
-
-            ← Back to Shopping List
-
-          </button>
-
-        </div>
-
-      `;
-
-      return;
-    }
-
-
-    /* =====================================
-       MAXIMUM SAVINGS
-       CHEAPEST PRODUCT PRICE
-    ===================================== */
-
-    let maximumSavingsTotal = 0;
-
-    const cheapestItems = [];
-
-    basketData.forEach(item => {
-
-      const sorted =
-        [...item.prices].sort(
-          (a,b) =>
-            a.price - b.price
-        );
-
-      const cheapest =
-        sorted[0];
-
-      const quantity =
-        item.quantity;
-
-      maximumSavingsTotal +=
-        cheapest.price * quantity;
-
-      cheapestItems.push({
-
-        ...cheapest,
-
-        quantity:quantity,
-
-        total:
-          cheapest.price *
-          quantity
-
-      });
-
-    });
-
-
-    /* =====================================
-       ONE SHOP TOTALS
-    ===================================== */
-
-    const shopTotals = {};
-
-    basketData.forEach(item => {
-
-      const quantity =
-        item.quantity;
-
-      item.prices.forEach(priceRow => {
-
-        const shopId =
-          priceRow.shopId;
-
-        if(!shopTotals[shopId]){
-
-          shopTotals[shopId] = {
-
-            shopId:shopId,
-
-            shopName:
-              priceRow.shopName,
-
-            location:
-              priceRow.location,
-
-            total:0,
-
-            items:[],
-
-            complete:true
-
-          };
-
-        }
-
-      });
-
-    });
-
-
-    /* Calculate shop basket */
-
-    Object.values(shopTotals)
-      .forEach(shop => {
-
-        basketData.forEach(item => {
-
-          const row =
-            item.prices.find(
-              priceRow =>
-                priceRow.shopId ===
-                shop.shopId
-            );
-
-          if(!row){
-
-            shop.complete = false;
-
-            return;
-
-          }
-
-          const itemTotal =
-            row.price *
-            item.quantity;
-
-          shop.total +=
-            itemTotal;
-
-          shop.items.push({
-
-            product:item.product,
-
-            quantity:item.quantity,
-
-            price:row.price,
-
-            total:itemTotal
-
-          });
-
-        });
-
-      });
-
-
-    /* Only shops that have every item */
-
-    const completeShops =
-      Object.values(shopTotals)
-        .filter(
-          shop => shop.complete
-        )
-        .sort(
-          (a,b) =>
-            a.total - b.total
-        );
-
-
-    /* =====================================
-       MAX SAVINGS HTML
-    ===================================== */
-
-    let html = `
-
-      <h2 style="color:#006633;">
-        🏆 Smart Basket
-      </h2>
-
-      <p style="
-        color:#666;
-        margin:8px 0 15px;
-      ">
-
-        Get-It found the best available
-        prices for your shopping list.
-
-      </p>
-
-      <div class="recommendation">
-
-        <h3>
-          💰 Maximum Savings
-        </h3>
-
-        <p style="color:#666;">
-          Cheapest available choice for
-          every product.
-        </p>
-
-        <div class="total-box">
-
-          <p>
-            Cheapest possible basket
-          </p>
-
-          <strong>
-            P${maximumSavingsTotal.toFixed(2)}
-          </strong>
-
-        </div>
-
-    `;
-
-
-    cheapestItems.forEach(item => {
-
-      html += `
-
-        <div class="basket-product">
-
-          <strong>
-            ${escapeHtml(
-              getProductName(item.product)
-            )}
-            × ${item.quantity}
-          </strong>
-
-          <p>
-            🏷️ ${escapeHtml(
-              getProductBrand(item.product)
-            )}
-            ${
-              getProductSize(item.product)
-              ?
-              " • " +
-              escapeHtml(
-                getProductSize(item.product)
-              )
-              :
-              ""
-            }
-          </p>
-
-          <p>
-            🏪 ${escapeHtml(
-              item.shopName
-            )}
-          </p>
-
-          <p>
-            P${item.price.toFixed(2)}
-            each
-            =
-            <strong>
-              P${item.total.toFixed(2)}
-            </strong>
-          </p>
-
-        </div>
-
-      `;
-
-    });
-
-
-    html += `
-      </div>
-    `;
-
-
-    /* =====================================
-       ONE SHOP OPTION
-    ===================================== */
-
-    if(
-      completeShops.length > 0
-    ){
-
-      const cheapestShop =
-        completeShops[0];
-
-      html += `
-
-        <div class="recommendation">
-
-          <h3>
-            🛍️ Best One-Shop Option
-          </h3>
-
-          <p style="color:#666;">
-            Buy everything from one shop.
-          </p>
-
-          <div class="total-box">
-
-            <p>
-              ${escapeHtml(
-                cheapestShop.shopName
-              )}
-            </p>
-
-            <strong>
-              P${cheapestShop.total.toFixed(2)}
-            </strong>
-
-            ${
-              cheapestShop.location
-              ?
-              `
-                <p style="
-                  margin-top:7px;
-                  color:#666;
-                ">
-                  📍 ${escapeHtml(
-                    cheapestShop.location
-                  )}
-                </p>
-              `
-              :
-              ""
-            }
-
-          </div>
-
-      `;
-
-
-      cheapestShop.items.forEach(item => {
-
-        html += `
-
-          <div class="basket-product">
-
-            <strong>
-              ${escapeHtml(
-                getProductName(item.product)
-              )}
-              × ${item.quantity}
-            </strong>
-
-            <p>
-              🏷️ ${escapeHtml(
-                getProductBrand(item.product)
-              )}
-            </p>
-
-            <p>
-              P${item.price.toFixed(2)}
-              each
-              =
-              P${item.total.toFixed(2)}
-            </p>
-
-          </div>
-
-        `;
-
-      });
-
-
-      const extraCost =
-        cheapestShop.total -
-        maximumSavingsTotal;
-
-      if(extraCost > 0){
-
-        html += `
-
-          <p class="save">
-
-            💡 You pay
-            P${extraCost.toFixed(2)}
-            more for the convenience of
-            buying everything in one shop.
-
-          </p>
-
-        `;
-
-      }else{
-
-        html += `
-
-          <p class="save">
-
-            🎉 This shop is also the
-            cheapest overall option!
-
-          </p>
-
-        `;
-
-      }
-
-      html += `
-        </div>
-      `;
-
-
-      /* ===================================
-         OTHER ONE-SHOP OPTIONS
-      =================================== */
-
-      if(
-        completeShops.length > 1
-      ){
-
-        html += `
-
-          <div class="recommendation">
-
-            <h3>
-              🏪 Other One-Shop Options
-            </h3>
-
-        `;
-
-        completeShops
-          .slice(1)
-          .forEach(
-            (shop,index) => {
-
-              html += `
-
-                <div class="shop-total">
-
-                  <div>
-
-                    <span class="rank">
-                      #${index + 2}
-                    </span>
-
-                    <strong>
-                      ${escapeHtml(
-                        shop.shopName
-                      )}
-                    </strong>
-
-                    ${
-                      shop.location
-                      ?
-                      `
-                        <p style="
-                          color:#666;
-                          font-size:13px;
-                          margin-top:4px;
-                        ">
-                          📍 ${escapeHtml(
-                            shop.location
-                          )}
-                        </p>
-                      `
-                      :
-                      ""
-                    }
-
-                  </div>
-
-                  <strong>
-                    P${shop.total.toFixed(2)}
-                  </strong>
-
-                </div>
-
-              `;
-
-            }
-          );
-
-        html += `
-          </div>
-        `;
-
-      }
-
-    }else{
-
-      html += `
-
-        <div class="recommendation">
-
-          <h3>
-            🛍️ One-Shop Option
-          </h3>
-
-          <p style="color:#666;">
-            No single shop currently has
-            prices for every item in your
-            shopping list.
-          </p>
-
-          <p class="save">
-            💡 Maximum Savings is still
-            available by comparing each
-            product separately.
-          </p>
-
-        </div>
-
-      `;
-
-    }
-
-
-    /* =====================================
-       SAVINGS MESSAGE
-    ===================================== */
-
-    html += `
-
-      <button
-        class="btn"
-        onclick="openShoppingList()">
-
-        🛒 Edit Shopping List
-
-      </button>
-
-      <button
-        class="btn secondary-btn"
-        onclick="showHome()">
-
-        🔎 Add More Products
-
-      </button>
-
-    `;
-
-
-    document.getElementById(
-      "basketContent"
-    ).innerHTML = html;
+    calculateBasket(
+      priceData
+    );
 
 
   }catch(error){
@@ -2449,6 +1741,7 @@ async function compareBasket(){
       "BASKET ERROR:",
       error
     );
+
 
     document.getElementById(
       "basketContent"
@@ -2460,108 +1753,627 @@ async function compareBasket(){
           Basket comparison error
         </h3>
 
-        <p style="
-          margin-top:10px;
-          word-break:break-word;
-        ">
-
-          ${escapeHtml(
-            error.message
-          )}
-
+        <p style="margin-top:10px;">
+          ${escapeHtml(error.message)}
         </p>
-
-        <button
-          class="btn"
-          onclick="openShoppingList()">
-
-          ← Back to Shopping List
-
-        </button>
 
       </div>
 
     `;
 
   }
+
 }
 
 
-/* =========================================
-   NAVIGATION
-========================================= */
+/* =========================
+   CALCULATE BASKET
+========================= */
 
-function showScreen(screenId){
+function calculateBasket(data){
 
-  document
-    .querySelectorAll(".screen")
-    .forEach(screen => {
+  let maximumSavingsTotal = 0;
 
-      screen.classList.remove(
-        "active"
+  let maximumSavingsItems = [];
+
+  let missingProducts = [];
+
+
+  /*
+    OPTION 1:
+    Cheapest available price
+    for each selected product.
+  */
+
+  data.forEach(item => {
+
+    if(
+      item.prices.length === 0
+    ){
+
+      missingProducts.push(
+        item.product
       );
+
+      return;
+    }
+
+
+    const sorted =
+      [...item.prices].sort(
+        (a,b) =>
+          Number(a.price) -
+          Number(b.price)
+      );
+
+
+    const cheapest =
+      sorted[0];
+
+
+    const unitPrice =
+      Number(cheapest.price);
+
+    const total =
+      unitPrice *
+      item.quantity;
+
+
+    maximumSavingsTotal +=
+      total;
+
+
+    const shop =
+      findShop(
+        cheapest.shop_id
+      );
+
+
+    maximumSavingsItems.push({
+
+      product:item.product,
+
+      quantity:item.quantity,
+
+      unitPrice:unitPrice,
+
+      total:total,
+
+      shop:shop
 
     });
 
-  const screen =
-    document.getElementById(
-      screenId
+  });
+
+
+  /*
+    OPTION 2:
+    Find the cheapest shop where
+    the entire basket is available.
+  */
+
+  const shopTotals = {};
+
+
+  allShops.forEach(shop => {
+
+    const shopId =
+      getShopId(shop);
+
+    shopTotals[
+      String(shopId)
+    ] = {
+
+      shop:shop,
+
+      total:0,
+
+      complete:true,
+
+      items:[]
+
+    };
+
+  });
+
+
+  data.forEach(item => {
+
+    Object.keys(
+      shopTotals
+    ).forEach(shopId => {
+
+      const matching =
+        item.prices.find(
+          row =>
+            String(row.shop_id) ===
+            String(shopId)
+        );
+
+
+      if(!matching){
+
+        shopTotals[
+          shopId
+        ].complete = false;
+
+        return;
+
+      }
+
+
+      const cost =
+        Number(matching.price) *
+        item.quantity;
+
+
+      shopTotals[
+        shopId
+      ].total += cost;
+
+
+      shopTotals[
+        shopId
+      ].items.push({
+
+        product:item.product,
+
+        quantity:item.quantity,
+
+        price:Number(
+          matching.price
+        )
+
+      });
+
+    });
+
+  });
+
+
+  const completeShops =
+    Object.values(
+      shopTotals
+    )
+    .filter(
+      option =>
+        option.complete
+    )
+    .sort(
+      (a,b) =>
+        a.total - b.total
     );
 
-  if(screen){
 
-    screen.classList.add(
-      "active"
-    );
+  let html = `
+
+    <div class="basket-total">
+
+      <h2>
+        🏆 Maximum Savings
+      </h2>
+
+      <p style="margin-top:10px;">
+        Cheapest available option
+        for every item.
+      </p>
+
+      <h2 style="margin-top:15px;">
+        P${maximumSavingsTotal.toFixed(2)}
+      </h2>
+
+    </div>
+
+  `;
+
+
+  /*
+    Show cheapest item-by-item
+    selections.
+  */
+
+  html += `
+
+    <div class="basket-card">
+
+      <h2>
+        🛍️ Cheapest Products
+      </h2>
+
+  `;
+
+
+  maximumSavingsItems.forEach(
+    item => {
+
+      const shopName =
+        item.shop
+        ? getShopName(item.shop)
+        : "Unknown shop";
+
+
+      html += `
+
+        <div class="price-row">
+
+          <div>
+
+            <strong>
+              ${escapeHtml(
+                getProductName(
+                  item.product
+                )
+              )}
+            </strong>
+
+            <div style="
+              margin-top:5px;
+              color:#666;
+              font-size:14px;
+            ">
+
+              ${escapeHtml(
+                getProductBrand(
+                  item.product
+                )
+              )}
+
+              × ${item.quantity}
+
+            </div>
+
+            <div style="
+              margin-top:5px;
+              color:#15803d;
+              font-size:14px;
+            ">
+
+              Buy at
+              ${escapeHtml(shopName)}
+
+            </div>
+
+          </div>
+
+          <strong>
+            P${item.total.toFixed(2)}
+          </strong>
+
+        </div>
+
+      `;
+
+    }
+  );
+
+
+  if(
+    missingProducts.length > 0
+  ){
+
+    html += `
+
+      <p style="
+        margin-top:15px;
+        color:#b45309;
+      ">
+
+        ⚠️ Some products have no
+        price available yet.
+
+      </p>
+
+    `;
 
   }
 
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
+
+  html += `</div>`;
+
+
+  /*
+    One-shop option.
+  */
+
+  html += `
+
+    <div class="basket-card">
+
+      <h2>
+        🏪 One-Shop Option
+      </h2>
+
+      <p style="margin-top:8px;">
+        Cheapest total if you buy
+        everything from one shop.
+      </p>
+
+  `;
+
+
+  if(
+    completeShops.length === 0
+  ){
+
+    html += `
+
+      <div class="shop-option">
+
+        No single shop currently has
+        every item in your basket.
+
+      </div>
+
+    `;
+
+  }else{
+
+    const bestShop =
+      completeShops[0];
+
+
+    completeShops.forEach(
+      (option,index) => {
+
+        html += `
+
+          <div class="
+            shop-option
+            ${index === 0
+              ? "best-shop"
+              : ""}
+          ">
+
+            ${
+              index === 0
+              ? `
+                <div class="cheapest-label">
+                  🏆 Cheapest one-shop basket
+                </div>
+              `
+              : ""
+            }
+
+            <div style="
+              display:flex;
+              justify-content:space-between;
+              margin-top:8px;
+            ">
+
+              <strong>
+                ${escapeHtml(
+                  getShopName(
+                    option.shop
+                  )
+                )}
+              </strong>
+
+              <strong>
+                P${option.total.toFixed(2)}
+              </strong>
+
+            </div>
+
+            ${
+              getShopLocation(
+                option.shop
+              )
+              ? `
+                <div style="
+                  margin-top:6px;
+                  color:#666;
+                  font-size:14px;
+                ">
+
+                  📍 ${escapeHtml(
+                    getShopLocation(
+                      option.shop
+                    )
+                  )}
+
+                </div>
+              `
+              : ""
+            }
+
+          </div>
+
+        `;
+
+      }
+    );
+
+
+    if(
+      bestShop.total >
+      maximumSavingsTotal
+    ){
+
+      const difference =
+        bestShop.total -
+        maximumSavingsTotal;
+
+
+      html += `
+
+        <p class="saving"
+           style="margin-top:15px;">
+
+          💰 You could save
+          P${difference.toFixed(2)}
+          by buying from different
+          shops.
+
+        </p>
+
+      `;
+
+    }
+
+  }
+
+
+  html += `</div>`;
+
+
+  document.getElementById(
+    "basketContent"
+  ).innerHTML = html;
+
 }
 
 
-function showHome(){
+/* =========================
+   BUTTONS
+========================= */
 
-  showScreen(
-    "homeScreen"
+document
+  .getElementById(
+    "shoppingListButton"
+  )
+  .addEventListener(
+    "click",
+    function(){
+
+      displayShoppingList();
+
+      showScreen(
+        "shoppingListScreen"
+      );
+
+    }
   );
-}
 
 
-function showDetails(){
+document
+  .getElementById(
+    "clearList"
+  )
+  .addEventListener(
+    "click",
+    function(){
 
-  showScreen(
-    "detailsScreen"
+      if(
+        shoppingList.length === 0
+      ){
+
+        return;
+
+      }
+
+
+      if(
+        confirm(
+          "Clear your shopping list?"
+        )
+      ){
+
+        shoppingList = [];
+
+        updateListCount();
+
+        displayShoppingList();
+
+      }
+
+    }
   );
-}
 
 
-/* =========================================
+document
+  .getElementById(
+    "detailsBack"
+  )
+  .addEventListener(
+    "click",
+    function(){
+
+      showScreen(
+        "homeScreen"
+      );
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "comparisonBack"
+  )
+  .addEventListener(
+    "click",
+    function(){
+
+      if(selectedProduct){
+
+        openProduct(
+          selectedProduct
+        );
+
+      }else{
+
+        showScreen(
+          "homeScreen"
+        );
+
+      }
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "shoppingBack"
+  )
+  .addEventListener(
+    "click",
+    function(){
+
+      showScreen(
+        "homeScreen"
+      );
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "basketBack"
+  )
+  .addEventListener(
+    "click",
+    function(){
+
+      displayShoppingList();
+
+      showScreen(
+        "shoppingListScreen"
+      );
+
+    }
+  );
+
+
+/* =========================
    START APP
-========================================= */
+========================= */
 
 async function startApp(){
 
-  try{
+  updateListCount();
 
-    await Promise.all([
-      loadProducts(),
-      loadShops()
-    ]);
+  /*
+    Load both independently.
+    Products will still appear even
+    if shops fail.
+  */
 
-    updateListCount();
+  loadProducts();
 
-  }catch(error){
+  loadShops();
 
-    console.error(
-      "START ERROR:",
-      error
-    );
-
-  }
 }
 
 
