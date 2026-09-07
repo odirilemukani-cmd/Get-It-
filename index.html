@@ -1,15 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
 <meta name="google-site-verification"
-content="rlliAywpbxUwN2l7xzJGWsbDwZk13me4HBk1WEP7xnw">
+      content="rlliAywpbxUwN2l7xzJGWsbDwZk13me4HBk1WEP7xnw">
 
 <title>Get-It 🇧🇼 | Find. Compare. Get.</title>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
+
 *{
   box-sizing:border-box;
   margin:0;
@@ -23,71 +29,66 @@ body{
 }
 
 header{
-  background:#111827;
+  background:#0b7a3b;
   color:white;
-  padding:18px;
+  padding:15px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
   position:sticky;
   top:0;
   z-index:100;
 }
 
-.header-inner{
-  max-width:1100px;
-  margin:auto;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:15px;
-}
-
 .logo{
-  font-size:24px;
+  font-size:23px;
   font-weight:bold;
+  cursor:pointer;
 }
 
-.logo span{
-  color:#facc15;
+.header-actions{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap;
 }
 
 button{
-  cursor:pointer;
   border:none;
+  cursor:pointer;
 }
 
-.list-button{
-  background:#facc15;
-  color:#111827;
-  padding:11px 15px;
-  border-radius:10px;
+.header-btn{
+  background:white;
+  color:#0b7a3b;
+  padding:9px 12px;
+  border-radius:8px;
   font-weight:bold;
 }
 
-.badge{
-  background:#dc2626;
+.list-badge{
+  background:#e53935;
   color:white;
-  padding:3px 7px;
   border-radius:20px;
-  margin-left:5px;
+  padding:2px 7px;
+  font-size:12px;
+  margin-left:4px;
 }
 
-main{
-  max-width:1100px;
+.container{
+  max-width:1150px;
   margin:auto;
   padding:20px;
 }
 
 .search-box{
-  display:flex;
-  gap:10px;
-  margin-bottom:18px;
-}
-
-.search-box input{
-  flex:1;
-  padding:14px;
-  border:1px solid #d1d5db;
+  width:100%;
+  padding:15px;
+  border:1px solid #ddd;
   border-radius:10px;
   font-size:16px;
+  margin-bottom:15px;
 }
 
 .categories{
@@ -95,84 +96,92 @@ main{
   gap:8px;
   overflow-x:auto;
   padding-bottom:10px;
-  margin-bottom:20px;
 }
 
 .category-btn{
   background:white;
-  border:1px solid #d1d5db;
-  padding:9px 15px;
+  border:1px solid #ddd;
+  padding:9px 14px;
   border-radius:20px;
   white-space:nowrap;
 }
 
 .category-btn.active{
-  background:#111827;
+  background:#0b7a3b;
   color:white;
 }
 
-.products-grid{
+.products-grid,
+.deals-grid,
+.shop-grid{
   display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
-  gap:16px;
+  grid-template-columns:
+    repeat(auto-fit,minmax(230px,1fr));
+  gap:15px;
 }
 
-.product-card,
+.card,
 .deal-card,
 .shop-card{
   background:white;
-  padding:18px;
-  border-radius:14px;
-  box-shadow:0 3px 12px rgba(0,0,0,.08);
+  border-radius:12px;
+  padding:17px;
+  box-shadow:0 3px 12px rgba(0,0,0,.07);
 }
 
-.product-card h3,
+.card h3,
 .deal-card h3,
 .shop-card h3{
-  margin-bottom:10px;
+  margin-bottom:8px;
 }
 
-.product-card p,
-.deal-card p,
-.shop-card p{
-  margin:6px 0;
-  color:#555;
+.brand{
+  color:#777;
+  font-size:14px;
 }
 
-.btn{
-  width:100%;
-  padding:11px;
-  border-radius:9px;
-  margin-top:10px;
-  background:#111827;
-  color:white;
+.price{
+  font-size:21px;
   font-weight:bold;
+  color:#0b7a3b;
+  margin:10px 0;
 }
 
-.secondary-btn{
-  background:#facc15;
-  color:#111827;
-}
-
-.green-btn{
-  background:#16a34a;
+.card button,
+.deal-card button,
+.shop-card button{
+  background:#0b7a3b;
   color:white;
+  padding:10px 13px;
+  border-radius:8px;
+  margin-top:6px;
 }
 
-.back-btn{
-  background:#111827;
-  color:white;
-  padding:10px 15px;
-  border-radius:9px;
-  margin-bottom:15px;
+.section{
+  margin-top:25px;
 }
 
-.screen{
-  display:none;
+.section-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:12px;
 }
 
-.screen.active{
-  display:block;
+.tool-card{
+  background:white;
+  padding:20px;
+  border-radius:12px;
+  box-shadow:0 3px 12px rgba(0,0,0,.07);
+  cursor:pointer;
+}
+
+.home-tools{
+  display:grid;
+  grid-template-columns:
+    repeat(auto-fit,minmax(220px,1fr));
+  gap:15px;
+  margin:15px 0;
 }
 
 .message{
@@ -183,471 +192,225 @@ main{
 }
 
 .error{
-  color:#b91c1c;
+  border-left:5px solid #e53935;
 }
 
-.detail-card,
-.comparison-card,
-.basket-card,
-.section-card{
-  background:white;
-  padding:20px;
-  border-radius:14px;
+.back-btn{
+  background:#555;
+  color:white;
+  padding:10px 15px;
+  border-radius:8px;
   margin-bottom:15px;
-  box-shadow:0 3px 12px rgba(0,0,0,.07);
 }
 
-.section-title{
-  margin:10px 0 15px;
-}
-
-.price-row{
+.comparison-row{
+  background:white;
+  padding:17px;
+  margin-bottom:10px;
+  border-radius:10px;
   display:flex;
   justify-content:space-between;
   align-items:center;
   gap:15px;
-  padding:15px 0;
-  border-bottom:1px solid #eee;
-}
-
-.price{
-  font-size:20px;
-  font-weight:bold;
-  white-space:nowrap;
 }
 
 .cheapest{
-  border:2px solid #16a34a;
-  background:#f0fdf4;
+  border:2px solid #0b7a3b;
 }
 
-.cheapest-label{
-  color:#15803d;
+.deal-save{
+  color:#0b7a3b;
   font-weight:bold;
-  font-size:13px;
 }
 
-.quantity-control{
+.saved-note{
+  background:#e9f8ef;
+  color:#0b7a3b;
+  padding:12px;
+  border-radius:8px;
+  margin:10px 0;
+}
+
+.list-item{
+  background:white;
+  padding:15px;
+  border-radius:10px;
+  margin-bottom:10px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+}
+
+.qty-controls{
   display:flex;
   align-items:center;
-  gap:10px;
-  margin-top:12px;
+  gap:7px;
 }
 
-.quantity-control button{
-  width:35px;
-  height:35px;
-  border-radius:8px;
-  background:#111827;
+.qty-controls button{
+  width:32px;
+  height:32px;
+  border-radius:7px;
+  background:#0b7a3b;
   color:white;
   font-size:18px;
 }
 
-.quantity{
-  font-weight:bold;
-  min-width:25px;
-  text-align:center;
+.remove-btn{
+  background:#e53935 !important;
 }
 
-.remove-btn{
-  background:#dc2626;
+.primary-btn{
+  background:#0b7a3b;
   color:white;
-  padding:8px 12px;
+  padding:12px 16px;
   border-radius:8px;
+  font-weight:bold;
+}
+
+.secondary-btn{
+  background:#555;
+  color:white;
+  padding:12px 16px;
+  border-radius:8px;
+  font-weight:bold;
+}
+
+.danger-btn{
+  background:#e53935;
+  color:white;
+  padding:12px 16px;
+  border-radius:8px;
+  font-weight:bold;
+}
+
+.auth-box{
+  max-width:450px;
+  margin:30px auto;
+  background:white;
+  padding:25px;
+  border-radius:14px;
+  box-shadow:0 4px 15px rgba(0,0,0,.08);
+}
+
+.auth-box h2{
+  margin-bottom:15px;
+}
+
+.auth-input{
+  width:100%;
+  padding:13px;
+  margin:7px 0;
+  border:1px solid #ddd;
+  border-radius:8px;
+}
+
+.auth-buttons{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
   margin-top:10px;
 }
 
-.clear-btn{
-  background:#dc2626;
-  color:white;
-  padding:11px 15px;
-  border-radius:9px;
+.account-card{
+  background:white;
+  padding:20px;
+  border-radius:12px;
   margin-bottom:15px;
+}
+
+.status{
+  padding:10px;
+  border-radius:8px;
+  margin-top:10px;
+  background:#f1f1f1;
 }
 
 .basket-total{
-  background:#111827;
-  color:white;
-  padding:20px;
-  border-radius:14px;
-  margin:15px 0;
-}
-
-.basket-total h2{
-  color:#facc15;
-}
-
-.saving{
-  color:#15803d;
-  font-weight:bold;
-}
-
-.shop-option{
-  padding:15px;
-  border:1px solid #ddd;
-  border-radius:10px;
-  margin-top:10px;
-}
-
-.best-shop{
-  border:2px solid #16a34a;
-  background:#f0fdf4;
-}
-
-.deals-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
-  gap:15px;
-}
-
-.deal-card{
-  border:2px solid #facc15;
-}
-
-.deal-price{
   font-size:24px;
   font-weight:bold;
+  color:#0b7a3b;
   margin:10px 0;
 }
 
-.deal-shop{
-  color:#15803d;
-  font-weight:bold;
-}
-
-.save-badge{
-  display:inline-block;
-  background:#dcfce7;
-  color:#15803d;
-  padding:6px 10px;
-  border-radius:20px;
-  font-weight:bold;
-  font-size:13px;
-  margin-top:8px;
-}
-
-.shop-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
-  gap:15px;
-}
-
-.distance{
-  font-weight:bold;
-  color:#2563eb;
-}
-
-.location-btn{
-  background:#2563eb;
+footer{
+  margin-top:40px;
+  padding:25px;
+  background:#222;
   color:white;
-  padding:10px 14px;
-  border-radius:9px;
-  margin-top:10px;
-  font-weight:bold;
-}
-
-.home-tools{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-  margin-bottom:20px;
-}
-
-.tool-card{
-  background:white;
-  border-radius:14px;
-  padding:18px;
-  box-shadow:0 3px 12px rgba(0,0,0,.07);
-  cursor:pointer;
-}
-
-.tool-card h3{
-  margin-bottom:7px;
-}
-
-.tool-card p{
-  color:#666;
-  font-size:14px;
-}
-
-.deals-preview{
-  margin-bottom:22px;
-}
-
-.shop-preview{
-  margin-bottom:22px;
-}
-
-.small-note{
-  color:#666;
-  font-size:14px;
-  margin-top:8px;
-}
-
-.saved-note{
-  background:#ecfdf5;
-  color:#166534;
-  padding:10px 12px;
-  border-radius:9px;
-  margin-bottom:15px;
-  font-size:14px;
-  font-weight:bold;
+  text-align:center;
 }
 
 @media(max-width:600px){
 
-  .header-inner{
+  header{
     align-items:flex-start;
   }
 
   .logo{
-    font-size:20px;
+    font-size:19px;
   }
 
-  .list-button{
-    padding:9px;
-    font-size:13px;
-  }
-
-  main{
-    padding:15px;
-  }
-
-  .home-tools{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .tool-card{
-    padding:14px;
-  }
-
-  .price-row{
+  .comparison-row,
+  .list-item{
+    flex-direction:column;
     align-items:flex-start;
   }
+
 }
+
 </style>
+
 </head>
 
 <body>
 
 <header>
-  <div class="header-inner">
 
-    <div class="logo">
-      Get-It <span>🇧🇼</span>
-    </div>
+  <div class="logo"
+       onclick="showHome()">
+    Get-It 🇧🇼
+  </div>
 
-    <button
-      class="list-button"
-      id="shoppingListButton">
+  <div class="header-actions">
+
+    <button class="header-btn"
+            onclick="showAccount()">
+      👤 Account
+    </button>
+
+    <button class="header-btn"
+            onclick="showShoppingList()">
+
       🛒 My List
-      <span
-        class="badge"
-        id="listCount">0</span>
+
+      <span id="listCount"
+            class="list-badge">0</span>
+
     </button>
 
   </div>
+
 </header>
 
-<main>
 
-<!-- HOME -->
-<section id="homeScreen" class="screen active">
-
-  <div class="search-box">
-    <input
-      type="text"
-      id="searchInput"
-      placeholder="Search products, brands or sizes...">
-  </div>
-
-  <div class="home-tools">
-
-    <div class="tool-card"
-         id="dealsTool">
-      <h3>🔥 Best Deals</h3>
-      <p>Find the cheapest prices available.</p>
-    </div>
-
-    <div class="tool-card"
-         id="nearbyTool">
-      <h3>📍 Nearby Shops</h3>
-      <p>Find shops close to you.</p>
-    </div>
-
-  </div>
-
-  <div id="dealsPreview"
-       class="deals-preview"></div>
-
-  <div id="shopsPreview"
-       class="shop-preview"></div>
-
-  <div class="categories">
-
-    <button class="category-btn active"
-      data-category="All">
-      All
-    </button>
-
-    <button class="category-btn"
-      data-category="Groceries">
-      Groceries
-    </button>
-
-    <button class="category-btn"
-      data-category="Electronics">
-      Electronics
-    </button>
-
-    <button class="category-btn"
-      data-category="Clothing">
-      Clothing
-    </button>
-
-    <button class="category-btn"
-      data-category="Household">
-      Household
-    </button>
-
-  </div>
-
-  <div id="productsContainer"
-       class="products-grid">
-
-    <div class="message">
-      Loading products...
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- DEALS -->
-<section id="dealsScreen" class="screen">
-
-  <button class="back-btn" id="dealsBack">
-    ← Back
-  </button>
-
-  <div class="section-card">
-
-    <h2>🔥 Best Deals</h2>
-
-    <p class="small-note">
-      Products with the lowest available prices across shops.
-    </p>
-
-  </div>
-
-  <div id="dealsContent"
-       class="deals-grid">
-
-    <div class="message">
-      Loading deals...
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- NEARBY SHOPS -->
-<section id="nearbyScreen" class="screen">
-
-  <button class="back-btn" id="nearbyBack">
-    ← Back
-  </button>
-
-  <div class="section-card">
-
-    <h2>📍 Nearby Shops</h2>
-
-    <p class="small-note">
-      Allow location access to find shops closest to you.
-    </p>
-
-    <button
-      class="location-btn"
-      id="locationButton">
-      📍 Find Shops Near Me
-    </button>
-
-  </div>
-
-  <div id="nearbyContent">
-
-    <div class="message">
-      Tap the button above to find nearby shops.
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- DETAILS -->
-<section id="detailsScreen" class="screen">
-
-  <button class="back-btn" id="detailsBack">
-    ← Back
-  </button>
-
-  <div id="detailsContent"></div>
-
-</section>
-
-
-<!-- COMPARISON -->
-<section id="comparisonScreen" class="screen">
-
-  <button class="back-btn" id="comparisonBack">
-    ← Back
-  </button>
-
-  <div id="comparisonContent"></div>
-
-</section>
-
-
-<!-- SHOPPING LIST -->
-<section id="shoppingListScreen" class="screen">
-
-  <button class="back-btn" id="shoppingBack">
-    ← Continue Shopping
-  </button>
-
-  <h2>🛒 My Shopping List</h2>
-
-  <br>
-
-  <div id="savedListMessage"></div>
-
-  <button class="clear-btn" id="clearList">
-    Clear List
-  </button>
-
-  <div id="shoppingListContent"></div>
-
-</section>
-
-
-<!-- BASKET -->
-<section id="basketScreen" class="screen">
-
-  <button class="back-btn" id="basketBack">
-    ← Shopping List
-  </button>
-
-  <div id="basketContent"></div>
-
-</section>
+<main class="container"
+      id="app">
 
 </main>
 
 
+<footer>
+  Get-It 🇧🇼 — Find. Compare. Get.
+</footer>
+
+
 <script>
+
+/* =====================================================
+   SUPABASE
+===================================================== */
 
 const SUPABASE_URL =
 "https://snjrlhkmixiamgqhfhug.supabase.co";
@@ -656,36 +419,183 @@ const SUPABASE_KEY =
 "sb_publishable_3jRUAQ88ntmpnA42QwTuew_TJ7NYgFw";
 
 
+const supabaseAuth =
+window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+
+/* =====================================================
+   APP DATA
+===================================================== */
+
+let allProducts = [];
+let allShops = [];
+
+let currentCategory = "All";
+let currentProduct = null;
+
+let shoppingList = [];
+
 const STORAGE_KEY =
 "getit_shopping_list";
 
 
-let allProducts = [];
-let allShops = [];
-let selectedProduct = null;
-let shoppingList = [];
-let currentCategory = "All";
+/* =====================================================
+   HELPERS
+===================================================== */
+
+function escapeHtml(value){
+
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
 
 
-/* =========================
-   SUPABASE
-========================= */
+function money(value){
 
-async function supabaseFetch(endpoint){
+  const n = Number(value);
+
+  if(!Number.isFinite(n))
+    return "P0.00";
+
+  return "P" + n.toFixed(2);
+
+}
+
+
+function getProductId(product){
+
+  return (
+    product.product_id ??
+    product.Product_id ??
+    product.id ??
+    product.Id ??
+    product.ID ??
+    product["I'd"]
+  );
+
+}
+
+
+function getProductName(product){
+
+  return (
+    product.name ??
+    product.Name ??
+    product.product_name ??
+    product.Product_name ??
+    product.product ??
+    product.Product ??
+    "Unnamed product"
+  );
+
+}
+
+
+function getProductBrand(product){
+
+  return (
+    product.brand ??
+    product.Brand ??
+    "Unknown brand"
+  );
+
+}
+
+
+function getProductSize(product){
+
+  return (
+    product.size ??
+    product.Size ??
+    ""
+  );
+
+}
+
+
+function getProductCategory(product){
+
+  return (
+    product.category ??
+    product.Category ??
+    product.category_name ??
+    product.Category_name ??
+    "Other"
+  );
+
+}
+
+
+function getShopId(shop){
+
+  return (
+    shop.shop_id ??
+    shop.Shop_id ??
+    shop.id ??
+    shop.Id ??
+    shop.ID
+  );
+
+}
+
+
+function getShopName(shop){
+
+  return (
+    shop.name ??
+    shop.Name ??
+    shop.shop_name ??
+    shop.Shop_name ??
+    "Unknown shop"
+  );
+
+}
+
+
+function getShopLocation(shop){
+
+  return (
+    shop.location ??
+    shop.Location ??
+    ""
+  );
+
+}
+
+
+/* =====================================================
+   SUPABASE REST FETCH
+===================================================== */
+
+async function supabaseFetch(path,options={}){
 
   const response =
     await fetch(
-      SUPABASE_URL +
-      "/rest/v1/" +
-      endpoint,
+      `${SUPABASE_URL}/rest/v1/${path}`,
       {
+        ...options,
+
         headers:{
           "apikey":SUPABASE_KEY,
           "Authorization":
-          "Bearer " + SUPABASE_KEY
+            `Bearer ${SUPABASE_KEY}`,
+
+          "Content-Type":
+            "application/json",
+
+          ...(options.headers || {})
         }
       }
     );
+
 
   if(!response.ok){
 
@@ -694,17 +604,25 @@ async function supabaseFetch(endpoint){
 
     throw new Error(
       text ||
-      "Supabase request failed"
+      `Supabase error ${response.status}`
     );
+
   }
 
-  return response.json();
+
+  const text =
+    await response.text();
+
+  return text
+    ? JSON.parse(text)
+    : [];
+
 }
 
 
-/* =========================
-   LOCAL STORAGE
-========================= */
+/* =====================================================
+   LOCAL SHOPPING LIST
+===================================================== */
 
 function saveShoppingList(){
 
@@ -712,9 +630,7 @@ function saveShoppingList(){
 
     localStorage.setItem(
       STORAGE_KEY,
-      JSON.stringify(
-        shoppingList
-      )
+      JSON.stringify(shoppingList)
     );
 
   }catch(error){
@@ -725,6 +641,7 @@ function saveShoppingList(){
     );
 
   }
+
 }
 
 
@@ -738,8 +655,11 @@ function loadSavedShoppingList(){
       );
 
     if(!saved){
+
       shoppingList = [];
+
       return;
+
     }
 
 
@@ -747,24 +667,27 @@ function loadSavedShoppingList(){
       JSON.parse(saved);
 
 
-    if(
-      Array.isArray(parsed)
-    ){
+    if(Array.isArray(parsed)){
 
       shoppingList =
-        parsed.filter(
-          item =>
-            item &&
-            item.product &&
-            Number(item.quantity) > 0
-        ).map(item => ({
-          product:item.product,
-          quantity:
-            Math.max(
-              1,
-              Number(item.quantity)
-            )
-        }));
+        parsed
+          .filter(
+            item =>
+              item &&
+              item.product &&
+              Number(item.quantity) > 0
+          )
+          .map(item => ({
+
+            product:item.product,
+
+            quantity:
+              Math.max(
+                1,
+                Number(item.quantity)
+              )
+
+          }));
 
     }else{
 
@@ -782,248 +705,531 @@ function loadSavedShoppingList(){
     shoppingList = [];
 
   }
+
 }
 
 
-/* =========================
-   HELPERS
-========================= */
+/* =====================================================
+   AUTH
+===================================================== */
 
-function escapeHtml(value){
+async function getCurrentUser(){
 
-  if(
-    value === null ||
-    value === undefined
-  ){
-    return "";
-  }
+  const {
+    data,
+    error
+  } =
+    await supabaseAuth
+      .auth
+      .getUser();
 
-  return String(value)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+  if(error)
+    return null;
+
+  return data.user || null;
+
 }
 
 
-function getProductId(product){
+async function signUp(){
 
-  return (
-    product.product_id ??
-    product.Product_id ??
-    product.id ??
-    product.Id ??
-    product.ID ??
-    product["I'd"]
-  );
-}
+  const email =
+    document
+      .getElementById("authEmail")
+      .value
+      .trim();
 
-
-function getProductName(product){
-
-  return (
-    product.name ??
-    product.Name ??
-    product.product_name ??
-    product.Product_name ??
-    product.product ??
-    product.Product ??
-    "Unnamed product"
-  );
-}
+  const password =
+    document
+      .getElementById("authPassword")
+      .value;
 
 
-function getProductBrand(product){
+  if(!email || !password){
 
-  return (
-    product.brand ??
-    product.Brand ??
-    "Unknown brand"
-  );
-}
-
-
-function getProductSize(product){
-
-  return (
-    product.size ??
-    product.Size ??
-    ""
-  );
-}
-
-
-function getProductCategory(product){
-
-  return (
-    product.category ??
-    product.Category ??
-    product.category_name ??
-    product.Category_name ??
-    "Other"
-  );
-}
-
-
-function getShopId(shop){
-
-  return (
-    shop.shop_id ??
-    shop.Shop_id ??
-    shop.id ??
-    shop.Id ??
-    shop.ID
-  );
-}
-
-
-function getShopName(shop){
-
-  return (
-    shop.name ??
-    shop.Name ??
-    shop.shop_name ??
-    shop.Shop_name ??
-    "Unknown shop"
-  );
-}
-
-
-function getShopLocation(shop){
-
-  return (
-    shop.location ??
-    shop.Location ??
-    ""
-  );
-}
-
-
-function findShop(shopId){
-
-  return allShops.find(
-    shop =>
-      String(getShopId(shop)) ===
-      String(shopId)
-  );
-}
-
-
-function showScreen(id){
-
-  document
-    .querySelectorAll(".screen")
-    .forEach(
-      screen =>
-        screen.classList.remove("active")
+    showAuthMessage(
+      "Please enter your email and password."
     );
 
-  const screen =
-    document.getElementById(id);
+    return;
 
-  if(screen){
-    screen.classList.add("active");
   }
 
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
+
+  if(password.length < 6){
+
+    showAuthMessage(
+      "Password must be at least 6 characters."
+    );
+
+    return;
+
+  }
+
+
+  const {
+    data,
+    error
+  } =
+    await supabaseAuth
+      .auth
+      .signUp({
+        email,
+        password
+      });
+
+
+  if(error){
+
+    showAuthMessage(
+      error.message
+    );
+
+    return;
+
+  }
+
+
+  if(data.user){
+
+    showAuthMessage(
+      "Account created successfully. Check your email if confirmation is required.",
+      true
+    );
+
+  }
+
 }
 
 
-/* =========================
-   DISTANCE
-========================= */
+async function signIn(){
 
-function calculateDistance(
-  lat1,
-  lon1,
-  lat2,
-  lon2
+  const email =
+    document
+      .getElementById("authEmail")
+      .value
+      .trim();
+
+  const password =
+    document
+      .getElementById("authPassword")
+      .value;
+
+
+  if(!email || !password){
+
+    showAuthMessage(
+      "Please enter your email and password."
+    );
+
+    return;
+
+  }
+
+
+  const {
+    data,
+    error
+  } =
+    await supabaseAuth
+      .auth
+      .signInWithPassword({
+        email,
+        password
+      });
+
+
+  if(error){
+
+    showAuthMessage(
+      error.message
+    );
+
+    return;
+
+  }
+
+
+  if(data.user){
+
+    await syncCloudShoppingList();
+
+    showAccount();
+
+  }
+
+}
+
+
+async function signOut(){
+
+  const {
+    error
+  } =
+    await supabaseAuth
+      .auth
+      .signOut();
+
+
+  if(error){
+
+    alert(error.message);
+
+    return;
+
+  }
+
+
+  showAccount();
+
+}
+
+
+function showAuthMessage(
+  message,
+  success=false
 ){
 
-  const R = 6371;
-
-  const dLat =
-    (lat2-lat1) *
-    Math.PI / 180;
-
-  const dLon =
-    (lon2-lon1) *
-    Math.PI / 180;
-
-  const a =
-    Math.sin(dLat/2) *
-    Math.sin(dLat/2) +
-
-    Math.cos(lat1 *
-      Math.PI / 180) *
-
-    Math.cos(lat2 *
-      Math.PI / 180) *
-
-    Math.sin(dLon/2) *
-    Math.sin(dLon/2);
-
-  const c =
-    2 *
-    Math.atan2(
-      Math.sqrt(a),
-      Math.sqrt(1-a)
+  const box =
+    document.getElementById(
+      "authMessage"
     );
 
-  return R*c;
+  if(!box)
+    return;
+
+
+  box.innerHTML = `
+    <div class="status"
+         style="color:${success ? "#0b7a3b" : "#d32f2f"}">
+      ${escapeHtml(message)}
+    </div>
+  `;
+
 }
 
 
-function extractCoordinates(shop){
+/* =====================================================
+   CLOUD SHOPPING LIST
+===================================================== */
 
-  const possibleLat =
-    shop.latitude ??
-    shop.Latitude ??
-    shop.lat ??
-    shop.Lat;
+async function getCloudList(){
 
-  const possibleLng =
-    shop.longitude ??
-    shop.Longitude ??
-    shop.lng ??
-    shop.Lng ??
-    shop.lon ??
-    shop.Lon;
+  const user =
+    await getCurrentUser();
+
+  if(!user)
+    return null;
+
+
+  const response =
+    await supabaseFetch(
+      `shopping_lists?select=*&user_id=eq.${encodeURIComponent(user.id)}&limit=1`
+    );
+
 
   if(
-    possibleLat === undefined ||
-    possibleLng === undefined
+    Array.isArray(response) &&
+    response.length > 0
   ){
-    return null;
+
+    return response[0];
+
   }
 
-  const lat =
-    Number(possibleLat);
 
-  const lng =
-    Number(possibleLng);
+  return null;
 
-  if(
-    !isFinite(lat) ||
-    !isFinite(lng)
-  ){
-    return null;
-  }
-
-  return {
-    lat:lat,
-    lng:lng
-  };
 }
 
 
-/* =========================
+async function saveCloudShoppingList(){
+
+  const user =
+    await getCurrentUser();
+
+  if(!user)
+    return false;
+
+
+  try{
+
+    const existing =
+      await getCloudList();
+
+
+    const payload = {
+
+      user_id:user.id,
+
+      items:shoppingList,
+
+      updated_at:
+        new Date().toISOString()
+
+    };
+
+
+    if(existing){
+
+      await supabaseFetch(
+        `shopping_lists?id=eq.${encodeURIComponent(existing.id)}`,
+        {
+          method:"PATCH",
+
+          headers:{
+            "Prefer":"return=minimal"
+          },
+
+          body:JSON.stringify({
+            items:shoppingList,
+            updated_at:
+              new Date().toISOString()
+          })
+
+        }
+      );
+
+    }else{
+
+      await supabaseFetch(
+        "shopping_lists",
+        {
+          method:"POST",
+
+          headers:{
+            "Prefer":"return=minimal"
+          },
+
+          body:JSON.stringify(payload)
+
+        }
+      );
+
+    }
+
+
+    return true;
+
+  }catch(error){
+
+    console.error(
+      "CLOUD SAVE ERROR:",
+      error
+    );
+
+    return false;
+
+  }
+
+}
+
+
+async function syncCloudShoppingList(){
+
+  const user =
+    await getCurrentUser();
+
+  if(!user)
+    return;
+
+
+  try{
+
+    const cloud =
+      await getCloudList();
+
+
+    if(
+      cloud &&
+      Array.isArray(cloud.items)
+    ){
+
+      const cloudItems =
+        cloud.items.filter(
+          item =>
+            item &&
+            item.product &&
+            Number(item.quantity) > 0
+        );
+
+
+      if(
+        cloudItems.length > 0
+      ){
+
+        /*
+          Merge local and cloud lists.
+          If the same product exists,
+          quantities are combined.
+        */
+
+        const merged = [];
+
+
+        for(
+          const item
+          of [...cloudItems,...shoppingList]
+        ){
+
+          const id =
+            getProductId(
+              item.product
+            );
+
+
+          const existing =
+            merged.find(
+              x =>
+                String(
+                  getProductId(
+                    x.product
+                  )
+                ) ===
+                String(id)
+            );
+
+
+          if(existing){
+
+            existing.quantity +=
+              Number(item.quantity);
+
+          }else{
+
+            merged.push({
+
+              product:item.product,
+
+              quantity:
+                Math.max(
+                  1,
+                  Number(item.quantity)
+                )
+
+            });
+
+          }
+
+        }
+
+
+        shoppingList =
+          merged;
+
+
+      }else if(
+        shoppingList.length > 0
+      ){
+
+        await saveCloudShoppingList();
+
+      }
+
+    }else if(
+      shoppingList.length > 0
+    ){
+
+      await saveCloudShoppingList();
+
+    }
+
+
+    saveShoppingList();
+
+    updateListCount();
+
+  }catch(error){
+
+    console.error(
+      "CLOUD SYNC ERROR:",
+      error
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   ADD TO SHOPPING LIST
+===================================================== */
+
+async function addToShoppingList(
+  product
+){
+
+  const id =
+    getProductId(product);
+
+
+  const existing =
+    shoppingList.find(
+      item =>
+        String(
+          getProductId(
+            item.product
+          )
+        ) === String(id)
+    );
+
+
+  if(existing){
+
+    existing.quantity += 1;
+
+  }else{
+
+    shoppingList.push({
+
+      product,
+
+      quantity:1
+
+    });
+
+  }
+
+
+  saveShoppingList();
+
+  updateListCount();
+
+  await saveCloudShoppingList();
+
+
+  alert(
+    `${getProductName(product)} added to your shopping list.`
+  );
+
+}
+
+
+function updateListCount(){
+
+  const count =
+    shoppingList.reduce(
+      (sum,item) =>
+        sum + Number(item.quantity || 0),
+      0
+    );
+
+
+  const badge =
+    document.getElementById(
+      "listCount"
+    );
+
+
+  if(badge)
+    badge.textContent = count;
+
+}
+
+
+/* =====================================================
    LOAD PRODUCTS
-========================= */
+===================================================== */
 
 async function loadProducts(){
 
@@ -1034,19 +1240,23 @@ async function loadProducts(){
         "products?select=*"
       );
 
+
     console.log(
       "PRODUCTS LOADED:",
       data
     );
+
 
     allProducts =
       Array.isArray(data)
       ? data
       : [];
 
+
     displayProducts(
       allProducts
     );
+
 
   }catch(error){
 
@@ -1055,8 +1265,9 @@ async function loadProducts(){
       error
     );
 
+
     document.getElementById(
-      "productsContainer"
+      "app"
     ).innerHTML = `
 
       <div class="message error">
@@ -1070,14 +1281,17 @@ async function loadProducts(){
         </p>
 
       </div>
+
     `;
+
   }
+
 }
 
 
-/* =========================
+/* =====================================================
    LOAD SHOPS
-========================= */
+===================================================== */
 
 async function loadShops(){
 
@@ -1088,10 +1302,12 @@ async function loadShops(){
         "shops?select=*"
       );
 
+
     console.log(
       "SHOPS LOADED:",
       allShops
     );
+
 
   }catch(error){
 
@@ -1101,483 +1317,557 @@ async function loadShops(){
     );
 
     allShops = [];
+
   }
+
 }
 
 
-/* =========================
-   DISPLAY PRODUCTS
-========================= */
+/* =====================================================
+   HOME
+===================================================== */
 
-function displayProducts(products){
+function showHome(){
+
+  document.getElementById(
+    "app"
+  ).innerHTML = `
+
+    <section>
+
+      <input
+        id="searchInput"
+        class="search-box"
+        placeholder="🔎 Search products, brands or sizes..."
+        oninput="filterProducts()"
+      >
+
+      <div
+        id="categories"
+        class="categories">
+      </div>
+
+    </section>
+
+
+    <div class="home-tools">
+
+      <div
+        class="tool-card"
+        onclick="showDeals()">
+
+        <h2>🔥 Best Deals</h2>
+
+        <p style="margin-top:8px;color:#777;">
+          Find products with the biggest
+          price differences.
+        </p>
+
+      </div>
+
+
+      <div
+        class="tool-card"
+        onclick="showNearbyShops()">
+
+        <h2>📍 Nearby Shops</h2>
+
+        <p style="margin-top:8px;color:#777;">
+          Find shops close to your location.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <section class="section">
+
+      <div class="section-title">
+
+        <h2>🔥 Best Deals</h2>
+
+        <button
+          class="primary-btn"
+          onclick="showDeals()">
+          View All
+        </button>
+
+      </div>
+
+      <div
+        id="dealsPreview"
+        class="deals-grid">
+      </div>
+
+    </section>
+
+
+    <section class="section">
+
+      <div class="section-title">
+
+        <h2>📍 Shops</h2>
+
+        <button
+          class="primary-btn"
+          onclick="showNearbyShops()">
+          Find Nearby
+        </button>
+
+      </div>
+
+      <div
+        id="shopsPreview"
+        class="shop-grid">
+      </div>
+
+    </section>
+
+
+    <section class="section">
+
+      <h2 style="margin-bottom:12px;">
+        Products
+      </h2>
+
+      <div
+        id="productsContainer"
+        class="products-grid">
+      </div>
+
+    </section>
+
+  `;
+
+
+  renderCategories();
+
+  displayProducts(
+    allProducts
+  );
+
+  loadDealsPreview();
+
+  loadShopsPreview();
+
+}
+
+
+function renderCategories(){
+
+  const categories =
+    [
+      "All",
+      "Groceries",
+      "Electronics",
+      "Clothing",
+      "Household"
+    ];
+
+
+  document.getElementById(
+    "categories"
+  ).innerHTML =
+
+    categories
+      .map(category => `
+
+        <button
+          class="category-btn ${
+            currentCategory === category
+              ? "active"
+              : ""
+          }"
+          onclick='selectCategory(${JSON.stringify(category)})'>
+
+          ${escapeHtml(category)}
+
+        </button>
+
+      `)
+      .join("");
+
+}
+
+
+function selectCategory(
+  category
+){
+
+  currentCategory =
+    category;
+
+  renderCategories();
+
+  filterProducts();
+
+}
+
+
+function filterProducts(){
+
+  const search =
+    (
+      document.getElementById(
+        "searchInput"
+      )?.value || ""
+    )
+      .toLowerCase()
+      .trim();
+
+
+  let filtered =
+    allProducts.filter(
+      product => {
+
+        const text = (
+
+          getProductName(product)
+          + " " +
+          getProductBrand(product)
+          + " " +
+          getProductSize(product)
+          + " " +
+          getProductCategory(product)
+
+        ).toLowerCase();
+
+
+        const matchesSearch =
+          !search ||
+          text.includes(search);
+
+
+        const matchesCategory =
+          currentCategory === "All" ||
+          getProductCategory(product)
+            .toLowerCase()
+            ===
+            currentCategory.toLowerCase();
+
+
+        return (
+          matchesSearch &&
+          matchesCategory
+        );
+
+      }
+    );
+
+
+  displayProducts(
+    filtered
+  );
+
+}
+
+
+function displayProducts(
+  products
+){
 
   const container =
     document.getElementById(
       "productsContainer"
     );
 
-  if(!container){
-    return;
-  }
 
-  if(
-    !Array.isArray(products) ||
-    products.length === 0
-  ){
+  if(!container)
+    return;
+
+
+  if(!products.length){
 
     container.innerHTML = `
+
       <div class="message">
-        No products found.
+
+        <h3>
+          No products found
+        </h3>
+
       </div>
+
     `;
 
     return;
+
   }
 
-  container.innerHTML = "";
 
-  products.forEach(product => {
+  container.innerHTML =
+    products
+      .map(product => `
 
-    const card =
-      document.createElement("div");
+        <div class="card">
 
-    card.className =
-      "product-card";
+          <h3>
+            ${escapeHtml(
+              getProductName(product)
+            )}
+          </h3>
 
-    const name =
-      getProductName(product);
+          <div class="brand">
+            ${escapeHtml(
+              getProductBrand(product)
+            )}
+          </div>
 
-    const brand =
-      getProductBrand(product);
-
-    const size =
-      getProductSize(product);
-
-    const category =
-      getProductCategory(product);
-
-    card.innerHTML = `
-
-      <h3>
-        ${escapeHtml(name)}
-      </h3>
-
-      <p>
-        🏷️ Brand:
-        ${escapeHtml(brand)}
-      </p>
-
-      ${
-        size
-        ? `
-          <p>
-            📦 Size:
-            ${escapeHtml(size)}
-          </p>
-        `
-        : ""
-      }
-
-      <p>
-        Category:
-        ${escapeHtml(category)}
-      </p>
-
-      <button class="btn compareBtn">
-        💰 Compare Prices
-      </button>
-
-      <button class="btn secondary-btn addBtn">
-        🛒 Add to List
-      </button>
-    `;
-
-
-    card.addEventListener(
-      "click",
-      function(){
-        openProduct(product);
-      }
-    );
-
-
-    card
-      .querySelector(".compareBtn")
-      .addEventListener(
-        "click",
-        function(event){
-
-          event.stopPropagation();
-
-          openProduct(product);
-
-        }
-      );
-
-
-    card
-      .querySelector(".addBtn")
-      .addEventListener(
-        "click",
-        function(event){
-
-          event.stopPropagation();
-
-          addToShoppingList(product);
-
-        }
-      );
-
-
-    container.appendChild(card);
-
-  });
-}
-
-
-/* =========================
-   SEARCH
-========================= */
-
-document
-  .getElementById("searchInput")
-  .addEventListener(
-    "input",
-    function(){
-
-      const search =
-        this.value
-          .toLowerCase()
-          .trim();
-
-      const filtered =
-        allProducts.filter(product => {
-
-          const name =
-            getProductName(product)
-              .toLowerCase();
-
-          const brand =
-            getProductBrand(product)
-              .toLowerCase();
-
-          const size =
+          ${
             getProductSize(product)
-              .toLowerCase();
-
-          return (
-            name.includes(search) ||
-            brand.includes(search) ||
-            size.includes(search)
-          );
-
-        });
-
-      displayProducts(filtered);
-
-    }
-  );
+            ? `
+              <div
+                style="margin-top:5px;color:#777;">
+                ${escapeHtml(
+                  getProductSize(product)
+                )}
+              </div>
+            `
+            : ""
+          }
 
 
-/* =========================
-   CATEGORIES
-========================= */
-
-document
-  .querySelectorAll(".category-btn")
-  .forEach(button => {
-
-    button.addEventListener(
-      "click",
-      function(){
-
-        document
-          .querySelectorAll(".category-btn")
-          .forEach(btn =>
-            btn.classList.remove("active")
-          );
-
-        this.classList.add("active");
-
-        currentCategory =
-          this.dataset.category;
-
-        if(
-          currentCategory === "All"
-        ){
-
-          displayProducts(
-            allProducts
-          );
-
-          return;
-        }
-
-        const filtered =
-          allProducts.filter(product => {
-
-            return (
-              getProductCategory(product)
-                .toLowerCase() ===
-              currentCategory.toLowerCase()
-            );
-
-          });
-
-        displayProducts(filtered);
-
-      }
-    );
-
-  });
+          <button
+            onclick='showProduct(${JSON.stringify(product).replace(/'/g,"&#39;")})'>
+            View Prices
+          </button>
 
 
-/* =========================
-   OPEN PRODUCT
-========================= */
+          <button
+            onclick='addToShoppingList(${JSON.stringify(product).replace(/'/g,"&#39;")})'>
+            🛒 Add to List
+          </button>
 
-function openProduct(product){
+        </div>
 
-  selectedProduct =
-    product;
+      `)
+      .join("");
 
-  const name =
-    getProductName(product);
-
-  const brand =
-    getProductBrand(product);
-
-  const size =
-    getProductSize(product);
-
-  document.getElementById(
-    "detailsContent"
-  ).innerHTML = `
-
-    <div class="detail-card">
-
-      <h2>
-        ${escapeHtml(name)}
-      </h2>
-
-      <p style="margin-top:10px;">
-        🏷️ Brand:
-        ${escapeHtml(brand)}
-      </p>
-
-      ${
-        size
-        ? `
-          <p style="margin-top:8px;">
-            📦 Size:
-            ${escapeHtml(size)}
-          </p>
-        `
-        : ""
-      }
-
-      <button
-        class="btn secondary-btn"
-        id="detailAdd">
-        🛒 Add to Shopping List
-      </button>
-
-      <button
-        class="btn"
-        id="detailCompare">
-        💰 Compare Prices
-      </button>
-
-    </div>
-  `;
-
-
-  document
-    .getElementById("detailAdd")
-    .addEventListener(
-      "click",
-      function(){
-
-        addToShoppingList(product);
-
-      }
-    );
-
-
-  document
-    .getElementById("detailCompare")
-    .addEventListener(
-      "click",
-      function(){
-
-        comparePrices(product);
-
-      }
-    );
-
-
-  showScreen(
-    "detailsScreen"
-  );
 }
 
 
-/* =========================
-   PRICE COMPARISON
-========================= */
+/* =====================================================
+   PRODUCT DETAILS / COMPARISON
+===================================================== */
 
-async function comparePrices(product){
+function showProduct(product){
 
-  selectedProduct =
+  currentProduct =
     product;
 
-  const productId =
+
+  const id =
     getProductId(product);
 
 
-  if(
-    productId === undefined ||
-    productId === null ||
-    productId === ""
-  ){
-
-    document.getElementById(
-      "comparisonContent"
-    ).innerHTML = `
-
-      <div class="message error">
-        Product ID could not be found.
-      </div>
-    `;
-
-    showScreen(
-      "comparisonScreen"
-    );
-
-    return;
-  }
-
-
   document.getElementById(
-    "comparisonContent"
+    "app"
   ).innerHTML = `
 
-    <div class="message">
-      Loading prices...
+    <button
+      class="back-btn"
+      onclick="showHome()">
+      ← Back
+    </button>
+
+
+    <div class="card">
+
+      <h1>
+        ${escapeHtml(
+          getProductName(product)
+        )}
+      </h1>
+
+      <p class="brand"
+         style="margin-top:7px;">
+        ${escapeHtml(
+          getProductBrand(product)
+        )}
+      </p>
+
+
+      ${
+        getProductSize(product)
+        ? `
+          <p style="margin-top:7px;">
+            Size:
+            ${escapeHtml(
+              getProductSize(product)
+            )}
+          </p>
+        `
+        : ""
+      }
+
+
+      <div style="margin-top:20px;">
+
+        <button
+          class="primary-btn"
+          onclick="showComparison('${String(id)}')">
+
+          💰 Compare Prices
+
+        </button>
+
+
+        <button
+          class="secondary-btn"
+          onclick='addToShoppingList(${JSON.stringify(product).replace(/'/g,"&#39;")})'>
+
+          🛒 Add to List
+
+        </button>
+
+      </div>
+
     </div>
+
   `;
 
+}
 
-  showScreen(
-    "comparisonScreen"
-  );
+
+async function showComparison(
+  productId
+){
+
+  document.getElementById(
+    "app"
+  ).innerHTML = `
+
+    <button
+      class="back-btn"
+      onclick="showHome()">
+      ← Back
+    </button>
+
+    <div class="message">
+
+      <h2>
+        💰 Price Comparison
+      </h2>
+
+      <p style="margin-top:10px;">
+        Loading prices...
+      </p>
+
+    </div>
+
+  `;
 
 
   try{
 
     const prices =
       await supabaseFetch(
-
-        "product_prices" +
-        "?select=product_id,shop_id,price" +
-        "&product_id=eq." +
-        encodeURIComponent(
-          String(productId)
-        )
+        `product_prices?select=product_id,shop_id,price&product_id=eq.${encodeURIComponent(productId)}`
       );
 
 
     const validPrices =
       Array.isArray(prices)
-      ? prices.filter(
-          row =>
-            row.price !== null &&
-            row.price !== undefined &&
-            !isNaN(Number(row.price))
-        )
+      ? prices
+          .filter(
+            row =>
+              Number.isFinite(
+                Number(row.price)
+              )
+          )
+          .sort(
+            (a,b) =>
+              Number(a.price) -
+              Number(b.price)
+          )
       : [];
 
 
-    validPrices.sort(
-      (a,b) =>
-        Number(a.price) -
-        Number(b.price)
-    );
-
-
-    const name =
-      getProductName(product);
-
-    const brand =
-      getProductBrand(product);
-
-    const size =
-      getProductSize(product);
-
-
-    if(validPrices.length === 0){
+    if(!validPrices.length){
 
       document.getElementById(
-        "comparisonContent"
+        "app"
       ).innerHTML = `
+
+        <button
+          class="back-btn"
+          onclick="showHome()">
+          ← Back
+        </button>
 
         <div class="message">
 
           <h2>
-            ${escapeHtml(name)}
+            No prices available
           </h2>
 
           <p style="margin-top:10px;">
-            No prices available yet.
+            There are currently no prices
+            for this product.
           </p>
 
         </div>
+
       `;
 
       return;
+
     }
+
+
+    const product =
+      allProducts.find(
+        p =>
+          String(
+            getProductId(p)
+          ) ===
+          String(productId)
+      );
 
 
     let html = `
 
-      <div class="comparison-card">
+      <button
+        class="back-btn"
+        onclick='showProduct(${JSON.stringify(product).replace(/'/g,"&#39;")})'>
+        ← Back
+      </button>
 
-        <h2>
-          💰 Price Comparison
-        </h2>
+      <h2>
+        💰 Price Comparison
+      </h2>
 
-        <p style="margin-top:8px;">
-          ${escapeHtml(name)}
-        </p>
+      <p style="margin:7px 0 15px;color:#777;">
+        ${escapeHtml(
+          product
+          ? getProductName(product)
+          : "Product"
+        )}
+        — prices across shops
+      </p>
 
-        <p style="margin-top:5px;">
-          🏷️ ${escapeHtml(brand)}
-        </p>
-
-        ${
-          size
-          ? `
-            <p style="margin-top:5px;">
-              📦 ${escapeHtml(size)}
-            </p>
-          `
-          : ""
-        }
-
-      </div>
     `;
 
 
     validPrices.forEach(
-      (item,index) => {
+      (row,index) => {
 
         const shop =
-          findShop(item.shop_id);
+          allShops.find(
+            s =>
+              String(
+                getShopId(s)
+              ) ===
+              String(row.shop_id)
+          );
+
 
         const shopName =
           shop
           ? getShopName(shop)
           : "Unknown shop";
+
 
         const location =
           shop
@@ -1588,58 +1878,46 @@ async function comparePrices(product){
         html += `
 
           <div class="
-            comparison-card
+            comparison-row
             ${index === 0 ? "cheapest" : ""}
           ">
 
-            ${
-              index === 0
-              ? `
-                <div class="cheapest-label">
-                  🏆 Cheapest price
-                </div>
-              `
-              : ""
-            }
+            <div>
 
-            <div class="price-row">
+              <strong>
+                ${index === 0 ? "🏆 " : ""}
+                ${escapeHtml(shopName)}
+              </strong>
 
-              <div>
-
-                <strong>
-                  ${escapeHtml(shopName)}
-                </strong>
-
-                ${
-                  location
-                  ? `
-                    <div style="
-                      color:#666;
-                      margin-top:5px;
-                      font-size:14px;
-                    ">
-                      📍 ${escapeHtml(location)}
-                    </div>
-                  `
-                  : ""
-                }
-
-              </div>
-
-              <div class="price">
-                P${Number(item.price).toFixed(2)}
-              </div>
+              ${
+                location
+                ? `
+                  <div
+                    style="color:#777;margin-top:4px;">
+                    📍 ${escapeHtml(location)}
+                  </div>
+                `
+                : ""
+              }
 
             </div>
 
+
+            <strong
+              style="font-size:20px;">
+              ${money(row.price)}
+            </strong>
+
           </div>
+
         `;
+
       }
     );
 
 
     document.getElementById(
-      "comparisonContent"
+      "app"
     ).innerHTML = html;
 
 
@@ -1650,9 +1928,16 @@ async function comparePrices(product){
       error
     );
 
+
     document.getElementById(
-      "comparisonContent"
+      "app"
     ).innerHTML = `
+
+      <button
+        class="back-btn"
+        onclick="showHome()">
+        ← Back
+      </button>
 
       <div class="message error">
 
@@ -1665,1146 +1950,106 @@ async function comparePrices(product){
         </p>
 
       </div>
-    `;
-  }
-}
-
-
-/* =========================
-   ADD TO SHOPPING LIST
-========================= */
-
-function addToShoppingList(product){
-
-  const productId =
-    getProductId(product);
-
-
-  if(
-    productId === undefined ||
-    productId === null ||
-    productId === ""
-  ){
-
-    return;
-  }
-
-
-  const existing =
-    shoppingList.find(
-      item =>
-        String(
-          getProductId(item.product)
-        ) ===
-        String(productId)
-    );
-
-
-  if(existing){
-
-    existing.quantity++;
-
-  }else{
-
-    shoppingList.push({
-
-      product:product,
-      quantity:1
-
-    });
-
-  }
-
-
-  saveShoppingList();
-
-  updateListCount();
-
-}
-
-
-/* =========================
-   LIST COUNT
-========================= */
-
-function updateListCount(){
-
-  const count =
-    shoppingList.reduce(
-      (total,item) =>
-        total + item.quantity,
-      0
-    );
-
-
-  document.getElementById(
-    "listCount"
-  ).textContent = count;
-}
-
-
-/* =========================
-   SHOPPING LIST
-========================= */
-
-function displayShoppingList(){
-
-  const container =
-    document.getElementById(
-      "shoppingListContent"
-    );
-
-  const savedMessage =
-    document.getElementById(
-      "savedListMessage"
-    );
-
-
-  if(
-    shoppingList.length === 0
-  ){
-
-    if(savedMessage){
-      savedMessage.innerHTML = "";
-    }
-
-    container.innerHTML = `
-
-      <div class="message">
-
-        <h3>
-          Your shopping list is empty
-        </h3>
-
-        <p style="margin-top:10px;">
-          Add products to start building
-          your cheapest basket.
-        </p>
-
-      </div>
-    `;
-
-    return;
-  }
-
-
-  if(savedMessage){
-
-    savedMessage.innerHTML = `
-
-      <div class="saved-note">
-        💾 Your shopping list is saved on this device.
-      </div>
 
     `;
 
   }
 
-
-  container.innerHTML = "";
-
-
-  shoppingList.forEach(
-    (item,index) => {
-
-      const product =
-        item.product;
-
-      const card =
-        document.createElement("div");
-
-      card.className =
-        "basket-card";
-
-
-      const name =
-        getProductName(product);
-
-      const brand =
-        getProductBrand(product);
-
-      const size =
-        getProductSize(product);
-
-
-      card.innerHTML = `
-
-        <h3>
-          ${escapeHtml(name)}
-        </h3>
-
-        <p style="margin-top:7px;">
-          🏷️ Brand:
-          ${escapeHtml(brand)}
-        </p>
-
-        ${
-          size
-          ? `
-            <p style="margin-top:5px;">
-              📦 Size:
-              ${escapeHtml(size)}
-            </p>
-          `
-          : ""
-        }
-
-        <div class="quantity-control">
-
-          <button class="minus">
-            −
-          </button>
-
-          <span class="quantity">
-            ${item.quantity}
-          </span>
-
-          <button class="plus">
-            +
-          </button>
-
-        </div>
-
-        <button class="remove-btn">
-          Remove
-        </button>
-      `;
-
-
-      card
-        .querySelector(".minus")
-        .addEventListener(
-          "click",
-          function(){
-
-            if(item.quantity > 1){
-              item.quantity--;
-            }
-
-            saveShoppingList();
-            updateListCount();
-            displayShoppingList();
-
-          }
-        );
-
-
-      card
-        .querySelector(".plus")
-        .addEventListener(
-          "click",
-          function(){
-
-            item.quantity++;
-
-            saveShoppingList();
-            updateListCount();
-            displayShoppingList();
-
-          }
-        );
-
-
-      card
-        .querySelector(".remove-btn")
-        .addEventListener(
-          "click",
-          function(){
-
-            shoppingList.splice(
-              index,
-              1
-            );
-
-            saveShoppingList();
-            updateListCount();
-            displayShoppingList();
-
-          }
-        );
-
-
-      container.appendChild(card);
-
-    }
-  );
-
-
-  const cheapestButton =
-    document.createElement("button");
-
-  cheapestButton.className =
-    "btn secondary-btn";
-
-  cheapestButton.textContent =
-    "🏆 Find Cheapest Basket";
-
-
-  cheapestButton.addEventListener(
-    "click",
-    findCheapestBasket
-  );
-
-
-  container.appendChild(
-    cheapestButton
-  );
 }
 
 
-/* =========================
-   CHEAPEST BASKET
-========================= */
-
-async function findCheapestBasket(){
-
-  if(
-    shoppingList.length === 0
-  ){
-    return;
-  }
-
-
-  document.getElementById(
-    "basketContent"
-  ).innerHTML = `
-
-    <div class="message">
-
-      <h3>
-        🔎 Comparing your basket...
-      </h3>
-
-      <p style="margin-top:10px;">
-        Checking prices across shops.
-      </p>
-
-    </div>
-  `;
-
-
-  showScreen(
-    "basketScreen"
-  );
-
-
-  try{
-
-    const priceData = [];
-
-
-    for(
-      const item of shoppingList
-    ){
-
-      const product =
-        item.product;
-
-      const productId =
-        getProductId(product);
-
-
-      if(
-        productId === undefined ||
-        productId === null ||
-        productId === ""
-      ){
-        continue;
-      }
-
-
-      const prices =
-        await supabaseFetch(
-
-          "product_prices" +
-          "?select=product_id,shop_id,price" +
-          "&product_id=eq." +
-          encodeURIComponent(
-            String(productId)
-          )
-        );
-
-
-      priceData.push({
-
-        product:product,
-
-        quantity:item.quantity,
-
-        prices:
-          Array.isArray(prices)
-          ? prices.filter(
-              row =>
-                row.price !== null &&
-                row.price !== undefined &&
-                !isNaN(Number(row.price))
-            )
-          : []
-
-      });
-
-    }
-
-
-    calculateBasket(
-      priceData
-    );
-
-
-  }catch(error){
-
-    console.error(
-      "BASKET ERROR:",
-      error
-    );
-
-
-    document.getElementById(
-      "basketContent"
-    ).innerHTML = `
-
-      <div class="message error">
-
-        <h3>
-          Basket comparison error
-        </h3>
-
-        <p style="margin-top:10px;">
-          ${escapeHtml(error.message)}
-        </p>
-
-      </div>
-    `;
-  }
-}
-
-
-/* =========================
-   CALCULATE BASKET
-========================= */
-
-function calculateBasket(data){
-
-  let maximumSavingsTotal = 0;
-
-  let maximumSavingsItems = [];
-
-  let missingProducts = [];
-
-
-  data.forEach(item => {
-
-    if(
-      item.prices.length === 0
-    ){
-
-      missingProducts.push(
-        item.product
-      );
-
-      return;
-    }
-
-
-    const sorted =
-      [...item.prices].sort(
-        (a,b) =>
-          Number(a.price) -
-          Number(b.price)
-      );
-
-
-    const cheapest =
-      sorted[0];
-
-
-    const unitPrice =
-      Number(cheapest.price);
-
-    const total =
-      unitPrice *
-      item.quantity;
-
-
-    maximumSavingsTotal +=
-      total;
-
-
-    const shop =
-      findShop(
-        cheapest.shop_id
-      );
-
-
-    maximumSavingsItems.push({
-
-      product:item.product,
-
-      quantity:item.quantity,
-
-      unitPrice:unitPrice,
-
-      total:total,
-
-      shop:shop
-
-    });
-
-  });
-
-
-  const shopTotals = {};
-
-
-  allShops.forEach(shop => {
-
-    const shopId =
-      getShopId(shop);
-
-    if(
-      shopId === undefined ||
-      shopId === null
-    ){
-      return;
-    }
-
-
-    shopTotals[
-      String(shopId)
-    ] = {
-
-      shop:shop,
-
-      total:0,
-
-      complete:true,
-
-      items:[]
-
-    };
-
-  });
-
-
-  data.forEach(item => {
-
-    Object.keys(
-      shopTotals
-    ).forEach(shopId => {
-
-      const matching =
-        item.prices.find(
-          row =>
-            String(row.shop_id) ===
-            String(shopId)
-        );
-
-
-      if(!matching){
-
-        shopTotals[
-          shopId
-        ].complete = false;
-
-        return;
-      }
-
-
-      const cost =
-        Number(matching.price) *
-        item.quantity;
-
-
-      shopTotals[
-        shopId
-      ].total += cost;
-
-
-      shopTotals[
-        shopId
-      ].items.push({
-
-        product:item.product,
-
-        quantity:item.quantity,
-
-        price:Number(
-          matching.price
-        )
-
-      });
-
-    });
-
-  });
-
-
-  const completeShops =
-    Object.values(
-      shopTotals
-    )
-    .filter(
-      option =>
-        option.complete
-    )
-    .sort(
-      (a,b) =>
-        a.total - b.total
-    );
-
-
-  let html = `
-
-    <div class="basket-total">
-
-      <h2>
-        🏆 Maximum Savings
-      </h2>
-
-      <p style="margin-top:10px;">
-        Cheapest available option
-        for every item.
-      </p>
-
-      <h2 style="margin-top:15px;">
-        P${maximumSavingsTotal.toFixed(2)}
-      </h2>
-
-    </div>
-  `;
-
-
-  html += `
-
-    <div class="basket-card">
-
-      <h2>
-        🛍️ Cheapest Products
-      </h2>
-  `;
-
-
-  maximumSavingsItems.forEach(
-    item => {
-
-      const shopName =
-        item.shop
-        ? getShopName(item.shop)
-        : "Unknown shop";
-
-
-      html += `
-
-        <div class="price-row">
-
-          <div>
-
-            <strong>
-              ${escapeHtml(
-                getProductName(
-                  item.product
-                )
-              )}
-            </strong>
-
-            <div style="
-              margin-top:5px;
-              color:#666;
-              font-size:14px;
-            ">
-
-              ${escapeHtml(
-                getProductBrand(
-                  item.product
-                )
-              )}
-
-              × ${item.quantity}
-
-            </div>
-
-            <div style="
-              margin-top:5px;
-              color:#15803d;
-              font-size:14px;
-            ">
-
-              Buy at
-              ${escapeHtml(shopName)}
-
-            </div>
-
-          </div>
-
-          <strong>
-            P${item.total.toFixed(2)}
-          </strong>
-
-        </div>
-      `;
-
-    }
-  );
-
-
-  if(
-    missingProducts.length > 0
-  ){
-
-    html += `
-
-      <p style="
-        margin-top:15px;
-        color:#b45309;
-      ">
-
-        ⚠️ Some products have no
-        price available yet.
-
-      </p>
-    `;
-  }
-
-
-  html += `</div>`;
-
-
-  html += `
-
-    <div class="basket-card">
-
-      <h2>
-        🏪 One-Shop Option
-      </h2>
-
-      <p style="margin-top:8px;">
-        Cheapest total if you buy
-        everything from one shop.
-      </p>
-  `;
-
-
-  if(
-    completeShops.length === 0
-  ){
-
-    html += `
-
-      <div class="shop-option">
-
-        No single shop currently has
-        every item in your basket.
-
-      </div>
-    `;
-
-  }else{
-
-    const bestShop =
-      completeShops[0];
-
-
-    completeShops.forEach(
-      (option,index) => {
-
-        html += `
-
-          <div class="
-            shop-option
-            ${index === 0
-              ? "best-shop"
-              : ""}
-          ">
-
-            ${
-              index === 0
-              ? `
-                <div class="cheapest-label">
-                  🏆 Cheapest one-shop basket
-                </div>
-              `
-              : ""
-            }
-
-            <div style="
-              display:flex;
-              justify-content:space-between;
-              gap:15px;
-              margin-top:8px;
-            ">
-
-              <strong>
-                ${escapeHtml(
-                  getShopName(
-                    option.shop
-                  )
-                )}
-              </strong>
-
-              <strong>
-                P${option.total.toFixed(2)}
-              </strong>
-
-            </div>
-
-            ${
-              getShopLocation(
-                option.shop
-              )
-              ? `
-                <div style="
-                  margin-top:6px;
-                  color:#666;
-                  font-size:14px;
-                ">
-
-                  📍 ${escapeHtml(
-                    getShopLocation(
-                      option.shop
-                    )
-                  )}
-
-                </div>
-              `
-              : ""
-            }
-
-          </div>
-        `;
-
-      }
-    );
-
-
-    if(
-      bestShop.total >
-      maximumSavingsTotal
-    ){
-
-      const difference =
-        bestShop.total -
-        maximumSavingsTotal;
-
-
-      html += `
-
-        <p class="saving"
-           style="margin-top:15px;">
-
-          💰 You could save
-          P${difference.toFixed(2)}
-          by buying from different
-          shops.
-
-        </p>
-      `;
-    }
-  }
-
-
-  html += `</div>`;
-
-
-  document.getElementById(
-    "basketContent"
-  ).innerHTML = html;
-}
-
-
-/* =========================
+/* =====================================================
    BEST DEALS
-========================= */
+===================================================== */
 
-async function loadDeals(){
+async function getBestDeals(){
 
-  const container =
-    document.getElementById(
-      "dealsContent"
-    );
+  const deals = [];
 
-  if(
-    !allProducts.length
+
+  for(
+    const product
+    of allProducts
   ){
 
-    container.innerHTML = `
-      <div class="message">
-        No products available.
-      </div>
-    `;
-
-    return;
-  }
+    const id =
+      getProductId(product);
 
 
-  container.innerHTML = `
-    <div class="message">
-      🔥 Finding the best deals...
-    </div>
-  `;
-
-
-  try{
-
-    const deals = [];
-
-
-    for(
-      const product of allProducts
-    ){
-
-      const productId =
-        getProductId(product);
-
-      if(
-        productId === undefined ||
-        productId === null ||
-        productId === ""
-      ){
-        continue;
-      }
-
+    try{
 
       const prices =
         await supabaseFetch(
-
-          "product_prices" +
-          "?select=product_id,shop_id,price" +
-          "&product_id=eq." +
-          encodeURIComponent(
-            String(productId)
-          )
+          `product_prices?select=product_id,shop_id,price&product_id=eq.${encodeURIComponent(id)}`
         );
 
 
       const valid =
-        Array.isArray(prices)
-        ? prices.filter(
-            row =>
-              row.price !== null &&
-              row.price !== undefined &&
-              !isNaN(Number(row.price))
+        prices
+          .filter(
+            p =>
+              Number.isFinite(
+                Number(p.price)
+              )
           )
-        : [];
+          .sort(
+            (a,b) =>
+              Number(a.price) -
+              Number(b.price)
+          );
 
 
-      if(!valid.length){
-        continue;
+      if(valid.length >= 2){
+
+        const cheapest =
+          Number(valid[0].price);
+
+        const highest =
+          Number(
+            valid[valid.length - 1]
+              .price
+          );
+
+
+        deals.push({
+
+          product,
+
+          cheapest,
+
+          highest,
+
+          saving:
+            highest - cheapest,
+
+          shopId:
+            valid[0].shop_id
+
+        });
+
       }
 
+    }catch(error){
 
-      valid.sort(
-        (a,b) =>
-          Number(a.price) -
-          Number(b.price)
+      console.error(
+        "DEAL ERROR:",
+        error
       );
 
-
-      const cheapest =
-        valid[0];
-
-      const highest =
-        valid[valid.length-1];
-
-
-      const cheapestPrice =
-        Number(cheapest.price);
-
-      const highestPrice =
-        Number(highest.price);
-
-
-      const saving =
-        highestPrice -
-        cheapestPrice;
-
-
-      deals.push({
-
-        product:product,
-
-        price:cheapestPrice,
-
-        shop:
-          findShop(
-            cheapest.shop_id
-          ),
-
-        saving:saving
-
-      });
-
     }
 
-
-    deals.sort(
-      (a,b) =>
-        b.saving - a.saving
-    );
-
-
-    const topDeals =
-      deals.slice(0,12);
-
-
-    if(!topDeals.length){
-
-      container.innerHTML = `
-        <div class="message">
-          No deals available yet.
-        </div>
-      `;
-
-      return;
-    }
-
-
-    container.innerHTML = "";
-
-
-    topDeals.forEach(deal => {
-
-      const card =
-        document.createElement("div");
-
-      card.className =
-        "deal-card";
-
-
-      const product =
-        deal.product;
-
-      const shop =
-        deal.shop;
-
-
-      card.innerHTML = `
-
-        <h3>
-          ${escapeHtml(
-            getProductName(product)
-          )}
-        </h3>
-
-        <p>
-          🏷️ ${escapeHtml(
-            getProductBrand(product)
-          )}
-        </p>
-
-        ${
-          getProductSize(product)
-          ? `
-            <p>
-              📦 ${escapeHtml(
-                getProductSize(product)
-              )}
-            </p>
-          `
-          : ""
-        }
-
-        <div class="deal-price">
-          P${deal.price.toFixed(2)}
-        </div>
-
-        <div class="deal-shop">
-          🏪 ${
-            escapeHtml(
-              shop
-              ? getShopName(shop)
-              : "Unknown shop"
-            )
-          }
-        </div>
-
-        ${
-          shop && getShopLocation(shop)
-          ? `
-            <p>
-              📍 ${escapeHtml(
-                getShopLocation(shop)
-              )}
-            </p>
-          `
-          : ""
-        }
-
-        ${
-          deal.saving > 0
-          ? `
-            <span class="save-badge">
-              💰 Save up to
-              P${deal.saving.toFixed(2)}
-            </span>
-          `
-          : ""
-        }
-
-        <button class="btn compareDeal">
-          Compare Prices
-        </button>
-
-        <button class="btn secondary-btn addDeal">
-          🛒 Add to List
-        </button>
-      `;
-
-
-      card
-        .querySelector(".compareDeal")
-        .addEventListener(
-          "click",
-          function(){
-
-            openProduct(product);
-
-          }
-        );
-
-
-      card
-        .querySelector(".addDeal")
-        .addEventListener(
-          "click",
-          function(){
-
-            addToShoppingList(product);
-
-          }
-        );
-
-
-      container.appendChild(card);
-
-    });
-
-
-  }catch(error){
-
-    console.error(
-      "DEALS ERROR:",
-      error
-    );
-
-    container.innerHTML = `
-
-      <div class="message error">
-
-        Unable to load deals.
-
-        <p style="margin-top:10px;">
-          ${escapeHtml(error.message)}
-        </p>
-
-      </div>
-    `;
   }
+
+
+  return deals
+    .sort(
+      (a,b) =>
+        b.saving -
+        a.saving
+    );
+
 }
 
-
-/* =========================
-   DEALS PREVIEW
-========================= */
 
 async function loadDealsPreview(){
 
@@ -2813,241 +2058,343 @@ async function loadDealsPreview(){
       "dealsPreview"
     );
 
-  if(!container){
+
+  if(!container)
     return;
+
+
+  container.innerHTML =
+    `<div class="message">
+       Loading deals...
+     </div>`;
+
+
+  const deals =
+    await getBestDeals();
+
+
+  if(!deals.length){
+
+    container.innerHTML =
+      `<div class="message">
+        No deals available yet.
+      </div>`;
+
+    return;
+
   }
 
 
-  container.innerHTML = `
+  container.innerHTML =
+    deals
+      .slice(0,4)
+      .map(renderDeal)
+      .join("");
 
-    <div class="section-card">
-
-      <h2>
-        🔥 Best Deals
-      </h2>
-
-      <p class="small-note">
-        Loading today's lowest prices...
-      </p>
-
-    </div>
-  `;
-
-
-  try{
-
-    const deals = [];
-
-
-    for(
-      const product of allProducts.slice(0,20)
-    ){
-
-      const productId =
-        getProductId(product);
-
-      if(
-        productId === undefined ||
-        productId === null ||
-        productId === ""
-      ){
-        continue;
-      }
-
-
-      const prices =
-        await supabaseFetch(
-
-          "product_prices" +
-          "?select=product_id,shop_id,price" +
-          "&product_id=eq." +
-          encodeURIComponent(
-            String(productId)
-          )
-        );
-
-
-      const valid =
-        Array.isArray(prices)
-        ? prices.filter(
-            row =>
-              row.price !== null &&
-              row.price !== undefined &&
-              !isNaN(Number(row.price))
-          )
-        : [];
-
-
-      if(!valid.length){
-        continue;
-      }
-
-
-      valid.sort(
-        (a,b) =>
-          Number(a.price) -
-          Number(b.price)
-      );
-
-
-      deals.push({
-
-        product:product,
-
-        price:Number(
-          valid[0].price
-        ),
-
-        shop:
-          findShop(
-            valid[0].shop_id
-          )
-
-      });
-
-    }
-
-
-    deals.sort(
-      (a,b) =>
-        a.price - b.price
-    );
-
-
-    const top =
-      deals.slice(0,4);
-
-
-    if(!top.length){
-
-      container.innerHTML = "";
-      return;
-    }
-
-
-    container.innerHTML = `
-
-      <div class="section-card">
-
-        <h2 class="section-title">
-          🔥 Best Deals
-        </h2>
-
-        <div class="deals-grid">
-
-          ${top.map(deal => `
-
-            <div class="deal-card">
-
-              <h3>
-                ${escapeHtml(
-                  getProductName(
-                    deal.product
-                  )
-                )}
-              </h3>
-
-              <div class="deal-price">
-                P${deal.price.toFixed(2)}
-              </div>
-
-              <div class="deal-shop">
-                🏪 ${
-                  escapeHtml(
-                    deal.shop
-                    ? getShopName(deal.shop)
-                    : "Unknown shop"
-                  )
-                }
-              </div>
-
-            </div>
-
-          `).join("")}
-
-        </div>
-
-        <button
-          class="btn secondary-btn"
-          id="viewAllDeals">
-          🔥 View All Best Deals
-        </button>
-
-      </div>
-    `;
-
-
-    document
-      .getElementById("viewAllDeals")
-      .addEventListener(
-        "click",
-        function(){
-
-          showScreen(
-            "dealsScreen"
-          );
-
-          loadDeals();
-
-        }
-      );
-
-
-  }catch(error){
-
-    console.error(
-      "DEALS PREVIEW ERROR:",
-      error
-    );
-
-    container.innerHTML = "";
-  }
 }
 
 
-/* =========================
-   NEARBY SHOPS
-========================= */
+function renderDeal(deal){
 
-function findNearbyShops(){
+  return `
+
+    <div class="deal-card">
+
+      <h3>
+        ${escapeHtml(
+          getProductName(
+            deal.product
+          )
+        )}
+      </h3>
+
+      <div class="brand">
+        ${escapeHtml(
+          getProductBrand(
+            deal.product
+          )
+        )}
+      </div>
+
+      <div class="price">
+        ${money(deal.cheapest)}
+      </div>
+
+      <div class="deal-save">
+        Save ${money(deal.saving)}
+      </div>
+
+      <button
+        onclick='showProduct(${JSON.stringify(deal.product).replace(/'/g,"&#39;")})'>
+
+        View Prices
+
+      </button>
+
+    </div>
+
+  `;
+
+}
+
+
+async function showDeals(){
+
+  document.getElementById(
+    "app"
+  ).innerHTML = `
+
+    <button
+      class="back-btn"
+      onclick="showHome()">
+      ← Back
+    </button>
+
+    <h2>
+      🔥 Best Deals
+    </h2>
+
+    <p style="margin:7px 0 15px;color:#777;">
+      Products with the biggest price differences.
+    </p>
+
+    <div
+      id="allDeals"
+      class="deals-grid">
+
+      <div class="message">
+        Loading deals...
+      </div>
+
+    </div>
+
+  `;
+
+
+  const deals =
+    await getBestDeals();
+
 
   const container =
     document.getElementById(
-      "nearbyContent"
+      "allDeals"
     );
 
 
-  if(
-    !navigator.geolocation
-  ){
+  if(!deals.length){
 
-    container.innerHTML = `
-
-      <div class="message error">
-
-        Your browser does not support
-        location services.
-
-      </div>
-    `;
+    container.innerHTML =
+      `<div class="message">
+        No deals available.
+      </div>`;
 
     return;
+
   }
 
 
-  container.innerHTML = `
+  container.innerHTML =
+    deals
+      .slice(0,12)
+      .map(renderDeal)
+      .join("");
 
-    <div class="message">
+}
 
-      📍 Getting your location...
+
+/* =====================================================
+   SHOPS
+===================================================== */
+
+function loadShopsPreview(){
+
+  const container =
+    document.getElementById(
+      "shopsPreview"
+    );
+
+
+  if(!container)
+    return;
+
+
+  if(!allShops.length){
+
+    container.innerHTML =
+      `<div class="message">
+        No shops available.
+      </div>`;
+
+    return;
+
+  }
+
+
+  container.innerHTML =
+    allShops
+      .slice(0,4)
+      .map(shop => `
+
+        <div class="shop-card">
+
+          <h3>
+            ${escapeHtml(
+              getShopName(shop)
+            )}
+          </h3>
+
+          <p style="color:#777;">
+            ${
+              getShopLocation(shop)
+              ? "📍 " +
+                escapeHtml(
+                  getShopLocation(shop)
+                )
+              : "Location not provided"
+            }
+          </p>
+
+        </div>
+
+      `)
+      .join("");
+
+}
+
+
+function extractCoordinates(shop){
+
+  const latitude =
+    shop.latitude ??
+    shop.Latitude ??
+    shop.lat ??
+    shop.Lat;
+
+
+  const longitude =
+    shop.longitude ??
+    shop.Longitude ??
+    shop.lng ??
+    shop.Lng ??
+    shop.lon ??
+    shop.Lon;
+
+
+  if(
+    latitude === undefined ||
+    longitude === undefined
+  )
+    return null;
+
+
+  const lat =
+    Number(latitude);
+
+  const lng =
+    Number(longitude);
+
+
+  if(
+    !Number.isFinite(lat) ||
+    !Number.isFinite(lng)
+  )
+    return null;
+
+
+  return {
+    lat,
+    lng
+  };
+
+}
+
+
+function distanceKm(
+  lat1,
+  lon1,
+  lat2,
+  lon2
+){
+
+  const R = 6371;
+
+  const dLat =
+    (lat2-lat1)
+    * Math.PI / 180;
+
+  const dLon =
+    (lon2-lon1)
+    * Math.PI / 180;
+
+
+  const a =
+    Math.sin(dLat/2) ** 2 +
+    Math.cos(lat1*Math.PI/180) *
+    Math.cos(lat2*Math.PI/180) *
+    Math.sin(dLon/2) ** 2;
+
+
+  return R *
+    2 *
+    Math.atan2(
+      Math.sqrt(a),
+      Math.sqrt(1-a)
+    );
+
+}
+
+
+function showNearbyShops(){
+
+  document.getElementById(
+    "app"
+  ).innerHTML = `
+
+    <button
+      class="back-btn"
+      onclick="showHome()">
+      ← Back
+    </button>
+
+    <h2>
+      📍 Nearby Shops
+    </h2>
+
+    <p style="margin:8px 0 15px;color:#777;">
+      Finding shops near you...
+    </p>
+
+    <div
+      id="nearbyResults"
+      class="shop-grid">
+
+      <div class="message">
+        Requesting your location...
+      </div>
 
     </div>
+
   `;
+
+
+  if(!navigator.geolocation){
+
+    document.getElementById(
+      "nearbyResults"
+    ).innerHTML =
+      `<div class="message">
+        Geolocation is not supported
+        by this browser.
+      </div>`;
+
+    return;
+
+  }
 
 
   navigator.geolocation.getCurrentPosition(
 
-    function(position){
+    position => {
 
       const userLat =
         position.coords.latitude;
@@ -3056,32 +2403,31 @@ function findNearbyShops(){
         position.coords.longitude;
 
 
-      const shopsWithDistance =
+      const shops =
         allShops
           .map(shop => {
 
             const coords =
               extractCoordinates(shop);
 
-            if(!coords){
+
+            if(!coords)
               return null;
-            }
-
-
-            const distance =
-              calculateDistance(
-                userLat,
-                userLng,
-                coords.lat,
-                coords.lng
-              );
 
 
             return {
 
-              shop:shop,
+              shop,
 
-              distance:distance
+              distance:
+                distanceKm(
+                  userLat,
+                  userLng,
+                  coords.lat,
+                  coords.lng
+                ),
+
+              coords
 
             };
 
@@ -3094,231 +2440,1036 @@ function findNearbyShops(){
           );
 
 
-      if(
-        !shopsWithDistance.length
-      ){
+      const container =
+        document.getElementById(
+          "nearbyResults"
+        );
+
+
+      if(!shops.length){
 
         container.innerHTML = `
 
           <div class="message">
 
             <h3>
-              📍 Shop locations unavailable
+              Shop locations unavailable
             </h3>
 
             <p style="margin-top:10px;">
-              Your shops table does not currently
-              contain latitude and longitude values.
-            </p>
-
-            <p class="small-note">
-              Add latitude and longitude columns
-              to the shops table later to enable
-              exact nearby-shop distances.
+              Your shops need latitude and
+              longitude values before
+              Nearby Shops can calculate
+              distances.
             </p>
 
           </div>
+
         `;
 
         return;
+
       }
 
 
-      const nearby =
-        shopsWithDistance.slice(0,20);
+      container.innerHTML =
+        shops
+          .slice(0,12)
+          .map(item => `
 
+            <div class="shop-card">
 
-      container.innerHTML = `
+              <h3>
+                ${escapeHtml(
+                  getShopName(
+                    item.shop
+                  )
+                )}
+              </h3>
 
-        <div class="shop-grid">
-
-          ${nearby.map(item => {
-
-            const shop =
-              item.shop;
-
-            const name =
-              getShopName(shop);
-
-            const location =
-              getShopLocation(shop);
-
-
-            const coords =
-              extractCoordinates(shop);
-
-
-            return `
-
-              <div class="shop-card">
-
-                <h3>
-                  🏪 ${escapeHtml(name)}
-                </h3>
-
+              <p style="margin:7px 0;color:#777;">
                 ${
-                  location
-                  ? `
-                    <p>
-                      📍 ${escapeHtml(location)}
-                    </p>
-                  `
+                  getShopLocation(
+                    item.shop
+                  )
+                  ? "📍 " +
+                    escapeHtml(
+                      getShopLocation(
+                        item.shop
+                      )
+                    )
                   : ""
                 }
+              </p>
 
-                <p class="distance">
-                  ${item.distance < 1
-                    ? Math.round(
-                        item.distance * 1000
-                      ) + " m away"
-                    : item.distance.toFixed(1) +
-                      " km away"}
-                </p>
+              <strong>
+                ${item.distance.toFixed(1)}
+                km away
+              </strong>
 
-                ${
-                  coords
-                  ? `
-                    <button
-                      class="location-btn"
-                      onclick="openMap(
-                        ${coords.lat},
-                        ${coords.lng}
-                      )">
-                      🗺️ Open Map
-                    </button>
-                  `
-                  : ""
-                }
+              <br>
 
-              </div>
-            `;
+              <button
+                onclick="window.open(
+                  'https://www.google.com/maps/dir/?api=1&destination=${item.coords.lat},${item.coords.lng}',
+                  '_blank'
+                )">
 
-          }).join("")}
+                🗺️ Directions
 
-        </div>
-      `;
+              </button>
+
+            </div>
+
+          `)
+          .join("");
 
     },
 
-    function(error){
+    error => {
 
-      let message =
-        "Unable to get your location.";
+      document.getElementById(
+        "nearbyResults"
+      ).innerHTML = `
 
-      if(error.code === 1){
-
-        message =
-          "Location permission was denied. Please allow location access and try again.";
-
-      }else if(error.code === 2){
-
-        message =
-          "Your location could not be determined.";
-
-      }else if(error.code === 3){
-
-        message =
-          "Location request timed out. Please try again.";
-
-      }
-
-
-      container.innerHTML = `
-
-        <div class="message error">
+        <div class="message">
 
           <h3>
-            📍 Location unavailable
+            Location unavailable
           </h3>
 
           <p style="margin-top:10px;">
-            ${escapeHtml(message)}
+            Please allow location access
+            and try again.
           </p>
 
         </div>
+
       `;
 
-    },
-
-    {
-      enableHighAccuracy:false,
-      timeout:10000,
-      maximumAge:300000
     }
 
   );
+
 }
 
 
-/* =========================
-   MAP
-========================= */
+/* =====================================================
+   SHOPPING LIST
+===================================================== */
 
-function openMap(lat,lng){
+async function showShoppingList(){
 
-  const url =
-    "https://www.google.com/maps/dir/?api=1&destination=" +
-    encodeURIComponent(
-      lat + "," + lng
+  document.getElementById(
+    "app"
+  ).innerHTML = `
+
+    <button
+      class="back-btn"
+      onclick="showHome()">
+      ← Back
+    </button>
+
+    <div class="section-title">
+
+      <h2>
+        🛒 My Shopping List
+      </h2>
+
+      ${
+        shoppingList.length
+        ? `
+          <button
+            class="danger-btn"
+            onclick="clearShoppingList()">
+            Clear List
+          </button>
+        `
+        : ""
+      }
+
+    </div>
+
+
+    ${
+      shoppingList.length
+      ? `
+        <div class="saved-note">
+
+          💾 Your shopping list is saved
+          on this device.
+
+          <br>
+
+          ${
+            await getCurrentUser()
+            ? "☁️ It is also saved to your account."
+            : "Sign in to save it across devices."
+          }
+
+        </div>
+      `
+      : ""
+    }
+
+
+    <div id="shoppingListContainer">
+
+      ${
+        shoppingList.length
+        ? shoppingList
+            .map(renderShoppingItem)
+            .join("")
+        : `
+          <div class="message">
+
+            <h3>
+              Your list is empty
+            </h3>
+
+            <p style="margin-top:10px;">
+              Add products from the product
+              catalogue.
+            </p>
+
+          </div>
+        `
+      }
+
+    </div>
+
+
+    ${
+      shoppingList.length
+      ? `
+        <button
+          class="primary-btn"
+          style="margin-top:15px;"
+          onclick="findCheapestBasket()">
+
+          🏆 Find Cheapest Basket
+
+        </button>
+      `
+      : ""
+    }
+
+  `;
+
+}
+
+
+function renderShoppingItem(
+  item,
+  index
+){
+
+  const product =
+    item.product;
+
+
+  return `
+
+    <div class="list-item">
+
+      <div>
+
+        <h3>
+          ${escapeHtml(
+            getProductName(product)
+          )}
+        </h3>
+
+        <div class="brand">
+          ${escapeHtml(
+            getProductBrand(product)
+          )}
+        </div>
+
+        ${
+          getProductSize(product)
+          ? `
+            <div
+              style="color:#777;margin-top:4px;">
+              ${escapeHtml(
+                getProductSize(product)
+              )}
+            </div>
+          `
+          : ""
+        }
+
+      </div>
+
+
+      <div class="qty-controls">
+
+        <button
+          onclick="changeQuantity(${index},-1)">
+          −
+        </button>
+
+        <strong>
+          ${item.quantity}
+        </strong>
+
+        <button
+          onclick="changeQuantity(${index},1)">
+          +
+        </button>
+
+        <button
+          class="remove-btn"
+          onclick="removeFromList(${index})">
+          ×
+        </button>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+async function changeQuantity(
+  index,
+  amount
+){
+
+  if(!shoppingList[index])
+    return;
+
+
+  shoppingList[index].quantity +=
+    amount;
+
+
+  if(
+    shoppingList[index].quantity <= 0
+  ){
+
+    shoppingList.splice(
+      index,
+      1
     );
 
-  window.open(
-    url,
-    "_blank"
-  );
+  }
+
+
+  saveShoppingList();
+
+  updateListCount();
+
+  await saveCloudShoppingList();
+
+  showShoppingList();
+
 }
 
 
-/* =========================
-   NAVIGATION
-========================= */
+async function removeFromList(
+  index
+){
 
-document
-  .getElementById(
-    "shoppingListButton"
-  )
-  .addEventListener(
-    "click",
-    function(){
+  shoppingList.splice(
+    index,
+    1
+  );
 
-      displayShoppingList();
 
-      showScreen(
-        "shoppingListScreen"
+  saveShoppingList();
+
+  updateListCount();
+
+  await saveCloudShoppingList();
+
+  showShoppingList();
+
+}
+
+
+async function clearShoppingList(){
+
+  if(!confirm(
+    "Clear your entire shopping list?"
+  ))
+    return;
+
+
+  shoppingList = [];
+
+  saveShoppingList();
+
+  updateListCount();
+
+  await saveCloudShoppingList();
+
+  showShoppingList();
+
+}
+
+
+/* =====================================================
+   CHEAPEST BASKET
+===================================================== */
+
+async function findCheapestBasket(){
+
+  if(!shoppingList.length)
+    return;
+
+
+  document.getElementById(
+    "app"
+  ).innerHTML = `
+
+    <button
+      class="back-btn"
+      onclick="showShoppingList()">
+      ← Back
+    </button>
+
+    <div class="message">
+
+      <h2>
+        🏆 Finding Cheapest Basket
+      </h2>
+
+      <p style="margin-top:10px;">
+        Checking prices across shops...
+      </p>
+
+    </div>
+
+  `;
+
+
+  const results = [];
+
+
+  for(
+    const item
+    of shoppingList
+  ){
+
+    const product =
+      item.product;
+
+
+    const productId =
+      getProductId(product);
+
+
+    try{
+
+      const prices =
+        await supabaseFetch(
+          `product_prices?select=product_id,shop_id,price&product_id=eq.${encodeURIComponent(productId)}`
+        );
+
+
+      const valid =
+        prices
+          .filter(
+            p =>
+              Number.isFinite(
+                Number(p.price)
+              )
+          )
+          .map(p => ({
+
+            ...p,
+
+            price:
+              Number(p.price)
+
+          }))
+          .sort(
+            (a,b) =>
+              a.price -
+              b.price
+          );
+
+
+      results.push({
+
+        product,
+
+        quantity:
+          Number(item.quantity),
+
+        prices:valid
+
+      });
+
+    }catch(error){
+
+      console.error(
+        "BASKET PRICE ERROR:",
+        error
+      );
+
+    }
+
+  }
+
+
+  renderBasket(
+    results
+  );
+
+}
+
+
+function renderBasket(
+  results
+){
+
+  let maximumSavingsTotal = 0;
+
+  const cheapestProducts = [];
+
+
+  results.forEach(
+    result => {
+
+      if(!result.prices.length)
+        return;
+
+
+      const cheapest =
+        result.prices[0];
+
+
+      const cost =
+        cheapest.price *
+        result.quantity;
+
+
+      maximumSavingsTotal +=
+        cost;
+
+
+      const shop =
+        allShops.find(
+          s =>
+            String(
+              getShopId(s)
+            ) ===
+            String(
+              cheapest.shop_id
+            )
+        );
+
+
+      cheapestProducts.push({
+
+        product:
+          result.product,
+
+        quantity:
+          result.quantity,
+
+        price:
+          cheapest.price,
+
+        total:
+          cost,
+
+        shop
+
+      });
+
+    }
+  );
+
+
+  const shopTotals = {};
+
+
+  results.forEach(
+    result => {
+
+      result.prices.forEach(
+        priceRow => {
+
+          const shopId =
+            String(
+              priceRow.shop_id
+            );
+
+
+          if(!shopTotals[shopId]){
+
+            shopTotals[shopId] = {
+
+              shopId,
+
+              total:0,
+
+              count:0
+
+            };
+
+          }
+
+
+          shopTotals[shopId].total +=
+            priceRow.price *
+            result.quantity;
+
+
+          shopTotals[shopId].count += 1;
+
+        }
       );
 
     }
   );
 
 
-document
-  .getElementById(
-    "clearList"
-  )
-  .addEventListener(
-    "click",
-    function(){
+  const completeShopOptions =
+    Object.values(
+      shopTotals
+    )
+    .filter(
+      shop =>
+        shop.count === results.length
+    )
+    .sort(
+      (a,b) =>
+        a.total -
+        b.total
+    );
 
-      if(
-        shoppingList.length === 0
-      ){
-        return;
+
+  const oneShopTotal =
+    completeShopOptions.length
+    ? completeShopOptions[0].total
+    : null;
+
+
+  const multipleShopTotal =
+    maximumSavingsTotal;
+
+
+  const savings =
+    oneShopTotal !== null
+      ? oneShopTotal -
+        multipleShopTotal
+      : 0;
+
+
+  document.getElementById(
+    "app"
+  ).innerHTML = `
+
+    <button
+      class="back-btn"
+      onclick="showShoppingList()">
+      ← Back
+    </button>
+
+
+    <h2>
+      🏆 Cheapest Basket
+    </h2>
+
+
+    <div class="card"
+         style="margin-top:15px;">
+
+      <h3>
+        Maximum Savings
+      </h3>
+
+      <div class="basket-total">
+        ${money(
+          multipleShopTotal
+        )}
+      </div>
+
+      <p style="color:#777;">
+        Buying each product from
+        its cheapest shop.
+      </p>
+
+    </div>
+
+
+    <section class="section">
+
+      <h3 style="margin-bottom:12px;">
+        Cheapest Products
+      </h3>
+
+      ${
+        cheapestProducts.length
+        ? cheapestProducts
+            .map(item => `
+
+              <div class="comparison-row">
+
+                <div>
+
+                  <strong>
+                    ${escapeHtml(
+                      getProductName(
+                        item.product
+                      )
+                    )}
+                  </strong>
+
+                  <div style="color:#777;margin-top:5px;">
+
+                    ${item.quantity}
+                    ×
+                    ${escapeHtml(
+                      item.shop
+                      ? getShopName(
+                          item.shop
+                        )
+                      : "Unknown shop"
+                    )}
+
+                  </div>
+
+                </div>
+
+                <strong>
+                  ${money(
+                    item.total
+                  )}
+                </strong>
+
+              </div>
+
+            `)
+            .join("")
+        : `
+          <div class="message">
+            Some products have no prices.
+          </div>
+        `
       }
 
+    </section>
+
+
+    <section class="section">
+
+      <h3 style="margin-bottom:12px;">
+        🏪 One-Shop Option
+      </h3>
+
+      ${
+        completeShopOptions.length
+        ? completeShopOptions
+            .map((option,index) => {
+
+              const shop =
+                allShops.find(
+                  s =>
+                    String(
+                      getShopId(s)
+                    ) ===
+                    String(
+                      option.shopId
+                    )
+                );
+
+
+              return `
+
+                <div
+                  class="
+                    comparison-row
+                    ${
+                      index === 0
+                      ? "cheapest"
+                      : ""
+                    }
+                  ">
+
+                  <div>
+
+                    <strong>
+                      ${
+                        index === 0
+                        ? "🏆 "
+                        : ""
+                      }
+
+                      ${escapeHtml(
+                        shop
+                        ? getShopName(shop)
+                        : "Unknown shop"
+                      )}
+
+                    </strong>
+
+                  </div>
+
+                  <strong>
+                    ${money(
+                      option.total
+                    )}
+                  </strong>
+
+                </div>
+
+              `;
+
+            })
+            .join("")
+        : `
+          <div class="message">
+
+            <p>
+              No single shop currently
+              has every item in your list.
+            </p>
+
+          </div>
+        `
+      }
+
+    </section>
+
+
+    ${
+      savings > 0.009
+      ? `
+
+        <div class="saved-note"
+             style="margin-top:20px;">
+
+          💰 You could save approximately
+          <strong>
+            ${money(savings)}
+          </strong>
+          by buying from multiple shops.
+
+        </div>
+
+      `
+      : ""
+    }
+
+  `;
+
+}
+
+
+/* =====================================================
+   ACCOUNT PAGE
+===================================================== */
+
+async function showAccount(){
+
+  const user =
+    await getCurrentUser();
+
+
+  if(user){
+
+    document.getElementById(
+      "app"
+    ).innerHTML = `
+
+      <button
+        class="back-btn"
+        onclick="showHome()">
+        ← Back
+      </button>
+
+
+      <div class="account-card">
+
+        <h2>
+          👤 My Account
+        </h2>
+
+        <p style="margin-top:12px;">
+          Signed in as:
+        </p>
+
+        <strong>
+          ${escapeHtml(
+            user.email
+          )}
+        </strong>
+
+
+        <div class="status">
+
+          ☁️ Your shopping list is
+          automatically saved to your
+          account.
+
+        </div>
+
+
+        <div
+          class="auth-buttons"
+          style="margin-top:15px;">
+
+          <button
+            class="primary-btn"
+            onclick="showShoppingList()">
+
+            🛒 My Shopping List
+
+          </button>
+
+
+          <button
+            class="danger-btn"
+            onclick="signOut()">
+
+            Logout
+
+          </button>
+
+        </div>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  document.getElementById(
+    "app"
+  ).innerHTML = `
+
+    <button
+      class="back-btn"
+      onclick="showHome()">
+      ← Back
+    </button>
+
+
+    <div class="auth-box">
+
+      <h2>
+        👤 Get-It Account
+      </h2>
+
+      <p style="color:#777;margin-bottom:10px;">
+        Sign in to save your shopping
+        list across devices.
+      </p>
+
+
+      <input
+        id="authEmail"
+        class="auth-input"
+        type="email"
+        placeholder="Email address"
+      >
+
+
+      <input
+        id="authPassword"
+        class="auth-input"
+        type="password"
+        placeholder="Password"
+      >
+
+
+      <div class="auth-buttons">
+
+        <button
+          class="primary-btn"
+          onclick="signIn()">
+
+          Login
+
+        </button>
+
+
+        <button
+          class="secondary-btn"
+          onclick="signUp()">
+
+          Create Account
+
+        </button>
+
+      </div>
+
+
+      <div id="authMessage"></div>
+
+
+      ${
+        shoppingList.length
+        ? `
+          <div class="saved-note"
+               style="margin-top:15px;">
+
+            🛒 You currently have
+            <strong>
+              ${shoppingList.length}
+            </strong>
+            product(s) in your local
+            shopping list.
+
+            <br><br>
+
+            After signing in, your list
+            will be synced to your account.
+
+          </div>
+        `
+        : ""
+      }
+
+    </div>
+
+  `;
+
+}
+
+
+/* =====================================================
+   AUTH STATE LISTENER
+===================================================== */
+
+supabaseAuth
+  .auth
+  .onAuthStateChange(
+    async (event,session) => {
+
+      console.log(
+        "AUTH EVENT:",
+        event
+      );
+
 
       if(
-        confirm(
-          "Clear your shopping list?"
-        )
+        event === "SIGNED_IN" &&
+        session
       ){
 
-        shoppingList = [];
-
-        saveShoppingList();
+        await syncCloudShoppingList();
 
         updateListCount();
 
-        displayShoppingList();
+      }
+
+
+      if(
+        event === "SIGNED_OUT"
+      ){
+
+        updateListCount();
 
       }
 
@@ -3326,161 +3477,9 @@ document
   );
 
 
-document
-  .getElementById(
-    "detailsBack"
-  )
-  .addEventListener(
-    "click",
-    function(){
-
-      showScreen(
-        "homeScreen"
-      );
-
-    }
-  );
-
-
-document
-  .getElementById(
-    "comparisonBack"
-  )
-  .addEventListener(
-    "click",
-    function(){
-
-      if(selectedProduct){
-
-        openProduct(
-          selectedProduct
-        );
-
-      }else{
-
-        showScreen(
-          "homeScreen"
-        );
-
-      }
-
-    }
-  );
-
-
-document
-  .getElementById(
-    "shoppingBack"
-  )
-  .addEventListener(
-    "click",
-    function(){
-
-      showScreen(
-        "homeScreen"
-      );
-
-    }
-  );
-
-
-document
-  .getElementById(
-    "basketBack"
-  )
-  .addEventListener(
-    "click",
-    function(){
-
-      displayShoppingList();
-
-      showScreen(
-        "shoppingListScreen"
-      );
-
-    }
-  );
-
-
-document
-  .getElementById(
-    "dealsTool"
-  )
-  .addEventListener(
-    "click",
-    function(){
-
-      showScreen(
-        "dealsScreen"
-      );
-
-      loadDeals();
-
-    }
-  );
-
-
-document
-  .getElementById(
-    "dealsBack"
-  )
-  .addEventListener(
-    "click",
-    function(){
-
-      showScreen(
-        "homeScreen"
-      );
-
-    }
-  );
-
-
-document
-  .getElementById(
-    "nearbyTool"
-  )
-  .addEventListener(
-    "click",
-    function(){
-
-      showScreen(
-        "nearbyScreen"
-      );
-
-    }
-  );
-
-
-document
-  .getElementById(
-    "nearbyBack"
-  )
-  .addEventListener(
-    "click",
-    function(){
-
-      showScreen(
-        "homeScreen"
-      );
-
-    }
-  );
-
-
-document
-  .getElementById(
-    "locationButton"
-  )
-  .addEventListener(
-    "click",
-    findNearbyShops
-  );
-
-
-/* =========================
-   START
-========================= */
+/* =====================================================
+   START APP
+===================================================== */
 
 async function startApp(){
 
@@ -3488,12 +3487,30 @@ async function startApp(){
 
   updateListCount();
 
+
   await Promise.all([
+
     loadProducts(),
+
     loadShops()
+
   ]);
 
-  loadDealsPreview();
+
+  showHome();
+
+
+  const user =
+    await getCurrentUser();
+
+
+  if(user){
+
+    await syncCloudShoppingList();
+
+    updateListCount();
+
+  }
 
 }
 
