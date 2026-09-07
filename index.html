@@ -333,7 +333,6 @@ footer{
 
 </section>
 
-
 <section id="detailsScreen" class="screen">
 
   <div class="back"
@@ -346,7 +345,6 @@ footer{
   <div id="detailsContent"></div>
 
 </section>
-
 
 <section id="comparisonScreen" class="screen">
 
@@ -376,7 +374,6 @@ footer{
   <p>Find. Compare. Get.</p>
 
 </footer>
-
 
 <script>
 
@@ -408,22 +405,23 @@ let selectedProduct = null;
 
 async function supabaseFetch(endpoint){
 
-  const response = await fetch(
-    SUPABASE_URL +
-    "/rest/v1/" +
-    endpoint,
-    {
-      method:"GET",
+  const response =
+    await fetch(
+      SUPABASE_URL +
+      "/rest/v1/" +
+      endpoint,
+      {
+        method:"GET",
 
-      headers:{
-        "apikey":SUPABASE_KEY,
-        "Authorization":
-          "Bearer " + SUPABASE_KEY,
-        "Content-Type":
-          "application/json"
+        headers:{
+          "apikey":SUPABASE_KEY,
+          "Authorization":
+            "Bearer " + SUPABASE_KEY,
+          "Content-Type":
+            "application/json"
+        }
       }
-    }
-  );
+    );
 
 
   if(!response.ok){
@@ -919,6 +917,27 @@ function openProduct(product){
 
 
 /* =========================================
+   CHECK AVAILABILITY
+========================================= */
+
+function isInStock(value){
+
+  return (
+    value === true ||
+    value === "true" ||
+    value === "TRUE" ||
+    value === "True" ||
+    value === 1 ||
+    value === "1" ||
+    value === "yes" ||
+    value === "YES" ||
+    value === "Yes"
+  );
+
+}
+
+
+/* =========================================
    COMPARE PRICES
 ========================================= */
 
@@ -988,19 +1007,32 @@ async function comparePrices(){
 
     /* =====================================
        LOAD PRICES
+       
+       IMPORTANT:
+       Your real columns are:
+       product_id
+       shop_id
+       Price
+       In_stock
     ===================================== */
 
     const prices =
       await supabaseFetch(
 
         "product_prices" +
-        "?select=product_id,shop_id,price,available" +
+        "?select=product_id,shop_id,Price,In_stock" +
         "&product_id=eq." +
         encodeURIComponent(
           String(productId)
         )
 
       );
+
+
+    console.log(
+      "PRICE ROWS:",
+      prices
+    );
 
 
     if(
@@ -1033,27 +1065,39 @@ async function comparePrices(){
     prices.forEach(
       item => {
 
-        const available =
-          item.available;
+        /*
+          Your database uses In_stock,
+          NOT available.
+        */
+
+        const stockValue =
+          item.In_stock;
 
 
-        const isAvailable =
-          available === true ||
-          available === "true" ||
-          available === 1 ||
-          available === "1";
+        /*
+          If In_stock is false,
+          don't show that price.
+        */
 
-
-        if(!isAvailable){
+        if(
+          stockValue !== null &&
+          stockValue !== undefined &&
+          !isInStock(stockValue)
+        ){
 
           return;
 
         }
 
 
+        /*
+          Your database uses Price,
+          NOT price.
+        */
+
         const price =
           Number(
-            item.price
+            item.Price
           );
 
 
