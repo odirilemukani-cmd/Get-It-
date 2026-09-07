@@ -117,18 +117,24 @@ main{
   gap:16px;
 }
 
-.product-card{
+.product-card,
+.deal-card,
+.shop-card{
   background:white;
   padding:18px;
   border-radius:14px;
   box-shadow:0 3px 12px rgba(0,0,0,.08);
 }
 
-.product-card h3{
+.product-card h3,
+.deal-card h3,
+.shop-card h3{
   margin-bottom:10px;
 }
 
-.product-card p{
+.product-card p,
+.deal-card p,
+.shop-card p{
   margin:6px 0;
   color:#555;
 }
@@ -146,6 +152,11 @@ main{
 .secondary-btn{
   background:#facc15;
   color:#111827;
+}
+
+.green-btn{
+  background:#16a34a;
+  color:white;
 }
 
 .back-btn{
@@ -177,12 +188,17 @@ main{
 
 .detail-card,
 .comparison-card,
-.basket-card{
+.basket-card,
+.section-card{
   background:white;
   padding:20px;
   border-radius:14px;
   margin-bottom:15px;
   box-shadow:0 3px 12px rgba(0,0,0,.07);
+}
+
+.section-title{
+  margin:10px 0 15px;
 }
 
 .price-row{
@@ -278,6 +294,96 @@ main{
   background:#f0fdf4;
 }
 
+.deals-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
+  gap:15px;
+}
+
+.deal-card{
+  border:2px solid #facc15;
+}
+
+.deal-price{
+  font-size:24px;
+  font-weight:bold;
+  margin:10px 0;
+}
+
+.deal-shop{
+  color:#15803d;
+  font-weight:bold;
+}
+
+.save-badge{
+  display:inline-block;
+  background:#dcfce7;
+  color:#15803d;
+  padding:6px 10px;
+  border-radius:20px;
+  font-weight:bold;
+  font-size:13px;
+  margin-top:8px;
+}
+
+.shop-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
+  gap:15px;
+}
+
+.distance{
+  font-weight:bold;
+  color:#2563eb;
+}
+
+.location-btn{
+  background:#2563eb;
+  color:white;
+  padding:10px 14px;
+  border-radius:9px;
+  margin-top:10px;
+  font-weight:bold;
+}
+
+.home-tools{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-bottom:20px;
+}
+
+.tool-card{
+  background:white;
+  border-radius:14px;
+  padding:18px;
+  box-shadow:0 3px 12px rgba(0,0,0,.07);
+  cursor:pointer;
+}
+
+.tool-card h3{
+  margin-bottom:7px;
+}
+
+.tool-card p{
+  color:#666;
+  font-size:14px;
+}
+
+.deals-preview{
+  margin-bottom:22px;
+}
+
+.shop-preview{
+  margin-bottom:22px;
+}
+
+.small-note{
+  color:#666;
+  font-size:14px;
+  margin-top:8px;
+}
+
 @media(max-width:600px){
 
   .header-inner{
@@ -295,6 +401,18 @@ main{
 
   main{
     padding:15px;
+  }
+
+  .home-tools{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .tool-card{
+    padding:14px;
+  }
+
+  .price-row{
+    align-items:flex-start;
   }
 }
 </style>
@@ -333,6 +451,28 @@ main{
       placeholder="Search products, brands or sizes...">
   </div>
 
+  <div class="home-tools">
+
+    <div class="tool-card"
+         id="dealsTool">
+      <h3>🔥 Best Deals</h3>
+      <p>Find the cheapest prices available.</p>
+    </div>
+
+    <div class="tool-card"
+         id="nearbyTool">
+      <h3>📍 Nearby Shops</h3>
+      <p>Find shops close to you.</p>
+    </div>
+
+  </div>
+
+  <div id="dealsPreview"
+       class="deals-preview"></div>
+
+  <div id="shopsPreview"
+       class="shop-preview"></div>
+
   <div class="categories">
 
     <button class="category-btn active"
@@ -367,6 +507,69 @@ main{
 
     <div class="message">
       Loading products...
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- DEALS -->
+<section id="dealsScreen" class="screen">
+
+  <button class="back-btn" id="dealsBack">
+    ← Back
+  </button>
+
+  <div class="section-card">
+
+    <h2>🔥 Best Deals</h2>
+
+    <p class="small-note">
+      Products with the lowest available prices across shops.
+    </p>
+
+  </div>
+
+  <div id="dealsContent"
+       class="deals-grid">
+
+    <div class="message">
+      Loading deals...
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- NEARBY SHOPS -->
+<section id="nearbyScreen" class="screen">
+
+  <button class="back-btn" id="nearbyBack">
+    ← Back
+  </button>
+
+  <div class="section-card">
+
+    <h2>📍 Nearby Shops</h2>
+
+    <p class="small-note">
+      Allow location access to find shops closest to you.
+    </p>
+
+    <button
+      class="location-btn"
+      id="locationButton">
+      📍 Find Shops Near Me
+    </button>
+
+  </div>
+
+  <div id="nearbyContent">
+
+    <div class="message">
+      Tap the button above to find nearby shops.
     </div>
 
   </div>
@@ -454,18 +657,19 @@ let currentCategory = "All";
 
 async function supabaseFetch(endpoint){
 
-  const response = await fetch(
-    SUPABASE_URL +
-    "/rest/v1/" +
-    endpoint,
-    {
-      headers:{
-        "apikey":SUPABASE_KEY,
-        "Authorization":
-        "Bearer " + SUPABASE_KEY
+  const response =
+    await fetch(
+      SUPABASE_URL +
+      "/rest/v1/" +
+      endpoint,
+      {
+        headers:{
+          "apikey":SUPABASE_KEY,
+          "Authorization":
+          "Bearer " + SUPABASE_KEY
+        }
       }
-    }
-  );
+    );
 
   if(!response.ok){
 
@@ -473,7 +677,8 @@ async function supabaseFetch(endpoint){
       await response.text();
 
     throw new Error(
-      text || "Supabase request failed"
+      text ||
+      "Supabase request failed"
     );
   }
 
@@ -610,8 +815,9 @@ function showScreen(id){
 
   document
     .querySelectorAll(".screen")
-    .forEach(screen =>
-      screen.classList.remove("active")
+    .forEach(
+      screen =>
+        screen.classList.remove("active")
     );
 
   const screen =
@@ -625,6 +831,94 @@ function showScreen(id){
     top:0,
     behavior:"smooth"
   });
+}
+
+
+/* =========================
+   DISTANCE
+========================= */
+
+function calculateDistance(
+  lat1,
+  lon1,
+  lat2,
+  lon2
+){
+
+  const R = 6371;
+
+  const dLat =
+    (lat2-lat1) *
+    Math.PI / 180;
+
+  const dLon =
+    (lon2-lon1) *
+    Math.PI / 180;
+
+  const a =
+    Math.sin(dLat/2) *
+    Math.sin(dLat/2) +
+
+    Math.cos(lat1 *
+      Math.PI / 180) *
+
+    Math.cos(lat2 *
+      Math.PI / 180) *
+
+    Math.sin(dLon/2) *
+    Math.sin(dLon/2);
+
+  const c =
+    2 *
+    Math.atan2(
+      Math.sqrt(a),
+      Math.sqrt(1-a)
+    );
+
+  return R*c;
+}
+
+
+function extractCoordinates(shop){
+
+  const possibleLat =
+    shop.latitude ??
+    shop.Latitude ??
+    shop.lat ??
+    shop.Lat;
+
+  const possibleLng =
+    shop.longitude ??
+    shop.Longitude ??
+    shop.lng ??
+    shop.Lng ??
+    shop.lon ??
+    shop.Lon;
+
+  if(
+    possibleLat === undefined ||
+    possibleLng === undefined
+  ){
+    return null;
+  }
+
+  const lat =
+    Number(possibleLat);
+
+  const lng =
+    Number(possibleLng);
+
+  if(
+    !isFinite(lat) ||
+    !isFinite(lng)
+  ){
+    return null;
+  }
+
+  return {
+    lat:lat,
+    lng:lng
+  };
 }
 
 
@@ -2092,6 +2386,764 @@ function calculateBasket(data){
 
 
 /* =========================
+   BEST DEALS
+========================= */
+
+async function loadDeals(){
+
+  const container =
+    document.getElementById(
+      "dealsContent"
+    );
+
+  if(
+    !allProducts.length
+  ){
+
+    container.innerHTML = `
+      <div class="message">
+        No products available.
+      </div>
+    `;
+
+    return;
+  }
+
+
+  container.innerHTML = `
+    <div class="message">
+      🔥 Finding the best deals...
+    </div>
+  `;
+
+
+  try{
+
+    const deals = [];
+
+
+    for(
+      const product of allProducts
+    ){
+
+      const productId =
+        getProductId(product);
+
+      if(
+        productId === undefined ||
+        productId === null ||
+        productId === ""
+      ){
+        continue;
+      }
+
+
+      const prices =
+        await supabaseFetch(
+
+          "product_prices" +
+          "?select=product_id,shop_id,price" +
+          "&product_id=eq." +
+          encodeURIComponent(
+            String(productId)
+          )
+        );
+
+
+      const valid =
+        Array.isArray(prices)
+        ? prices.filter(
+            row =>
+              row.price !== null &&
+              row.price !== undefined &&
+              !isNaN(Number(row.price))
+          )
+        : [];
+
+
+      if(!valid.length){
+        continue;
+      }
+
+
+      valid.sort(
+        (a,b) =>
+          Number(a.price) -
+          Number(b.price)
+      );
+
+
+      const cheapest =
+        valid[0];
+
+      const highest =
+        valid[valid.length-1];
+
+
+      const cheapestPrice =
+        Number(cheapest.price);
+
+      const highestPrice =
+        Number(highest.price);
+
+
+      const saving =
+        highestPrice -
+        cheapestPrice;
+
+
+      deals.push({
+
+        product:product,
+
+        price:cheapestPrice,
+
+        shop:
+          findShop(
+            cheapest.shop_id
+          ),
+
+        saving:saving
+
+      });
+
+    }
+
+
+    deals.sort(
+      (a,b) =>
+        b.saving - a.saving
+    );
+
+
+    const topDeals =
+      deals.slice(0,12);
+
+
+    if(!topDeals.length){
+
+      container.innerHTML = `
+        <div class="message">
+          No deals available yet.
+        </div>
+      `;
+
+      return;
+    }
+
+
+    container.innerHTML = "";
+
+
+    topDeals.forEach(deal => {
+
+      const card =
+        document.createElement("div");
+
+      card.className =
+        "deal-card";
+
+
+      const product =
+        deal.product;
+
+      const shop =
+        deal.shop;
+
+
+      card.innerHTML = `
+
+        <h3>
+          ${escapeHtml(
+            getProductName(product)
+          )}
+        </h3>
+
+        <p>
+          🏷️ ${escapeHtml(
+            getProductBrand(product)
+          )}
+        </p>
+
+        ${
+          getProductSize(product)
+          ? `
+            <p>
+              📦 ${escapeHtml(
+                getProductSize(product)
+              )}
+            </p>
+          `
+          : ""
+        }
+
+        <div class="deal-price">
+          P${deal.price.toFixed(2)}
+        </div>
+
+        <div class="deal-shop">
+          🏪 ${
+            escapeHtml(
+              shop
+              ? getShopName(shop)
+              : "Unknown shop"
+            )
+          }
+        </div>
+
+        ${
+          shop && getShopLocation(shop)
+          ? `
+            <p>
+              📍 ${escapeHtml(
+                getShopLocation(shop)
+              )}
+            </p>
+          `
+          : ""
+        }
+
+        ${
+          deal.saving > 0
+          ? `
+            <span class="save-badge">
+              💰 Save up to
+              P${deal.saving.toFixed(2)}
+            </span>
+          `
+          : ""
+        }
+
+        <button class="btn compareDeal">
+          Compare Prices
+        </button>
+
+        <button class="btn secondary-btn addDeal">
+          🛒 Add to List
+        </button>
+      `;
+
+
+      card
+        .querySelector(".compareDeal")
+        .addEventListener(
+          "click",
+          function(){
+
+            openProduct(product);
+
+          }
+        );
+
+
+      card
+        .querySelector(".addDeal")
+        .addEventListener(
+          "click",
+          function(){
+
+            addToShoppingList(product);
+
+          }
+        );
+
+
+      container.appendChild(card);
+
+    });
+
+
+  }catch(error){
+
+    console.error(
+      "DEALS ERROR:",
+      error
+    );
+
+    container.innerHTML = `
+
+      <div class="message error">
+
+        Unable to load deals.
+
+        <p style="margin-top:10px;">
+          ${escapeHtml(error.message)}
+        </p>
+
+      </div>
+    `;
+  }
+}
+
+
+/* =========================
+   DEALS PREVIEW
+========================= */
+
+async function loadDealsPreview(){
+
+  const container =
+    document.getElementById(
+      "dealsPreview"
+    );
+
+  if(!container){
+    return;
+  }
+
+
+  container.innerHTML = `
+
+    <div class="section-card">
+
+      <h2>
+        🔥 Best Deals
+      </h2>
+
+      <p class="small-note">
+        Loading today's lowest prices...
+      </p>
+
+    </div>
+  `;
+
+
+  try{
+
+    const deals = [];
+
+
+    for(
+      const product of allProducts.slice(0,20)
+    ){
+
+      const productId =
+        getProductId(product);
+
+      if(
+        productId === undefined ||
+        productId === null ||
+        productId === ""
+      ){
+        continue;
+      }
+
+
+      const prices =
+        await supabaseFetch(
+
+          "product_prices" +
+          "?select=product_id,shop_id,price" +
+          "&product_id=eq." +
+          encodeURIComponent(
+            String(productId)
+          )
+        );
+
+
+      const valid =
+        Array.isArray(prices)
+        ? prices.filter(
+            row =>
+              row.price !== null &&
+              row.price !== undefined &&
+              !isNaN(Number(row.price))
+          )
+        : [];
+
+
+      if(!valid.length){
+        continue;
+      }
+
+
+      valid.sort(
+        (a,b) =>
+          Number(a.price) -
+          Number(b.price)
+      );
+
+
+      deals.push({
+
+        product:product,
+
+        price:Number(
+          valid[0].price
+        ),
+
+        shop:
+          findShop(
+            valid[0].shop_id
+          )
+
+      });
+
+    }
+
+
+    deals.sort(
+      (a,b) =>
+        a.price - b.price
+    );
+
+
+    const top =
+      deals.slice(0,4);
+
+
+    if(!top.length){
+
+      container.innerHTML = "";
+      return;
+    }
+
+
+    container.innerHTML = `
+
+      <div class="section-card">
+
+        <h2 class="section-title">
+          🔥 Best Deals
+        </h2>
+
+        <div class="deals-grid">
+
+          ${top.map(deal => `
+
+            <div class="deal-card">
+
+              <h3>
+                ${escapeHtml(
+                  getProductName(
+                    deal.product
+                  )
+                )}
+              </h3>
+
+              <div class="deal-price">
+                P${deal.price.toFixed(2)}
+              </div>
+
+              <div class="deal-shop">
+                🏪 ${
+                  escapeHtml(
+                    deal.shop
+                    ? getShopName(deal.shop)
+                    : "Unknown shop"
+                  )
+                }
+              </div>
+
+            </div>
+
+          `).join("")}
+
+        </div>
+
+        <button
+          class="btn secondary-btn"
+          id="viewAllDeals">
+          🔥 View All Best Deals
+        </button>
+
+      </div>
+    `;
+
+
+    document
+      .getElementById("viewAllDeals")
+      .addEventListener(
+        "click",
+        function(){
+
+          showScreen(
+            "dealsScreen"
+          );
+
+          loadDeals();
+
+        }
+      );
+
+
+  }catch(error){
+
+    console.error(
+      "DEALS PREVIEW ERROR:",
+      error
+    );
+
+    container.innerHTML = "";
+  }
+}
+
+
+/* =========================
+   NEARBY SHOPS
+========================= */
+
+function findNearbyShops(){
+
+  const container =
+    document.getElementById(
+      "nearbyContent"
+    );
+
+
+  if(
+    !navigator.geolocation
+  ){
+
+    container.innerHTML = `
+
+      <div class="message error">
+
+        Your browser does not support
+        location services.
+
+      </div>
+    `;
+
+    return;
+  }
+
+
+  container.innerHTML = `
+
+    <div class="message">
+
+      📍 Getting your location...
+
+    </div>
+  `;
+
+
+  navigator.geolocation.getCurrentPosition(
+
+    function(position){
+
+      const userLat =
+        position.coords.latitude;
+
+      const userLng =
+        position.coords.longitude;
+
+
+      const shopsWithDistance =
+        allShops
+          .map(shop => {
+
+            const coords =
+              extractCoordinates(shop);
+
+            if(!coords){
+              return null;
+            }
+
+
+            const distance =
+              calculateDistance(
+                userLat,
+                userLng,
+                coords.lat,
+                coords.lng
+              );
+
+
+            return {
+
+              shop:shop,
+
+              distance:distance
+
+            };
+
+          })
+          .filter(Boolean)
+          .sort(
+            (a,b) =>
+              a.distance -
+              b.distance
+          );
+
+
+      if(
+        !shopsWithDistance.length
+      ){
+
+        container.innerHTML = `
+
+          <div class="message">
+
+            <h3>
+              📍 Shop locations unavailable
+            </h3>
+
+            <p style="margin-top:10px;">
+              Your shops table does not currently
+              contain latitude and longitude values.
+            </p>
+
+            <p class="small-note">
+              Add latitude and longitude columns
+              to the shops table later to enable
+              exact nearby-shop distances.
+            </p>
+
+          </div>
+        `;
+
+        return;
+      }
+
+
+      const nearby =
+        shopsWithDistance.slice(0,20);
+
+
+      container.innerHTML = `
+
+        <div class="shop-grid">
+
+          ${nearby.map(item => {
+
+            const shop =
+              item.shop;
+
+            const name =
+              getShopName(shop);
+
+            const location =
+              getShopLocation(shop);
+
+
+            const coords =
+              extractCoordinates(shop);
+
+
+            return `
+
+              <div class="shop-card">
+
+                <h3>
+                  🏪 ${escapeHtml(name)}
+                </h3>
+
+                ${
+                  location
+                  ? `
+                    <p>
+                      📍 ${escapeHtml(location)}
+                    </p>
+                  `
+                  : ""
+                }
+
+                <p class="distance">
+                  ${item.distance < 1
+                    ? Math.round(
+                        item.distance * 1000
+                      ) + " m away"
+                    : item.distance.toFixed(1) +
+                      " km away"}
+                </p>
+
+                ${
+                  coords
+                  ? `
+                    <button
+                      class="location-btn"
+                      onclick="openMap(
+                        ${coords.lat},
+                        ${coords.lng}
+                      )">
+                      🗺️ Open Map
+                    </button>
+                  `
+                  : ""
+                }
+
+              </div>
+            `;
+
+          }).join("")}
+
+        </div>
+      `;
+
+    },
+
+    function(error){
+
+      let message =
+        "Unable to get your location.";
+
+      if(error.code === 1){
+
+        message =
+          "Location permission was denied. Please allow location access and try again.";
+
+      }else if(error.code === 2){
+
+        message =
+          "Your location could not be determined.";
+
+      }else if(error.code === 3){
+
+        message =
+          "Location request timed out. Please try again.";
+
+      }
+
+
+      container.innerHTML = `
+
+        <div class="message error">
+
+          <h3>
+            📍 Location unavailable
+          </h3>
+
+          <p style="margin-top:10px;">
+            ${escapeHtml(message)}
+          </p>
+
+        </div>
+      `;
+
+    },
+
+    {
+      enableHighAccuracy:false,
+      timeout:10000,
+      maximumAge:300000
+    }
+
+  );
+}
+
+
+/* =========================
+   MAP
+========================= */
+
+function openMap(lat,lng){
+
+  const url =
+    "https://www.google.com/maps/dir/?api=1&destination=" +
+    encodeURIComponent(
+      lat + "," + lng
+    );
+
+  window.open(
+    url,
+    "_blank"
+  );
+}
+
+
+/* =========================
    NAVIGATION
 ========================= */
 
@@ -2222,6 +3274,82 @@ document
   );
 
 
+document
+  .getElementById(
+    "dealsTool"
+  )
+  .addEventListener(
+    "click",
+    function(){
+
+      showScreen(
+        "dealsScreen"
+      );
+
+      loadDeals();
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "dealsBack"
+  )
+  .addEventListener(
+    "click",
+    function(){
+
+      showScreen(
+        "homeScreen"
+      );
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "nearbyTool"
+  )
+  .addEventListener(
+    "click",
+    function(){
+
+      showScreen(
+        "nearbyScreen"
+      );
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "nearbyBack"
+  )
+  .addEventListener(
+    "click",
+    function(){
+
+      showScreen(
+        "homeScreen"
+      );
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "locationButton"
+  )
+  .addEventListener(
+    "click",
+    findNearbyShops
+  );
+
+
 /* =========================
    START
 ========================= */
@@ -2230,9 +3358,12 @@ async function startApp(){
 
   updateListCount();
 
-  loadProducts();
+  await Promise.all([
+    loadProducts(),
+    loadShops()
+  ]);
 
-  loadShops();
+  loadDealsPreview();
 
 }
 
