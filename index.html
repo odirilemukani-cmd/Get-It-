@@ -20,7 +20,7 @@ font-family:Arial,sans-serif;
 }
 
 body{
-background:#f4f8f6;
+background:#f5f7fa;
 color:#222;
 overflow-x:hidden;
 }
@@ -29,43 +29,46 @@ body:before{
 content:"";
 position:fixed;
 inset:0;
-z-index:-3;
+z-index:-5;
 background:
-radial-gradient(circle at 10% 10%,rgba(11,122,59,.14),transparent 28%),
-radial-gradient(circle at 90% 20%,rgba(255,193,7,.13),transparent 25%),
-radial-gradient(circle at 50% 100%,rgba(11,122,59,.10),transparent 35%);
+radial-gradient(circle at 10% 10%,rgba(11,122,59,.12),transparent 28%),
+radial-gradient(circle at 90% 20%,rgba(255,193,7,.10),transparent 25%),
+radial-gradient(circle at 50% 100%,rgba(11,122,59,.08),transparent 35%);
 }
 
 .decor{
 position:fixed;
 inset:0;
+overflow:hidden;
 pointer-events:none;
 z-index:-2;
-overflow:hidden;
 }
 
 .food-orb{
 position:absolute;
-font-size:75px;
-opacity:.08;
-filter:blur(.3px);
-animation:float 8s ease-in-out infinite;
+font-size:70px;
+opacity:.07;
+animation:floatFood 8s ease-in-out infinite;
 }
 
-.food1{left:4%;top:18%}
-.food2{right:4%;top:35%;animation-delay:1s}
-.food3{left:8%;bottom:12%;animation-delay:2s}
-.food4{right:10%;bottom:8%;animation-delay:3s}
+.food1{left:3%;top:20%}
+.food2{right:4%;top:34%;animation-delay:1s}
+.food3{left:7%;bottom:12%;animation-delay:2s}
+.food4{right:8%;bottom:8%;animation-delay:3s}
 
-@keyframes float{
-0%,100%{transform:translateY(0) rotate(0deg)}
-50%{transform:translateY(-20px) rotate(8deg)}
+@keyframes floatFood{
+0%,100%{
+transform:translateY(0) rotate(0deg);
+}
+50%{
+transform:translateY(-18px) rotate(7deg);
+}
 }
 
 header{
-background:rgba(11,122,59,.96);
+background:#0b7a3b;
 color:white;
-padding:14px 20px;
+padding:15px 20px;
 display:flex;
 justify-content:space-between;
 align-items:center;
@@ -73,7 +76,7 @@ gap:15px;
 position:sticky;
 top:0;
 z-index:100;
-box-shadow:0 4px 20px rgba(0,0,0,.15);
+box-shadow:0 4px 18px rgba(0,0,0,.15);
 }
 
 .logo{
@@ -92,18 +95,17 @@ flex-wrap:wrap;
 button{
 border:none;
 cursor:pointer;
-transition:.2s;
 }
 
 button:hover{
-transform:translateY(-1px);
+opacity:.9;
 }
 
 .header-btn{
 background:white;
 color:#0b7a3b;
 padding:9px 12px;
-border-radius:9px;
+border-radius:8px;
 font-weight:bold;
 }
 
@@ -123,24 +125,18 @@ padding:20px;
 }
 
 .hero{
-background:linear-gradient(135deg,rgba(11,122,59,.96),rgba(20,160,82,.86));
+background:linear-gradient(
+135deg,
+#0b7a3b,
+#159653
+);
 color:white;
 padding:25px;
-border-radius:20px;
+border-radius:18px;
 margin-bottom:20px;
-box-shadow:0 12px 35px rgba(11,122,59,.18);
+box-shadow:0 10px 30px rgba(11,122,59,.18);
 position:relative;
 overflow:hidden;
-}
-
-.hero:after{
-content:"🍲";
-position:absolute;
-right:25px;
-bottom:-15px;
-font-size:110px;
-opacity:.18;
-transform:rotate(-10deg);
 }
 
 .hero h1{
@@ -149,25 +145,34 @@ margin-bottom:8px;
 }
 
 .hero p{
-opacity:.92;
 line-height:1.5;
-max-width:650px;
+opacity:.95;
+max-width:700px;
+}
+
+.hero-food{
+position:absolute;
+right:25px;
+bottom:-18px;
+font-size:105px;
+opacity:.16;
+transform:rotate(-10deg);
 }
 
 .search-box{
 width:100%;
-padding:16px;
+padding:15px;
 border:1px solid #ddd;
-border-radius:12px;
+border-radius:10px;
 font-size:16px;
 margin-bottom:15px;
-background:rgba(255,255,255,.96);
+background:white;
 outline:none;
 }
 
 .search-box:focus{
 border-color:#0b7a3b;
-box-shadow:0 0 0 3px rgba(11,122,59,.1);
+box-shadow:0 0 0 3px rgba(11,122,59,.10);
 }
 
 .categories{
@@ -180,8 +185,8 @@ padding-bottom:10px;
 .category-btn{
 background:white;
 border:1px solid #ddd;
-padding:10px 15px;
-border-radius:22px;
+padding:9px 14px;
+border-radius:20px;
 white-space:nowrap;
 }
 
@@ -189,7 +194,6 @@ white-space:nowrap;
 background:#0b7a3b;
 color:white;
 border-color:#0b7a3b;
-box-shadow:0 5px 15px rgba(11,122,59,.2);
 }
 
 .products-grid,
@@ -202,52 +206,47 @@ gap:15px;
 
 .card,
 .deal-card,
-.shop-card,
-.tool-card,
-.account-card{
-background:rgba(255,255,255,.93);
-border-radius:15px;
+.shop-card{
+background:white;
+border-radius:12px;
 padding:17px;
-box-shadow:0 5px 18px rgba(0,0,0,.07);
-border:1px solid rgba(255,255,255,.8);
-backdrop-filter:blur(8px);
-}
-
-.card{
-position:relative;
-overflow:hidden;
+box-shadow:0 3px 12px rgba(0,0,0,.07);
 }
 
 .product-visual{
-height:135px;
-border-radius:13px;
+height:125px;
+border-radius:12px;
 margin-bottom:14px;
 display:flex;
 align-items:center;
 justify-content:center;
-font-size:72px;
-background:linear-gradient(135deg,#e9f8ef,#f9fcfa);
-box-shadow:inset 0 0 30px rgba(11,122,59,.05);
-position:relative;
+font-size:68px;
+background:
+linear-gradient(
+135deg,
+#e9f8ef,
+#f8fbf9
+);
 overflow:hidden;
+position:relative;
 }
 
-.product-visual:after{
+.product-visual:before{
 content:"";
 position:absolute;
-width:100px;
-height:100px;
+width:90px;
+height:90px;
+background:white;
 border-radius:50%;
-background:rgba(255,255,255,.5);
-top:-35px;
-right:-30px;
+top:-30px;
+right:-20px;
+opacity:.55;
 }
 
 .product-emoji{
 position:relative;
 z-index:2;
-filter:drop-shadow(0 8px 7px rgba(0,0,0,.18));
-transform:perspective(300px) rotateX(5deg);
+filter:drop-shadow(0 7px 5px rgba(0,0,0,.18));
 }
 
 .card h3,
@@ -291,13 +290,11 @@ gap:10px;
 }
 
 .tool-card{
+background:white;
+padding:20px;
+border-radius:12px;
+box-shadow:0 3px 12px rgba(0,0,0,.07);
 cursor:pointer;
-transition:.2s;
-}
-
-.tool-card:hover{
-transform:translateY(-3px);
-box-shadow:0 10px 25px rgba(0,0,0,.1);
 }
 
 .home-tools{
@@ -436,6 +433,13 @@ flex-wrap:wrap;
 margin-top:10px;
 }
 
+.account-card{
+background:white;
+padding:20px;
+border-radius:12px;
+margin-bottom:15px;
+}
+
 .status{
 padding:10px;
 border-radius:8px;
@@ -459,6 +463,7 @@ text-align:center;
 }
 
 @media(max-width:600px){
+
 header{
 align-items:flex-start;
 }
@@ -471,6 +476,11 @@ font-size:19px;
 font-size:25px;
 }
 
+.hero-food{
+font-size:75px;
+right:10px;
+}
+
 .comparison-row,
 .list-item{
 flex-direction:column;
@@ -478,12 +488,13 @@ align-items:flex-start;
 }
 
 .product-visual{
-height:120px;
+height:115px;
 }
 
 .food-orb{
-font-size:55px;
+font-size:52px;
 }
+
 }
 </style>
 </head>
@@ -491,10 +502,10 @@ font-size:55px;
 <body>
 
 <div class="decor">
-<div class="food-orb food1">🍛</div>
-<div class="food-orb food2">🍕</div>
-<div class="food-orb food3">🥗</div>
-<div class="food-orb food4">🍔</div>
+<div id="food1" class="food-orb food1">🍛</div>
+<div id="food2" class="food-orb food2">🍕</div>
+<div id="food3" class="food-orb food3">🥗</div>
+<div id="food4" class="food-orb food4">🍔</div>
 </div>
 
 <header>
@@ -505,19 +516,30 @@ Get-It 🇧🇼
 
 <div class="header-actions">
 
-<button class="header-btn" onclick="showAccount()">
+<button class="header-btn"
+onclick="showAccount()">
 👤 Account
 </button>
 
-<button class="header-btn" onclick="showShoppingList()">
+<button class="header-btn"
+onclick="showShoppingList()">
+
 🛒 My List
-<span id="listCount" class="list-badge">0</span>
+
+<span id="listCount"
+class="list-badge">
+0
+</span>
+
 </button>
 
 </div>
+
 </header>
 
-<main class="container" id="app"></main>
+<main class="container"
+id="app">
+</main>
 
 <footer>
 Get-It 🇧🇼 — Find. Compare. Get.
@@ -552,7 +574,8 @@ let currentCategory="All";
 let currentProduct=null;
 let shoppingList=[];
 
-const STORAGE_KEY="getit_shopping_list";
+const STORAGE_KEY=
+"getit_shopping_list";
 
 
 /* =====================================================
@@ -560,21 +583,29 @@ HELPERS
 ===================================================== */
 
 function escapeHtml(value){
+
 return String(value??"")
 .replace(/&/g,"&amp;")
 .replace(/</g,"&lt;")
 .replace(/>/g,"&gt;")
 .replace(/"/g,"&quot;")
 .replace(/'/g,"&#039;");
+
 }
 
 function money(value){
+
 const n=Number(value);
-if(!Number.isFinite(n))return"P0.00";
+
+if(!Number.isFinite(n))
+return"P0.00";
+
 return"P"+n.toFixed(2);
+
 }
 
 function getProductId(product){
+
 return(
 product.product_id ??
 product.Product_id ??
@@ -583,9 +614,11 @@ product.Id ??
 product.ID ??
 product["I'd"]
 );
+
 }
 
 function getProductName(product){
+
 return(
 product.name ??
 product.Name ??
@@ -595,25 +628,31 @@ product.product ??
 product.Product ??
 "Unnamed product"
 );
+
 }
 
 function getProductBrand(product){
+
 return(
 product.brand ??
 product.Brand ??
 "Unknown brand"
 );
+
 }
 
 function getProductSize(product){
+
 return(
 product.size ??
 product.Size ??
 ""
 );
+
 }
 
 function getProductCategory(product){
+
 return(
 product.category ??
 product.Category ??
@@ -621,9 +660,11 @@ product.category_name ??
 product.Category_name ??
 "Other"
 );
+
 }
 
 function getShopId(shop){
+
 return(
 shop.shop_id ??
 shop.Shop_id ??
@@ -631,9 +672,11 @@ shop.id ??
 shop.Id ??
 shop.ID
 );
+
 }
 
 function getShopName(shop){
+
 return(
 shop.name ??
 shop.Name ??
@@ -641,19 +684,22 @@ shop.shop_name ??
 shop.Shop_name ??
 "Unknown shop"
 );
+
 }
 
 function getShopLocation(shop){
+
 return(
 shop.location ??
 shop.Location ??
 ""
 );
+
 }
 
 
 /* =====================================================
-SMART CATEGORY SYSTEM
+SMART GROCERY DETECTION
 ===================================================== */
 
 function isGroceryProduct(product){
@@ -671,7 +717,7 @@ const brand=
 getProductBrand(product)
 .toLowerCase();
 
-const groceryWords=[
+const groceryCategories=[
 "grocery",
 "groceries",
 "food",
@@ -683,14 +729,8 @@ const groceryWords=[
 "drink",
 "drinks",
 "bakery",
-"bread",
 "dairy",
-"milk",
 "meat",
-"chicken",
-"beef",
-"pork",
-"fish",
 "frozen",
 "fruit",
 "fruits",
@@ -704,28 +744,19 @@ const groceryWords=[
 "flour",
 "sugar",
 "cooking",
-"oil",
-"water",
-"juice",
-"soft drink",
-"soft drinks",
-"coffee",
-"tea",
-"condiment",
-"condiments",
-"sauce",
-"sauces",
-"spice",
-"spices",
 "pantry",
 "edible"
 ];
 
 if(
-groceryWords.some(word=>category.includes(word))
-)return true;
+groceryCategories.some(
+word=>category.includes(word)
+)
+){
+return true;
+}
 
-const foodNames=[
+const foodWords=[
 "bread",
 "milk",
 "cheese",
@@ -742,6 +773,7 @@ const foodNames=[
 "water",
 "juice",
 "drink",
+"drinks",
 "soda",
 "coke",
 "pepsi",
@@ -767,2282 +799,30 @@ const foodNames=[
 "biscuits",
 "chips",
 "coffee",
-"tea"
+"tea",
+"cake",
+"pizza",
+"burger"
 ];
 
-return foodNames.some(word=>name.includes(word));
+if(
+foodWords.some(
+word=>name.includes(word)
+)
+){
+return true;
+}
+
+return false;
+
 }
 
 
 /* =====================================================
-PRODUCT VISUALS
+PRODUCT VISUAL
 ===================================================== */
 
 function getProductEmoji(product){
 
 const category=
-getProductCategory(product).toLowerCase();
-
-const name=
-getProductName(product).toLowerCase();
-
-if(isGroceryProduct(product)){
-
-if(name.includes("bread"))return"🍞";
-if(name.includes("milk"))return"🥛";
-if(name.includes("rice"))return"🍚";
-if(name.includes("chicken"))return"🍗";
-if(name.includes("meat")||name.includes("beef"))return"🥩";
-if(name.includes("fish"))return"🐟";
-if(name.includes("egg"))return"🥚";
-if(name.includes("fruit"))return"🍎";
-if(name.includes("juice"))return"🧃";
-if(name.includes("water"))return"💧";
-if(name.includes("oil"))return"🫗";
-if(name.includes("coffee"))return"☕";
-if(name.includes("tea"))return"🍵";
-if(name.includes("cake"))return"🍰";
-if(name.includes("pizza"))return"🍕";
-if(name.includes("burger"))return"🍔";
-
-return"🍛";
-}
-
-if(category.includes("electronic"))
-return"📱";
-
-if(category.includes("cloth"))
-return"👕";
-
-if(category.includes("house"))
-return"🏠";
-
-if(category.includes("pharm"))
-return"💊";
-
-return"🛍️";
-}
-
-function productVisual(product){
-
-return`
-<div class="product-visual">
-<span class="product-emoji">
-${getProductEmoji(product)}
-</span>
-</div>
-`;
-}
-
-
-/* =====================================================
-SUPABASE FETCH
-===================================================== */
-
-async function supabaseFetch(path,options={}){
-
-const response=
-await fetch(
-`${SUPABASE_URL}/rest/v1/${path}`,
-{
-...options,
-headers:{
-"apikey":SUPABASE_KEY,
-"Authorization":`Bearer ${SUPABASE_KEY}`,
-"Content-Type":"application/json",
-...(options.headers||{})
-}
-}
-);
-
-if(!response.ok){
-
-const text=await response.text();
-
-throw new Error(
-text||`Supabase error ${response.status}`
-);
-}
-
-const text=await response.text();
-
-return text?JSON.parse(text):[];
-}
-
-
-/* =====================================================
-LOCAL LIST
-===================================================== */
-
-function saveShoppingList(){
-
-try{
-
-localStorage.setItem(
-STORAGE_KEY,
-JSON.stringify(shoppingList)
-);
-
-}catch(error){
-console.error("SAVE LIST ERROR:",error);
-}
-}
-
-function loadSavedShoppingList(){
-
-try{
-
-const saved=
-localStorage.getItem(STORAGE_KEY);
-
-if(!saved){
-shoppingList=[];
-return;
-}
-
-const parsed=JSON.parse(saved);
-
-if(Array.isArray(parsed)){
-
-shoppingList=
-parsed
-.filter(
-item=>
-item &&
-item.product &&
-Number(item.quantity)>0
-)
-.map(item=>({
-product:item.product,
-quantity:Math.max(
-1,
-Number(item.quantity)
-)
-}));
-
-}else{
-shoppingList=[];
-}
-
-}catch(error){
-
-console.error(
-"LOAD SAVED LIST ERROR:",
-error
-);
-
-shoppingList=[];
-}
-}
-
-
-/* =====================================================
-AUTH
-===================================================== */
-
-async function getCurrentUser(){
-
-const{data,error}=
-await supabaseAuth.auth.getUser();
-
-if(error)return null;
-
-return data.user||null;
-}
-
-async function signUp(){
-
-const email=
-document.getElementById("authEmail").value.trim();
-
-const password=
-document.getElementById("authPassword").value;
-
-if(!email||!password){
-showAuthMessage(
-"Please enter your email and password."
-);
-return;
-}
-
-if(password.length<6){
-showAuthMessage(
-"Password must be at least 6 characters."
-);
-return;
-}
-
-const{data,error}=
-await supabaseAuth.auth.signUp({
-email,
-password
-});
-
-if(error){
-showAuthMessage(error.message);
-return;
-}
-
-if(data.user){
-showAuthMessage(
-"Account created successfully. Check your email if confirmation is required.",
-true
-);
-}
-}
-
-async function signIn(){
-
-const email=
-document.getElementById("authEmail").value.trim();
-
-const password=
-document.getElementById("authPassword").value;
-
-if(!email||!password){
-showAuthMessage(
-"Please enter your email and password."
-);
-return;
-}
-
-const{data,error}=
-await supabaseAuth.auth.signInWithPassword({
-email,
-password
-});
-
-if(error){
-showAuthMessage(error.message);
-return;
-}
-
-if(data.user){
-
-await syncCloudShoppingList();
-
-showAccount();
-}
-}
-
-async function signOut(){
-
-const{error}=
-await supabaseAuth.auth.signOut();
-
-if(error){
-alert(error.message);
-return;
-}
-
-showAccount();
-}
-
-function showAuthMessage(message,success=false){
-
-const box=
-document.getElementById("authMessage");
-
-if(!box)return;
-
-box.innerHTML=`
-<div class="status"
-style="color:${success?"#0b7a3b":"#d32f2f"}">
-${escapeHtml(message)}
-</div>
-`;
-}
-
-
-/* =====================================================
-CLOUD LIST
-===================================================== */
-
-async function getCloudList(){
-
-const user=await getCurrentUser();
-
-if(!user)return null;
-
-const response=
-await supabaseFetch(
-`shopping_lists?select=*&user_id=eq.${encodeURIComponent(user.id)}&limit=1`
-);
-
-if(
-Array.isArray(response)&&
-response.length>0
-)return response[0];
-
-return null;
-}
-
-async function saveCloudShoppingList(){
-
-const user=await getCurrentUser();
-
-if(!user)return false;
-
-try{
-
-const existing=await getCloudList();
-
-const payload={
-user_id:user.id,
-items:shoppingList,
-updated_at:new Date().toISOString()
-};
-
-if(existing){
-
-await supabaseFetch(
-`shopping_lists?id=eq.${encodeURIComponent(existing.id)}`,
-{
-method:"PATCH",
-headers:{
-"Prefer":"return=minimal"
-},
-body:JSON.stringify({
-items:shoppingList,
-updated_at:new Date().toISOString()
-})
-}
-);
-
-}else{
-
-await supabaseFetch(
-"shopping_lists",
-{
-method:"POST",
-headers:{
-"Prefer":"return=minimal"
-},
-body:JSON.stringify(payload)
-}
-);
-}
-
-return true;
-
-}catch(error){
-
-console.error(
-"CLOUD SAVE ERROR:",
-error
-);
-
-return false;
-}
-
-async function syncCloudShoppingList(){
-
-const user=await getCurrentUser();
-
-if(!user)return;
-
-try{
-
-const cloud=await getCloudList();
-
-if(
-cloud &&
-Array.isArray(cloud.items)
-){
-
-const cloudItems=
-cloud.items.filter(
-item=>
-item &&
-item.product &&
-Number(item.quantity)>0
-);
-
-if(cloudItems.length>0){
-
-const merged=[];
-
-for(
-const item
-of [...cloudItems,...shoppingList]
-){
-
-const id=
-getProductId(item.product);
-
-const existing=
-merged.find(
-x=>
-String(
-getProductId(x.product)
-)===String(id)
-);
-
-if(existing){
-
-existing.quantity+=
-Number(item.quantity);
-
-}else{
-
-merged.push({
-product:item.product,
-quantity:Math.max(
-1,
-Number(item.quantity)
-)
-});
-}
-}
-
-shoppingList=merged;
-
-}else if(shoppingList.length>0){
-
-await saveCloudShoppingList();
-
-}
-
-}else if(shoppingList.length>0){
-
-await saveCloudShoppingList();
-}
-
-saveShoppingList();
-updateListCount();
-
-}catch(error){
-
-console.error(
-"CLOUD SYNC ERROR:",
-error
-);
-}
-}
-
-
-/* =====================================================
-LIST
-===================================================== */
-
-async function addToShoppingList(product){
-
-const id=getProductId(product);
-
-const existing=
-shoppingList.find(
-item=>
-String(
-getProductId(item.product)
-)===String(id)
-);
-
-if(existing){
-existing.quantity+=1;
-}else{
-shoppingList.push({
-product,
-quantity:1
-});
-}
-
-saveShoppingList();
-updateListCount();
-
-await saveCloudShoppingList();
-
-alert(
-`${getProductName(product)} added to your shopping list.`
-);
-}
-
-function updateListCount(){
-
-const count=
-shoppingList.reduce(
-(sum,item)=>
-sum+Number(item.quantity||0),
-0
-);
-
-const badge=
-document.getElementById("listCount");
-
-if(badge)
-badge.textContent=count;
-}
-
-
-/* =====================================================
-PRODUCTS
-===================================================== */
-
-async function loadProducts(){
-
-try{
-
-const data=
-await supabaseFetch(
-"products?select=*"
-);
-
-console.log(
-"PRODUCTS LOADED:",
-data
-);
-
-allProducts=
-Array.isArray(data)?data:[];
-
-}catch(error){
-
-console.error(
-"PRODUCT ERROR:",
-error
-);
-
-document.getElementById("app").innerHTML=`
-<div class="message error">
-<h3>Unable to load products</h3>
-<p style="margin-top:10px;">
-${escapeHtml(error.message)}
-</p>
-</div>
-`;
-
-}
-}
-
-async function loadShops(){
-
-try{
-
-allShops=
-await supabaseFetch(
-"shops?select=*"
-);
-
-console.log(
-"SHOPS LOADED:",
-allShops
-);
-
-}catch(error){
-
-console.error(
-"SHOP ERROR:",
-error
-);
-
-allShops=[];
-}
-}
-
-
-/* =====================================================
-HOME
-===================================================== */
-
-function showHome(){
-
-document.getElementById("app").innerHTML=`
-
-<div class="hero">
-<h1>Find it. Compare it. Get it. 🇧🇼</h1>
-<p>
-Find products, compare prices across shops,
-discover the best deals and build your cheapest basket.
-</p>
-</div>
-
-<section>
-
-<input
-id="searchInput"
-class="search-box"
-placeholder="🔎 Search products, brands or sizes..."
-oninput="filterProducts()">
-
-<div id="categories"
-class="categories">
-</div>
-
-</section>
-
-<div class="home-tools">
-
-<div class="tool-card" onclick="showDeals()">
-<h2>🔥 Best Deals</h2>
-<p style="margin-top:8px;color:#777;">
-Find products with the biggest price differences.
-</p>
-</div>
-
-<div class="tool-card" onclick="showNearbyShops()">
-<h2>📍 Nearby Shops</h2>
-<p style="margin-top:8px;color:#777;">
-Find shops close to your location.
-</p>
-</div>
-
-</div>
-
-<section class="section">
-
-<div class="section-title">
-<h2>🔥 Best Deals</h2>
-
-<button class="primary-btn"
-onclick="showDeals()">
-View All
-</button>
-</div>
-
-<div id="dealsPreview"
-class="deals-grid">
-</div>
-
-</section>
-
-<section class="section">
-
-<div class="section-title">
-<h2>📍 Shops</h2>
-
-<button class="primary-btn"
-onclick="showNearbyShops()">
-Find Nearby
-</button>
-</div>
-
-<div id="shopsPreview"
-class="shop-grid">
-</div>
-
-</section>
-
-<section class="section">
-
-<h2 style="margin-bottom:12px;">
-Products
-</h2>
-
-<div
-id="productsContainer"
-class="products-grid">
-</div>
-
-</section>
-`;
-
-renderCategories();
-displayProducts(allProducts);
-loadDealsPreview();
-loadShopsPreview();
-
-setDecorForCategory(currentCategory);
-}
-
-
-/* =====================================================
-CATEGORIES
-===================================================== */
-
-function renderCategories(){
-
-const categories=[
-"All",
-"Groceries",
-"Electronics",
-"Clothing",
-"Household",
-"Pharmacy"
-];
-
-document.getElementById("categories").innerHTML=
-categories.map(category=>`
-
-<button
-class="category-btn ${
-currentCategory===category?"active":""
-}"
-onclick='selectCategory(${JSON.stringify(category)})'>
-
-${escapeHtml(category)}
-
-</button>
-
-`).join("");
-}
-
-function selectCategory(category){
-
-currentCategory=category;
-
-renderCategories();
-
-setDecorForCategory(category);
-
-filterProducts();
-}
-
-
-/* =====================================================
-BACKGROUND VISUAL CHANGES
-===================================================== */
-
-function setDecorForCategory(category){
-
-const emojis={
-All:["🍛","🍕","🛍️","🥗"],
-Groceries:["🍛","🥗","🍞","🍎"],
-Electronics:["📱","💻","🎧","⌚"],
-Clothing:["👕","👟","🧢","👜"],
-Household:["🏠","🛋️","🧹","🪣"],
-Pharmacy:["💊","🩺","🧴","🧪"]
-};
-
-const selected=
-emojis[category]||emojis.All;
-
-const orbs=
-document.querySelectorAll(".food-orb");
-
-orbs.forEach(
-(orb,index)=>{
-orb.textContent=
-selected[index%selected.length];
-}
-);
-}
-
-
-/* =====================================================
-FILTER
-===================================================== */
-
-function filterProducts(){
-
-const search=
-(
-document.getElementById("searchInput")?.value||""
-)
-.toLowerCase()
-.trim();
-
-let filtered=
-allProducts.filter(product=>{
-
-const text=(
-getProductName(product)+" "+
-getProductBrand(product)+" "+
-getProductSize(product)+" "+
-getProductCategory(product)
-).toLowerCase();
-
-const matchesSearch=
-!search||text.includes(search);
-
-let matchesCategory=false;
-
-if(currentCategory==="All"){
-matchesCategory=true;
-}
-else if(currentCategory==="Groceries"){
-matchesCategory=
-isGroceryProduct(product);
-}
-else{
-matchesCategory=
-getProductCategory(product)
-.toLowerCase()
-.includes(
-currentCategory.toLowerCase()
-);
-}
-
-return matchesSearch&&matchesCategory;
-});
-
-displayProducts(filtered);
-}
-
-
-/* =====================================================
-DISPLAY PRODUCTS
-===================================================== */
-
-function displayProducts(products){
-
-const container=
-document.getElementById("productsContainer");
-
-if(!container)return;
-
-if(!products.length){
-
-container.innerHTML=`
-<div class="message">
-<h3>No products found</h3>
-<p style="margin-top:8px;color:#777;">
-Try another search or category.
-</p>
-</div>
-`;
-
-return;
-}
-
-container.innerHTML=
-products.map(product=>`
-
-<div class="card">
-
-${productVisual(product)}
-
-<h3>
-${escapeHtml(
-getProductName(product)
-)}
-</h3>
-
-<div class="brand">
-${escapeHtml(
-getProductBrand(product)
-)}
-</div>
-
-${
-getProductSize(product)
-?`
-<div style="margin-top:5px;color:#777;">
-${escapeHtml(
-getProductSize(product)
-)}
-</div>
-`
-:""
-}
-
-<button
-onclick='showProduct(${JSON.stringify(product).replace(/'/g,"&#39;")})'>
-💰 View Prices
-</button>
-
-<button
-onclick='addToShoppingList(${JSON.stringify(product).replace(/'/g,"&#39;")})'>
-🛒 Add to List
-</button>
-
-</div>
-
-`).join("");
-}
-
-
-/* =====================================================
-PRODUCT PAGE
-===================================================== */
-
-function showProduct(product){
-
-currentProduct=product;
-
-const id=getProductId(product);
-
-document.getElementById("app").innerHTML=`
-
-<button class="back-btn"
-onclick="showHome()">
-← Back
-</button>
-
-<div class="card">
-
-${productVisual(product)}
-
-<h1>
-${escapeHtml(
-getProductName(product)
-)}
-</h1>
-
-<p class="brand"
-style="margin-top:7px;">
-${escapeHtml(
-getProductBrand(product)
-)}
-</p>
-
-${
-getProductSize(product)
-?`
-<p style="margin-top:7px;">
-Size:
-${escapeHtml(
-getProductSize(product)
-)}
-</p>
-`
-:""
-}
-
-<div style="margin-top:20px;">
-
-<button
-class="primary-btn"
-onclick="showComparison('${String(id)}')">
-💰 Compare Prices
-</button>
-
-<button
-class="secondary-btn"
-onclick='addToShoppingList(${JSON.stringify(product).replace(/'/g,"&#39;")})'>
-🛒 Add to List
-</button>
-
-</div>
-
-</div>
-`;
-}
-
-
-/* =====================================================
-PRICE COMPARISON
-===================================================== */
-
-async function showComparison(productId){
-
-document.getElementById("app").innerHTML=`
-
-<button class="back-btn"
-onclick="showHome()">
-← Back
-</button>
-
-<div class="message">
-
-<h2>💰 Price Comparison</h2>
-
-<p style="margin-top:10px;">
-Loading prices...
-</p>
-
-</div>
-`;
-
-try{
-
-const prices=
-await supabaseFetch(
-`product_prices?select=product_id,shop_id,price&product_id=eq.${encodeURIComponent(productId)}`
-);
-
-const validPrices=
-Array.isArray(prices)
-?prices
-.filter(
-row=>
-Number.isFinite(
-Number(row.price)
-)
-)
-.sort(
-(a,b)=>
-Number(a.price)-Number(b.price)
-)
-:[];
-
-if(!validPrices.length){
-
-document.getElementById("app").innerHTML=`
-
-<button class="back-btn"
-onclick="showHome()">
-← Back
-</button>
-
-<div class="message">
-
-<h2>No prices available</h2>
-
-<p style="margin-top:10px;">
-There are currently no prices
-for this product.
-</p>
-
-</div>
-`;
-
-return;
-}
-
-const product=
-allProducts.find(
-p=>
-String(getProductId(p))===
-String(productId)
-);
-
-let html=`
-
-<button class="back-btn"
-onclick='showProduct(${JSON.stringify(product).replace(/'/g,"&#39;")})'>
-← Back
-</button>
-
-<h2>💰 Price Comparison</h2>
-
-<p style="margin:7px 0 15px;color:#777;">
-${escapeHtml(
-product?getProductName(product):"Product"
-)}
-— prices across shops
-</p>
-`;
-
-validPrices.forEach(
-(row,index)=>{
-
-const shop=
-allShops.find(
-s=>
-String(getShopId(s))===
-String(row.shop_id)
-);
-
-const shopName=
-shop?getShopName(shop):"Unknown shop";
-
-const location=
-shop?getShopLocation(shop):"";
-
-html+=`
-
-<div class="
-comparison-row
-${index===0?"cheapest":""}
-">
-
-<div>
-
-<strong>
-${index===0?"🏆 ":""}
-${escapeHtml(shopName)}
-</strong>
-
-${
-location
-?`
-<div style="color:#777;margin-top:4px;">
-📍 ${escapeHtml(location)}
-</div>
-`
-:""
-}
-
-</div>
-
-<strong style="font-size:20px;">
-${money(row.price)}
-</strong>
-
-</div>
-`;
-}
-);
-
-document.getElementById("app").innerHTML=html;
-
-}catch(error){
-
-console.error(
-"PRICE COMPARISON ERROR:",
-error
-);
-
-document.getElementById("app").innerHTML=`
-
-<button class="back-btn"
-onclick="showHome()">
-← Back
-</button>
-
-<div class="message error">
-
-<h3>Price comparison error</h3>
-
-<p style="margin-top:10px;">
-${escapeHtml(error.message)}
-</p>
-
-</div>
-`;
-}
-}
-
-
-/* =====================================================
-BEST DEALS
-===================================================== */
-
-async function getBestDeals(){
-
-const deals=[];
-
-for(const product of allProducts){
-
-const id=getProductId(product);
-
-try{
-
-const prices=
-await supabaseFetch(
-`product_prices?select=product_id,shop_id,price&product_id=eq.${encodeURIComponent(id)}`
-);
-
-const valid=
-prices
-.filter(
-p=>
-Number.isFinite(Number(p.price))
-)
-.sort(
-(a,b)=>
-Number(a.price)-Number(b.price)
-);
-
-if(valid.length>=2){
-
-const cheapest=
-Number(valid[0].price);
-
-const highest=
-Number(
-valid[valid.length-1].price
-);
-
-deals.push({
-
-product,
-
-cheapest,
-
-highest,
-
-saving:
-highest-cheapest,
-
-shopId:
-valid[0].shop_id
-
-});
-}
-
-}catch(error){
-
-console.error(
-"DEAL ERROR:",
-error
-);
-}
-}
-
-return deals.sort(
-(a,b)=>b.saving-a.saving
-);
-}
-
-async function loadDealsPreview(){
-
-const container=
-document.getElementById("dealsPreview");
-
-if(!container)return;
-
-container.innerHTML=
-`<div class="message">
-Loading deals...
-</div>`;
-
-const deals=
-await getBestDeals();
-
-if(!deals.length){
-
-container.innerHTML=
-`<div class="message">
-No deals available yet.
-</div>`;
-
-return;
-}
-
-container.innerHTML=
-deals.slice(0,4)
-.map(renderDeal)
-.join("");
-}
-
-function renderDeal(deal){
-
-return`
-
-<div class="deal-card">
-
-${productVisual(deal.product)}
-
-<h3>
-${escapeHtml(
-getProductName(deal.product)
-)}
-</h3>
-
-<div class="brand">
-${escapeHtml(
-getProductBrand(deal.product)
-)}
-</div>
-
-<div class="price">
-${money(deal.cheapest)}
-</div>
-
-<div class="deal-save">
-Save ${money(deal.saving)}
-</div>
-
-<button
-onclick='showProduct(${JSON.stringify(deal.product).replace(/'/g,"&#39;")})'>
-View Prices
-</button>
-
-</div>
-`;
-}
-
-async function showDeals(){
-
-document.getElementById("app").innerHTML=`
-
-<button class="back-btn"
-onclick="showHome()">
-← Back
-</button>
-
-<h2>🔥 Best Deals</h2>
-
-<p style="margin:7px 0 15px;color:#777;">
-Products with the biggest price differences.
-</p>
-
-<div id="allDeals"
-class="deals-grid">
-
-<div class="message">
-Loading deals...
-</div>
-
-</div>
-`;
-
-const deals=
-await getBestDeals();
-
-const container=
-document.getElementById("allDeals");
-
-if(!deals.length){
-
-container.innerHTML=
-`<div class="message">
-No deals available.
-</div>`;
-
-return;
-}
-
-container.innerHTML=
-deals.slice(0,12)
-.map(renderDeal)
-.join("");
-}
-
-
-/* =====================================================
-SHOPS
-===================================================== */
-
-function loadShopsPreview(){
-
-const container=
-document.getElementById("shopsPreview");
-
-if(!container)return;
-
-if(!allShops.length){
-
-container.innerHTML=
-`<div class="message">
-No shops available.
-</div>`;
-
-return;
-}
-
-container.innerHTML=
-allShops.slice(0,4)
-.map(shop=>`
-
-<div class="shop-card">
-
-<h3>
-${escapeHtml(
-getShopName(shop)
-)}
-</h3>
-
-<p style="color:#777;">
-${
-getShopLocation(shop)
-?"📍 "+escapeHtml(
-getShopLocation(shop)
-)
-:"Location not provided"
-}
-</p>
-
-</div>
-
-`)
-.join("");
-}
-
-function extractCoordinates(shop){
-
-const latitude=
-shop.latitude ??
-shop.Latitude ??
-shop.lat ??
-shop.Lat;
-
-const longitude=
-shop.longitude ??
-shop.Longitude ??
-shop.lng ??
-shop.Lng ??
-shop.lon ??
-shop.Lon;
-
-if(
-latitude===undefined||
-longitude===undefined
-)return null;
-
-const lat=Number(latitude);
-const lng=Number(longitude);
-
-if(
-!Number.isFinite(lat)||
-!Number.isFinite(lng)
-)return null;
-
-return{lat,lng};
-}
-
-function distanceKm(
-lat1,
-lon1,
-lat2,
-lon2
-){
-
-const R=6371;
-
-const dLat=
-(lat2-lat1)*Math.PI/180;
-
-const dLon=
-(lon2-lon1)*Math.PI/180;
-
-const a=
-Math.sin(dLat/2)**2+
-Math.cos(lat1*Math.PI/180)*
-Math.cos(lat2*Math.PI/180)*
-Math.sin(dLon/2)**2;
-
-return R*2*
-Math.atan2(
-Math.sqrt(a),
-Math.sqrt(1-a)
-);
-}
-
-function showNearbyShops(){
-
-document.getElementById("app").innerHTML=`
-
-<button class="back-btn"
-onclick="showHome()">
-← Back
-</button>
-
-<h2>📍 Nearby Shops</h2>
-
-<p style="margin:8px 0 15px;color:#777;">
-Finding shops near you...
-</p>
-
-<div id="nearbyResults"
-class="shop-grid">
-
-<div class="message">
-Requesting your location...
-</div>
-
-</div>
-`;
-
-if(!navigator.geolocation){
-
-document.getElementById(
-"nearbyResults"
-).innerHTML=
-`<div class="message">
-Geolocation is not supported.
-</div>`;
-
-return;
-}
-
-navigator.geolocation.getCurrentPosition(
-
-position=>{
-
-const userLat=
-position.coords.latitude;
-
-const userLng=
-position.coords.longitude;
-
-const shops=
-allShops
-.map(shop=>{
-
-const coords=
-extractCoordinates(shop);
-
-if(!coords)return null;
-
-return{
-shop,
-distance:
-distanceKm(
-userLat,
-userLng,
-coords.lat,
-coords.lng
-),
-coords
-};
-
-})
-.filter(Boolean)
-.sort(
-(a,b)=>a.distance-b.distance
-);
-
-const container=
-document.getElementById(
-"nearbyResults"
-);
-
-if(!shops.length){
-
-container.innerHTML=`
-
-<div class="message">
-
-<h3>
-Shop locations unavailable
-</h3>
-
-<p style="margin-top:10px;">
-Your shops need latitude and
-longitude values before
-Nearby Shops can calculate distances.
-</p>
-
-</div>
-`;
-
-return;
-}
-
-container.innerHTML=
-shops.slice(0,12)
-.map(item=>`
-
-<div class="shop-card">
-
-<h3>
-${escapeHtml(
-getShopName(item.shop)
-)}
-</h3>
-
-<p style="margin:7px 0;color:#777;">
-${
-getShopLocation(item.shop)
-?"📍 "+escapeHtml(
-getShopLocation(item.shop)
-)
-:""
-}
-</p>
-
-<strong>
-${item.distance.toFixed(1)}
-km away
-</strong>
-
-<br>
-
-<button
-onclick="window.open(
-'https://www.google.com/maps/dir/?api=1&destination=${item.coords.lat},${item.coords.lng}',
-'_blank'
-)">
-🗺️ Directions
-</button>
-
-</div>
-`)
-.join("");
-
-},
-
-error=>{
-
-document.getElementById(
-"nearbyResults"
-).innerHTML=`
-
-<div class="message">
-
-<h3>
-Location unavailable
-</h3>
-
-<p style="margin-top:10px;">
-Please allow location access
-and try again.
-</p>
-
-</div>
-`;
-}
-);
-}
-
-
-/* =====================================================
-SHOPPING LIST PAGE
-===================================================== */
-
-async function showShoppingList(){
-
-document.getElementById("app").innerHTML=`
-
-<button class="back-btn"
-onclick="showHome()">
-← Back
-</button>
-
-<div class="section-title">
-
-<h2>🛒 My Shopping List</h2>
-
-${
-shoppingList.length
-?`
-<button class="danger-btn"
-onclick="clearShoppingList()">
-Clear List
-</button>
-`
-:""
-}
-
-</div>
-
-${
-shoppingList.length
-?`
-<div class="saved-note">
-
-💾 Your shopping list is saved
-on this device.
-
-<br>
-
-${
-await getCurrentUser()
-?"☁️ It is also saved to your account."
-:"Sign in to save it across devices."
-}
-
-</div>
-`
-:""
-}
-
-<div id="shoppingListContainer">
-
-${
-shoppingList.length
-?shoppingList
-.map(renderShoppingItem)
-.join("")
-:`
-<div class="message">
-
-<h3>Your list is empty</h3>
-
-<p style="margin-top:10px;">
-Add products from the catalogue.
-</p>
-
-</div>
-`
-}
-
-</div>
-
-${
-shoppingList.length
-?`
-<button
-class="primary-btn"
-style="margin-top:15px;"
-onclick="findCheapestBasket()">
-🏆 Find Cheapest Basket
-</button>
-`
-:""
-}
-`;
-}
-
-function renderShoppingItem(item,index){
-
-const product=item.product;
-
-return`
-
-<div class="list-item">
-
-<div>
-
-<h3>
-${escapeHtml(
-getProductName(product)
-)}
-</h3>
-
-<div class="brand">
-${escapeHtml(
-getProductBrand(product)
-)}
-</div>
-
-${
-getProductSize(product)
-?`
-<div style="color:#777;margin-top:4px;">
-${escapeHtml(
-getProductSize(product)
-)}
-</div>
-`
-:""
-}
-
-</div>
-
-<div class="qty-controls">
-
-<button onclick="changeQuantity(${index},-1)">
-−
-</button>
-
-<strong>${item.quantity}</strong>
-
-<button onclick="changeQuantity(${index},1)">
-+
-</button>
-
-<button
-class="remove-btn"
-onclick="removeFromList(${index})">
-×
-</button>
-
-</div>
-
-</div>
-`;
-}
-
-async function changeQuantity(index,amount){
-
-if(!shoppingList[index])return;
-
-shoppingList[index].quantity+=amount;
-
-if(shoppingList[index].quantity<=0){
-
-shoppingList.splice(index,1);
-}
-
-saveShoppingList();
-updateListCount();
-
-await saveCloudShoppingList();
-
-showShoppingList();
-}
-
-async function removeFromList(index){
-
-shoppingList.splice(index,1);
-
-saveShoppingList();
-updateListCount();
-
-await saveCloudShoppingList();
-
-showShoppingList();
-}
-
-async function clearShoppingList(){
-
-if(!confirm(
-"Clear your entire shopping list?"
-))
-return;
-
-shoppingList=[];
-
-saveShoppingList();
-updateListCount();
-
-await saveCloudShoppingList();
-
-showShoppingList();
-}
-
-
-/* =====================================================
-CHEAPEST BASKET
-===================================================== */
-
-async function findCheapestBasket(){
-
-if(!shoppingList.length)return;
-
-document.getElementById("app").innerHTML=`
-
-<button class="back-btn"
-onclick="showShoppingList()">
-← Back
-</button>
-
-<div class="message">
-
-<h2>🏆 Finding Cheapest Basket</h2>
-
-<p style="margin-top:10px;">
-Checking prices across shops...
-</p>
-
-</div>
-`;
-
-const results=[];
-
-for(const item of shoppingList){
-
-const product=item.product;
-const productId=getProductId(product);
-
-try{
-
-const prices=
-await supabaseFetch(
-`product_prices?select=product_id,shop_id,price&product_id=eq.${encodeURIComponent(productId)}`
-);
-
-const valid=
-prices
-.filter(
-p=>
-Number.isFinite(Number(p.price))
-)
-.map(p=>({
-...p,
-price:Number(p.price)
-}))
-.sort(
-(a,b)=>a.price-b.price
-);
-
-results.push({
-product,
-quantity:Number(item.quantity),
-prices:valid
-});
-
-}catch(error){
-
-console.error(
-"BASKET PRICE ERROR:",
-error
-);
-}
-}
-
-renderBasket(results);
-}
-
-function renderBasket(results){
-
-let maximumSavingsTotal=0;
-const cheapestProducts=[];
-
-results.forEach(result=>{
-
-if(!result.prices.length)return;
-
-const cheapest=result.prices[0];
-
-const cost=
-cheapest.price*
-result.quantity;
-
-maximumSavingsTotal+=cost;
-
-const shop=
-allShops.find(
-s=>
-String(getShopId(s))===
-String(cheapest.shop_id)
-);
-
-cheapestProducts.push({
-product:result.product,
-quantity:result.quantity,
-price:cheapest.price,
-total:cost,
-shop
-});
-});
-
-const shopTotals={};
-
-results.forEach(result=>{
-
-result.prices.forEach(priceRow=>{
-
-const shopId=
-String(priceRow.shop_id);
-
-if(!shopTotals[shopId]){
-
-shopTotals[shopId]={
-shopId,
-total:0,
-count:0
-};
-}
-
-shopTotals[shopId].total+=
-priceRow.price*
-result.quantity;
-
-shopTotals[shopId].count+=1;
-});
-});
-
-const completeShopOptions=
-Object.values(shopTotals)
-.filter(
-shop=>
-shop.count===results.length
-)
-.sort(
-(a,b)=>a.total-b.total
-);
-
-const oneShopTotal=
-completeShopOptions.length
-?completeShopOptions[0].total
-:null;
-
-const multipleShopTotal=
-maximumSavingsTotal;
-
-const savings=
-oneShopTotal!==null
-?oneShopTotal-multipleShopTotal
-:0;
-
-document.getElementById("app").innerHTML=`
-
-<button class="back-btn"
-onclick="showShoppingList()">
-← Back
-</button>
-
-<h2>🏆 Cheapest Basket</h2>
-
-<div class="card"
-style="margin-top:15px;">
-
-<h3>Maximum Savings</h3>
-
-<div class="basket-total">
-${money(multipleShopTotal)}
-</div>
-
-<p style="color:#777;">
-Buying each product from its cheapest shop.
-</p>
-
-</div>
-
-<section class="section">
-
-<h3 style="margin-bottom:12px;">
-Cheapest Products
-</h3>
-
-${
-cheapestProducts.length
-?cheapestProducts
-.map(item=>`
-
-<div class="comparison-row">
-
-<div>
-
-<strong>
-${escapeHtml(
-getProductName(item.product)
-)}
-</strong>
-
-<div style="color:#777;margin-top:5px;">
-
-${item.quantity}
-×
-${escapeHtml(
-item.shop
-?getShopName(item.shop)
-:"Unknown shop"
-)}
-
-</div>
-
-</div>
-
-<strong>
-${money(item.total)}
-</strong>
-
-</div>
-`)
-.join("")
-:`
-<div class="message">
-Some products have no prices.
-</div>
-`
-}
-
-</section>
-
-<section class="section">
-
-<h3 style="margin-bottom:12px;">
-🏪 One-Shop Option
-</h3>
-
-${
-completeShopOptions.length
-?completeShopOptions
-.map((option,index)=>{
-
-const shop=
-allShops.find(
-s=>
-String(getShopId(s))===
-String(option.shopId)
-);
-
-return`
-
-<div class="
-comparison-row
-${index===0?"cheapest":""}
-">
-
-<div>
-
-<strong>
-${index===0?"🏆 ":""}
-${escapeHtml(
-shop
-?getShopName(shop)
-:"Unknown shop"
-)}
-</strong>
-
-</div>
-
-<strong>
-${money(option.total)}
-</strong>
-
-</div>
-`;
-})
-.join("")
-:`
-<div class="message">
-
-<p>
-No single shop currently
-has every item in your list.
-</p>
-
-</div>
-`
-}
-
-</section>
-
-${
-savings>0.009
-?`
-<div class="saved-note"
-style="margin-top:20px;">
-
-💰 You could save approximately
-<strong>${money(savings)}</strong>
-by buying from multiple shops.
-
-</div>
-`
-:""
-}
-`;
-}
-
-
-/* =====================================================
-ACCOUNT
-===================================================== */
-
-async function showAccount(){
-
-const user=await getCurrentUser();
-
-if(user){
-
-document.getElementById("app").innerHTML=`
-
-<button class="back-btn"
-onclick="showHome()">
-← Back
-</button>
-
-<div class="account-card">
-
-<h2>👤 My Account</h2>
-
-<p style="margin-top:12px;">
-Signed in as:
-</p>
-
-<strong>
-${escapeHtml(user.email)}
-</strong>
-
-<div class="status">
-
-☁️ Your shopping list is
-automatically saved to your account.
-
-</div>
-
-<div class="auth-buttons"
-style="margin-top:15px;">
-
-<button
-class="primary-btn"
-onclick="showShoppingList()">
-🛒 My Shopping List
-</button>
-
-<button
-class="danger-btn"
-onclick="signOut()">
-Logout
-</button>
-
-</div>
-
-</div>
-`;
-
-return;
-}
-
-document.getElementById("app").innerHTML=`
-
-<button class="back-btn"
-onclick="showHome()">
-← Back
-</button>
-
-<div class="auth-box">
-
-<h2>👤 Get-It Account</h2>
-
-<p style="color:#777;margin-bottom:10px;">
-Sign in to save your shopping
-list across devices.
-</p>
-
-<input
-id="authEmail"
-class="auth-input"
-type="email"
-placeholder="Email address">
-
-<input
-id="authPassword"
-class="auth-input"
-type="password"
-placeholder="Password">
-
-<div class="auth-buttons">
-
-<button
-class="primary-btn"
-onclick="signIn()">
-Login
-</button>
-
-<button
-class="secondary-btn"
-onclick="signUp()">
-Create Account
-</button>
-
-</div>
-
-<div id="authMessage"></div>
-
-${
-shoppingList.length
-?`
-<div class="saved-note"
-style="margin-top:15px;">
-
-🛒 You currently have
-<strong>
-${shoppingList.length}
-</strong>
-product(s) in your local
-shopping list.
-
-<br><br>
-
-After signing in, your list
-will be synced to your account.
-
-</div>
-`
-:""
-}
-
-</div>
-`;
-}
-
-
-/* =====================================================
-AUTH STATE
-===================================================== */
-
-supabaseAuth.auth.onAuthStateChange(
-async(event,session)=>{
-
-console.log(
-"AUTH EVENT:",
-event
-);
-
-if(
-event==="SIGNED_IN"&&
-session
-){
-
-await syncCloudShoppingList();
-updateListCount();
-}
-
-if(event==="SIGNED_OUT"){
-updateListCount();
-}
-}
-);
-
-
-/* =====================================================
-START
-===================================================== */
-
-async function startApp(){
-
-loadSavedShoppingList();
-
-updateListCount();
-
-await Promise.all([
-loadProducts(),
-loadShops()
-]);
-
-showHome();
-
-const user=
-await getCurrentUser();
-
-if(user){
-
-await syncCloudShoppingList();
-
-updateListCount();
-}
-}
-
-startApp();
-
-</script>
-
-</body>
-</html>
+getProductCategory
