@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -917,21 +918,34 @@ function openProduct(product){
 
 
 /* =========================================
-   CHECK AVAILABILITY
+   STOCK CHECK
 ========================================= */
 
 function isInStock(value){
 
+  if(value === null || value === undefined){
+    return true;
+  }
+
+  if(value === true){
+    return true;
+  }
+
+  if(value === false){
+    return false;
+  }
+
+  const text =
+    String(value)
+      .trim()
+      .toLowerCase();
+
   return (
-    value === true ||
-    value === "true" ||
-    value === "TRUE" ||
-    value === "True" ||
-    value === 1 ||
-    value === "1" ||
-    value === "yes" ||
-    value === "YES" ||
-    value === "Yes"
+    text === "true" ||
+    text === "1" ||
+    text === "yes" ||
+    text === "in stock" ||
+    text === "available"
   );
 
 }
@@ -1005,22 +1019,21 @@ async function comparePrices(){
 
   try{
 
-    /* =====================================
-       LOAD PRICES
-       
-       IMPORTANT:
-       Your real columns are:
-       product_id
-       shop_id
-       Price
-       In_stock
-    ===================================== */
+    /*
+      IMPORTANT:
+
+      Actual PostgreSQL price column:
+      price
+
+      Actual stock column:
+      in_stock
+    */
 
     const prices =
       await supabaseFetch(
 
         "product_prices" +
-        "?select=product_id,shop_id,Price,In_stock" +
+        "?select=product_id,shop_id,price,in_stock" +
         "&product_id=eq." +
         encodeURIComponent(
           String(productId)
@@ -1066,22 +1079,20 @@ async function comparePrices(){
       item => {
 
         /*
-          Your database uses In_stock,
-          NOT available.
+          Read actual database fields.
         */
 
         const stockValue =
-          item.In_stock;
+          item.in_stock;
 
 
         /*
-          If In_stock is false,
-          don't show that price.
+          If stock field exists and says
+          the product is not in stock,
+          skip it.
         */
 
         if(
-          stockValue !== null &&
-          stockValue !== undefined &&
           !isInStock(stockValue)
         ){
 
@@ -1091,13 +1102,13 @@ async function comparePrices(){
 
 
         /*
-          Your database uses Price,
-          NOT price.
+          Actual PostgreSQL column:
+          price
         */
 
         const price =
           Number(
-            item.Price
+            item.price
           );
 
 
@@ -1414,4 +1425,3 @@ startApp();
 
 </body>
 </html>
-
